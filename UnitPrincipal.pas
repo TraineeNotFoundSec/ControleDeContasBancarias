@@ -55,13 +55,16 @@ type
     Label12: TLabel;
     conn: TFDConnection;
     ds: TDataSource;
-    query1: TFDQuery;
-    query2: TFDQuery;
+    queryClientes: TFDQuery;
+    queryIUD: TFDQuery;
+    queryUF: TFDQuery;
+    queryMUNICIPIOS: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure listUFChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,8 +79,62 @@ implementation
 {$R *.dfm}
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+  repetidor : integer;
+  qntRegistros : integer;
+
 begin
+  repetidor := 0;
   conn.Connected := True;
+
+  listUF.Items.Clear;
+  listMUNICIPIO.Items.Clear;
+
+  queryUF.SQL.Text := 'SELECT COUNT(id_uf) AS "qntRegistros" from uf;';
+  queryUF.Open;
+  qntRegistros := queryUF.FieldByName('qntRegistros').AsInteger;
+
+  queryUF.SQL.Text := 'SELECT id_uf,  nome_uf FROM uf ORDER BY nome_uf ASC;';
+  queryUF.Open;
+
+  while repetidor < qntRegistros do
+    begin
+      listUF.Items.Add(queryUF.FieldByName('nome_uf').AsString);
+      listUF.Items.Objects[listUF.Items.Count - 1] := TObject(queryUF.FieldByName('id_uf').AsInteger);
+
+      queryUF.Next;
+      repetidor := repetidor + 1;
+    end;
+end;
+
+procedure TForm1.listUFChange(Sender: TObject);
+var
+  repetidor : integer;
+  qntRegistros : integer;
+
+begin
+  repetidor := 0;
+
+  listMUNICIPIO.Items.Clear;
+
+  queryMUNICIPIOS.SQL.Text := 'SELECT COUNT(id_cidade) AS qntRegistros FROM cidade WHERE id_uf = :id_uf';
+  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+  queryMUNICIPIOS.Open;
+  qntRegistros := queryMUNICIPIOS.FieldByName('qntRegistros').AsInteger;
+
+  queryMUNICIPIOS.SQL.Text := 'SELECT id_cidade, nome_cidade FROM cidade WHERE id_uf = :id_uf';
+  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+  queryMUNICIPIOS.Open;
+
+  while repetidor < qntRegistros do
+    begin
+      listMUNICIPIO.Items.Add(queryMUNICIPIOS.FieldByName('nome_cidade').AsString);
+      listMUNICIPIO.Items.Objects[listMUNICIPIO.Items.Count - 1] := TObject(queryMUNICIPIOS.FieldByName('id_cidade').AsInteger);
+
+      queryMUNICIPIOS.Next;
+      repetidor := repetidor + 1;
+    end;
+
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -89,39 +146,40 @@ procedure TForm1.Button2Click(Sender: TObject);
 begin
   if (txtID.Text = '') then
     begin
-      query2.SQL.Text := 'INSERT INTO clientes(id, nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio)'+
-	    'VALUES (:id, :nome, :cpf, :fixo, :celular, :cep, :endereco, :numero, :bairro, :id_uf, :id_municipio);';
-      query2.ParamByName('id').AsInteger := StrToInt(txtID.Text);
-      query2.ParamByName('nome').AsString := (txtNOME.Text);
-      query2.ParamByName('cpf').AsString := (txtCPF.Text);
-      query2.ParamByName('fixo').AsString := (txtFIXO.Text);
-      query2.ParamByName('celular').AsString := (txtMOVEL.Text);
-      query2.ParamByName('cep').AsString := (txtCEP.Text);
-      query2.ParamByName('endereco').AsString := (txtENDERECO.Text);
-      query2.ParamByName('numero').AsString := (txtNUMERO.Text);
-      query2.ParamByName('bairro').AsString := (txtBAIRRO.Text);
-      query2.ParamByName('id_uf').AsInteger := StrToInt(listUF.Text);
-      query2.ParamByName('id_municipio').AsInteger := StrToInt(listMUNICIPIO.Text);
-      query2.ExecSQL;
+      queryIUD.SQL.Text := 'INSERT INTO clientes(nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio)'+
+	    'VALUES (:nome, :cpf, :fixo, :celular, :cep, :endereco, :numero, :bairro, :id_uf, :id_municipio);';
+      queryIUD.ParamByName('nome').AsString := (txtNOME.Text);
+      queryIUD.ParamByName('cpf').AsString := (txtCPF.Text);
+      queryIUD.ParamByName('fixo').AsString := (txtFIXO.Text);
+      queryIUD.ParamByName('celular').AsString := (txtMOVEL.Text);
+      queryIUD.ParamByName('cep').AsString := (txtCEP.Text);
+      queryIUD.ParamByName('endereco').AsString := (txtENDERECO.Text);
+      queryIUD.ParamByName('numero').AsString := (txtNUMERO.Text);
+      queryIUD.ParamByName('bairro').AsString := (txtBAIRRO.Text);
+      queryIUD.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+      queryIUD.ParamByName('id_municipio').AsInteger := Integer(listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex]);
+      queryIUD.ExecSQL;
     end
   else
     begin
-      query2.SQL.Text := 'UPDATE public.clientes'+
+      queryIUD.SQL.Text := 'UPDATE public.clientes'+
 	    'SET id=:id, nome=:nome, cpf=:cpf, fixo=;fixo, celular=:movel, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio'+
 	    'WHERE id = :id;';
-      query2.ParamByName('id').AsInteger := StrToInt(txtID.Text);
-      query2.ParamByName('nome').AsString := (txtNOME.Text);
-      query2.ParamByName('cpf').AsString := (txtCPF.Text);
-      query2.ParamByName('fixo').AsString := (txtFIXO.Text);
-      query2.ParamByName('celular').AsString := (txtMOVEL.Text);
-      query2.ParamByName('cep').AsString := (txtCEP.Text);
-      query2.ParamByName('endereco').AsString := (txtENDERECO.Text);
-      query2.ParamByName('numero').AsString := (txtNUMERO.Text);
-      query2.ParamByName('bairro').AsString := (txtBAIRRO.Text);
-      query2.ParamByName('id_uf').AsInteger := StrToInt(listUF.Text);
-      query2.ParamByName('id_municipio').AsInteger := StrToInt(listMUNICIPIO.Text);
-      query2.ExecSQL;
+      queryIUD.ParamByName('id').AsInteger := StrToInt(txtID.Text);
+      queryIUD.ParamByName('nome').AsString := (txtNOME.Text);
+      queryIUD.ParamByName('cpf').AsString := (txtCPF.Text);
+      queryIUD.ParamByName('fixo').AsString := (txtFIXO.Text);
+      queryIUD.ParamByName('celular').AsString := (txtMOVEL.Text);
+      queryIUD.ParamByName('cep').AsString := (txtCEP.Text);
+      queryIUD.ParamByName('endereco').AsString := (txtENDERECO.Text);
+      queryIUD.ParamByName('numero').AsString := (txtNUMERO.Text);
+      queryIUD.ParamByName('bairro').AsString := (txtBAIRRO.Text);
+      queryIUD.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+      queryIUD.ParamByName('id_municipio').AsInteger := Integer(listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex]);
+      queryIUD.ExecSQL;
     end;
+  queryClientes.Open;
+
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -132,9 +190,9 @@ begin
     end
   else
     begin
-      query2.SQL.Text := 'DELETE FROM clientes WHERE id = :id';
-      query2.ParamByName('id').AsInteger := StrToInt(txtID.Text);
-      query2.ExecSQL;
+      queryIUD.SQL.Text := 'DELETE FROM clientes WHERE id = :id';
+      queryIUD.ParamByName('id').AsInteger := StrToInt(txtID.Text);
+      queryIUD.ExecSQL;
     end;
 end;
 
@@ -142,8 +200,8 @@ procedure TForm1.Clientes1Click(Sender: TObject);
 begin
  Panel1.Visible := Not Panel1.Visible;
 
- query1.SQL.Text := 'SELECT id AS "ID", nome AS "Nome" FROM clientes ORDER BY nome ASC';
- query1.Open;
+ queryClientes.SQL.Text := 'SELECT id AS "ID", nome AS "Nome" FROM clientes ORDER BY nome ASC';
+ queryClientes.Open;
 
 end;
 // fim

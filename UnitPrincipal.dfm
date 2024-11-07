@@ -152,6 +152,7 @@ object Form1: TForm1
       Width = 121
       Height = 23
       TabOrder = 5
+      OnChange = listUFChange
     end
     object listMUNICIPIO: TComboBox
       Left = 135
@@ -308,18 +309,28 @@ object Form1: TForm1
     Top = 144
   end
   object ds: TDataSource
-    DataSet = query1
+    DataSet = queryClientes
     Left = 552
     Top = 144
   end
-  object query1: TFDQuery
+  object queryClientes: TFDQuery
     Connection = conn
     Left = 512
     Top = 144
   end
-  object query2: TFDQuery
+  object queryIUD: TFDQuery
     Connection = conn
     Left = 512
     Top = 200
+  end
+  object queryUF: TFDQuery
+    Connection = conn
+    Left = 512
+    Top = 256
+  end
+  object queryMUNICIPIOS: TFDQuery
+    Connection = conn
+    Left = 512
+    Top = 312
   end
 end
