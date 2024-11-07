@@ -59,12 +59,16 @@ type
     queryIUD: TFDQuery;
     queryUF: TFDQuery;
     queryMUNICIPIOS: TFDQuery;
+    queryClientesForm: TFDQuery;
+    Button4: TButton;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure listUFChange(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -209,10 +213,12 @@ begin
     begin
       queryIUD.SQL.Text := 'DELETE FROM clientes WHERE id = :id';
       queryIUD.ParamByName('id').AsInteger := StrToInt(txtID.Text);
+
       try
         queryIUD.ExecSQL;
         ShowMessage('Registro excluído com sucesso!')
       except
+
       on E: Exception do
         begin
           // ShowMessage('Ocorreu um erro ao executar o comando: ' + E.Message);
@@ -229,15 +235,82 @@ begin
   ClearPanelData(Clientes);
 end;
 
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+  ClearPanelData(Clientes);
+
+  queryClientes.Open;
+  queryClientes.Refresh;
+end;
+
 procedure TForm1.Clientes1Click(Sender: TObject);
 begin
  Clientes.Visible := Not Clientes.Visible;
 
  ClearPanelData(Clientes);
 
- queryClientes.SQL.Text := 'SELECT id AS "ID", nome AS "Nome" FROM clientes ORDER BY nome ASC';
+ queryClientes.SQL.Text := 'SELECT id AS "ID", nome as "Nome" FROM clientes ORDER BY nome;';
  queryClientes.Open;
-
 end;
-// fim
+
+procedure TForm1.DBGrid1DblClick(Sender: TObject);
+var
+  UFIndex, MunicipioIndex, repetidor, qntRegistros: Integer;
+begin
+  ClearPanelData(Clientes);
+
+  queryClientesForm.SQL.Text := 'SELECT id, nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio FROM clientes WHERE id = :id;';
+  queryClientesForm.ParamByName('id').AsInteger := queryClientes.FieldByName('ID').AsInteger;
+  queryClientesForm.Open;
+
+  txtID.Text := queryClientesForm.FieldByName('id').AsString;
+  txtNOME.Text := queryClientesForm.FieldByName('nome').AsString;
+  txtCPF.Text := queryClientesForm.FieldByName('cpf').AsString;
+  txtFIXO.Text := queryClientesForm.FieldByName('fixo').AsString;
+  txtMOVEL.Text := queryClientesForm.FieldByName('celular').AsString;
+  txtCEP.Text := queryClientesForm.FieldByName('cep').AsString;
+  txtENDERECO.Text := queryClientesForm.FieldByName('endereco').AsString;
+  txtNUMERO.Text := queryClientesForm.FieldByName('numero').AsString;
+  txtBAIRRO.Text := queryClientesForm.FieldByName('bairro').AsString;
+
+  UFIndex := listUF.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_uf').AsInteger));
+  if UFIndex <> -1 then
+    listUF.ItemIndex := UFIndex; // Define o ItemIndex com o índice correto da UF
+
+  repetidor := 0;
+
+  listMUNICIPIO.Items.Clear;
+
+  queryMUNICIPIOS.SQL.Text := 'SELECT COUNT(id_cidade) AS qntRegistros FROM cidade WHERE id_uf = :id_uf';
+  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+  queryMUNICIPIOS.Open;
+  qntRegistros := queryMUNICIPIOS.FieldByName('qntRegistros').AsInteger;
+
+  queryMUNICIPIOS.SQL.Text := 'SELECT id_cidade, nome_cidade FROM cidade WHERE id_uf = :id_uf';
+  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+  queryMUNICIPIOS.Open;
+
+  while repetidor < qntRegistros do
+    begin
+      listMUNICIPIO.Items.Add(queryMUNICIPIOS.FieldByName('nome_cidade').AsString);
+      listMUNICIPIO.Items.Objects[listMUNICIPIO.Items.Count - 1] := TObject(queryMUNICIPIOS.FieldByName('id_cidade').AsInteger);
+
+      queryMUNICIPIOS.Next;
+      repetidor := repetidor + 1;
+    end;
+
+  // Atribui o id_municipio ao objeto do item selecionado na listMUNICIPIO
+  MunicipioIndex := listMUNICIPIO.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_municipio').AsInteger));
+  if MunicipioIndex <> -1 then
+    listMUNICIPIO.ItemIndex := MunicipioIndex; // Define o ItemIndex com o índice correto do Município
+
+
+
+  {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
+  listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
+
+  {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
+  listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
+end;
+
 end.

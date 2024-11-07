@@ -212,6 +212,7 @@ object Form1: TForm1
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnDblClick = DBGrid1DblClick
     end
     object Button2: TButton
       Left = 328
@@ -254,7 +255,26 @@ object Form1: TForm1
       Top = 56
       Width = 50
       Height = 23
+      ReadOnly = True
       TabOrder = 14
+    end
+    object Button4: TButton
+      Left = 264
+      Top = 9
+      Width = 26
+      Height = 25
+      Hint = 'Excluir'
+      Caption = 'L'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 15
+      OnClick = Button4Click
     end
   end
   object StatusBar1: TStatusBar
@@ -331,5 +351,10 @@ object Form1: TForm1
     Connection = conn
     Left = 512
     Top = 312
+  end
+  object queryClientesForm: TFDQuery
+    Connection = conn
+    Left = 432
+    Top = 200
   end
 end
