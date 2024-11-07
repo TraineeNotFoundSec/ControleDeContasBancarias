@@ -4,8 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.StdCtrls,
-  Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
 
 type
   TForm1 = class(TForm)
@@ -19,29 +18,6 @@ type
     MovBancria1: TMenuItem;
     Extrato1: TMenuItem;
     Analtico1: TMenuItem;
-    StatusBar1: TStatusBar;
-    Panel1: TPanel;
-    Edit1: TEdit;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Edit2: TEdit;
-    Label4: TLabel;
-    Edit3: TEdit;
-    Edit4: TEdit;
-    Label5: TLabel;
-    Edit5: TEdit;
-    Label6: TLabel;
-    Label7: TLabel;
-    ComboBox1: TComboBox;
-    ComboBox2: TComboBox;
-    Label8: TLabel;
-    Edit6: TEdit;
-    Label9: TLabel;
-    Edit7: TEdit;
-    Edit8: TEdit;
-    Label10: TLabel;
-    Label11: TLabel;
   private
     { Private declarations }
   public
