@@ -25,7 +25,7 @@ type
     Extrato1: TMenuItem;
     Analtico1: TMenuItem;
     StatusBar1: TStatusBar;
-    Clientes: TPanel;
+    Panel1: TPanel;
     txtNOME: TEdit;
     Label1: TLabel;
     Label2: TLabel;
@@ -77,19 +77,6 @@ var
 implementation
 
 {$R *.dfm}
-
-procedure ClearPanelData(Panel: TPanel);
-var
-  I: Integer;
-  begin
-    for I := 0 to Panel.ControlCount - 1 do
-      begin
-        if Panel.Controls[I] is TEdit then
-          TEdit(Panel.Controls[I]).Text := '' // Limpa o texto dos Edit
-        else if Panel.Controls[I] is TComboBox then
-          TComboBox(Panel.Controls[I]).ItemIndex := -1; // Reseta a seleção do ComboBox
-      end;
-  end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
@@ -152,9 +139,7 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  Clientes.Visible := Not Clientes.Visible;
-
-  ClearPanelData(Clientes);
+  Panel1.Visible := Not Panel1.Visible;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -195,8 +180,6 @@ begin
     end;
   queryClientes.Open;
   queryClientes.Refresh;
-
-  ClearPanelData(Clientes);
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -214,15 +197,11 @@ begin
 
   queryClientes.Open;
   queryClientes.Refresh;
-
-  ClearPanelData(Clientes);
 end;
 
 procedure TForm1.Clientes1Click(Sender: TObject);
 begin
- Clientes.Visible := Not Clientes.Visible;
-
- ClearPanelData(Clientes);
+ Panel1.Visible := Not Panel1.Visible;
 
  queryClientes.SQL.Text := 'SELECT id AS "ID", nome AS "Nome" FROM clientes ORDER BY nome ASC';
  queryClientes.Open;

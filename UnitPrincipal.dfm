@@ -13,7 +13,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   TextHeight = 15
-  object Panel1: TPanel
+  object Clientes: TPanel
     Left = 8
     Top = 8
     Width = 393
