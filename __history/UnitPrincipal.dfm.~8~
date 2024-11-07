@@ -16,7 +16,8 @@ object Form1: TForm1
     Left = 8
     Top = 8
     Width = 393
-    Height = 408
+    Height = 321
+    Caption = 'Panel1'
     TabOrder = 1
     Visible = False
     object Label1: TLabel
@@ -34,11 +35,11 @@ object Form1: TForm1
       ParentFont = False
     end
     object Label2: TLabel
-      Left = 64
+      Left = 8
       Top = 35
-      Width = 89
+      Width = 33
       Height = 15
-      Caption = 'Nome Completo'
+      Caption = 'Nome'
     end
     object Label3: TLabel
       Left = 8
@@ -103,17 +104,10 @@ object Form1: TForm1
       Height = 15
       Caption = 'Telefone M'#243'vel'
     end
-    object Label12: TLabel
-      Left = 8
-      Top = 35
-      Width = 11
-      Height = 15
-      Caption = 'ID'
-    end
     object Edit1: TEdit
-      Left = 64
+      Left = 8
       Top = 56
-      Width = 321
+      Width = 377
       Height = 23
       TabOrder = 0
       Text = 'Edit1'
@@ -195,7 +189,6 @@ object Form1: TForm1
       Top = 9
       Width = 25
       Height = 25
-      Hint = 'Fechar'
       Caption = 'X'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -203,64 +196,8 @@ object Form1: TForm1
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
       TabOrder = 10
       OnClick = Button1Click
-    end
-    object DBGrid1: TDBGrid
-      Left = 8
-      Top = 319
-      Width = 377
-      Height = 81
-      TabOrder = 11
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-    end
-    object Button2: TButton
-      Left = 328
-      Top = 9
-      Width = 26
-      Height = 25
-      Hint = 'Salvar/Incluir'
-      Caption = 'S/I'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 12
-    end
-    object Button3: TButton
-      Left = 296
-      Top = 9
-      Width = 26
-      Height = 25
-      Hint = 'Excluir'
-      Caption = 'E'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 13
-    end
-    object Edit9: TEdit
-      Left = 8
-      Top = 56
-      Width = 50
-      Height = 23
-      TabOrder = 14
-      Text = 'Edit1'
     end
   end
   object StatusBar1: TStatusBar
