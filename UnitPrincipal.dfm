@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = MainMenu1
+  OnCreate = FormCreate
   TextHeight = 15
   object Panel1: TPanel
     Left = 8
@@ -35,77 +36,77 @@ object Form1: TForm1
     end
     object Label2: TLabel
       Left = 64
-      Top = 35
+      Top = 40
       Width = 89
       Height = 15
       Caption = 'Nome Completo'
     end
     object Label3: TLabel
       Left = 8
-      Top = 91
+      Top = 85
       Width = 21
       Height = 15
       Caption = 'CPF'
     end
     object Label4: TLabel
       Left = 135
-      Top = 155
+      Top = 130
       Width = 49
       Height = 15
       Caption = 'Endere'#231'o'
     end
     object Label5: TLabel
       Left = 8
-      Top = 211
+      Top = 177
       Width = 44
       Height = 15
       Caption = 'N'#250'mero'
     end
     object Label6: TLabel
       Left = 135
-      Top = 211
+      Top = 177
       Width = 31
       Height = 15
       Caption = 'Bairro'
     end
     object Label7: TLabel
       Left = 8
-      Top = 269
+      Top = 228
       Width = 101
       Height = 15
       Caption = 'Unidade Federativa'
     end
     object Label8: TLabel
       Left = 135
-      Top = 269
+      Top = 228
       Width = 54
       Height = 15
       Caption = 'Munic'#237'pio'
     end
     object Label9: TLabel
       Left = 8
-      Top = 155
+      Top = 130
       Width = 21
       Height = 15
       Caption = 'CEP'
     end
     object Label10: TLabel
       Left = 135
-      Top = 91
+      Top = 85
       Width = 69
       Height = 15
       Caption = 'Telefone Fixo'
     end
     object Label11: TLabel
       Left = 262
-      Top = 91
+      Top = 85
       Width = 80
       Height = 15
       Caption = 'Telefone M'#243'vel'
     end
     object Label12: TLabel
       Left = 8
-      Top = 35
+      Top = 40
       Width = 11
       Height = 15
       Caption = 'ID'
@@ -120,7 +121,7 @@ object Form1: TForm1
     end
     object Edit2: TEdit
       Left = 8
-      Top = 112
+      Top = 101
       Width = 121
       Height = 23
       TabOrder = 1
@@ -128,7 +129,7 @@ object Form1: TForm1
     end
     object Edit3: TEdit
       Left = 135
-      Top = 176
+      Top = 146
       Width = 250
       Height = 23
       TabOrder = 2
@@ -136,7 +137,7 @@ object Form1: TForm1
     end
     object Edit4: TEdit
       Left = 8
-      Top = 232
+      Top = 193
       Width = 121
       Height = 23
       TabOrder = 3
@@ -144,7 +145,7 @@ object Form1: TForm1
     end
     object Edit5: TEdit
       Left = 135
-      Top = 232
+      Top = 193
       Width = 250
       Height = 23
       TabOrder = 4
@@ -152,7 +153,7 @@ object Form1: TForm1
     end
     object ComboBox1: TComboBox
       Left = 8
-      Top = 290
+      Top = 244
       Width = 121
       Height = 23
       TabOrder = 5
@@ -160,7 +161,7 @@ object Form1: TForm1
     end
     object ComboBox2: TComboBox
       Left = 135
-      Top = 290
+      Top = 244
       Width = 250
       Height = 23
       TabOrder = 6
@@ -168,7 +169,7 @@ object Form1: TForm1
     end
     object Edit6: TEdit
       Left = 8
-      Top = 176
+      Top = 146
       Width = 121
       Height = 23
       TabOrder = 7
@@ -176,7 +177,7 @@ object Form1: TForm1
     end
     object Edit7: TEdit
       Left = 135
-      Top = 112
+      Top = 101
       Width = 121
       Height = 23
       TabOrder = 8
@@ -184,7 +185,7 @@ object Form1: TForm1
     end
     object Edit8: TEdit
       Left = 262
-      Top = 112
+      Top = 101
       Width = 121
       Height = 23
       TabOrder = 9
@@ -210,9 +211,10 @@ object Form1: TForm1
     end
     object DBGrid1: TDBGrid
       Left = 8
-      Top = 319
+      Top = 273
       Width = 377
-      Height = 81
+      Height = 127
+      DataSource = ds
       TabOrder = 11
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -259,6 +261,7 @@ object Form1: TForm1
       Top = 56
       Width = 50
       Height = 23
+      ReadOnly = True
       TabOrder = 14
       Text = 'Edit1'
     end
@@ -301,5 +304,26 @@ object Form1: TForm1
         end
       end
     end
+  end
+  object conn: TFDConnection
+    Params.Strings = (
+      'Database=ControleDeContas'
+      'User_Name=postgres'
+      'Password=EC8d@731ca'
+      'Server=localhost'
+      'CharacterSet=UTF8'
+      'DriverID=PG')
+    Left = 472
+    Top = 144
+  end
+  object ds: TDataSource
+    DataSet = query1
+    Left = 552
+    Top = 144
+  end
+  object query1: TFDQuery
+    Connection = conn
+    Left = 512
+    Top = 144
   end
 end
