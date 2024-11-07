@@ -254,7 +254,6 @@ object Form1: TForm1
       Top = 56
       Width = 50
       Height = 23
-      ReadOnly = True
       TabOrder = 14
     end
   end

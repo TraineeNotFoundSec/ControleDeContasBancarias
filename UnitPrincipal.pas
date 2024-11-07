@@ -163,7 +163,7 @@ begin
   else
     begin
       queryIUD.SQL.Text := 'UPDATE public.clientes'+
-	    'SET id=:id, nome=:nome, cpf=:cpf, fixo=;fixo, celular=:movel, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio'+
+	    'SET id=:id, nome=:nome, cpf=:cpf, fixo=:fixo, celular=:movel, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio'+
 	    'WHERE id = :id;';
       queryIUD.ParamByName('id').AsInteger := StrToInt(txtID.Text);
       queryIUD.ParamByName('nome').AsString := (txtNOME.Text);
@@ -179,7 +179,7 @@ begin
       queryIUD.ExecSQL;
     end;
   queryClientes.Open;
-
+  queryClientes.Refresh;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -194,6 +194,9 @@ begin
       queryIUD.ParamByName('id').AsInteger := StrToInt(txtID.Text);
       queryIUD.ExecSQL;
     end;
+
+  queryClientes.Open;
+  queryClientes.Refresh;
 end;
 
 procedure TForm1.Clientes1Click(Sender: TObject);
