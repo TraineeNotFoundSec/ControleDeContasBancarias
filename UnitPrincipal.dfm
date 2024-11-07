@@ -111,85 +111,75 @@ object Form1: TForm1
       Height = 15
       Caption = 'ID'
     end
-    object Edit1: TEdit
+    object txtNOME: TEdit
       Left = 64
       Top = 56
       Width = 321
       Height = 23
       TabOrder = 0
-      Text = 'Edit1'
     end
-    object Edit2: TEdit
+    object txtCPF: TEdit
       Left = 8
       Top = 101
       Width = 121
       Height = 23
       TabOrder = 1
-      Text = 'Edit1'
     end
-    object Edit3: TEdit
+    object txtENDERECO: TEdit
       Left = 135
       Top = 146
       Width = 250
       Height = 23
       TabOrder = 2
-      Text = 'Edit1'
     end
-    object Edit4: TEdit
+    object txtNUMERO: TEdit
       Left = 8
       Top = 193
       Width = 121
       Height = 23
       TabOrder = 3
-      Text = 'Edit1'
     end
-    object Edit5: TEdit
+    object txtBAIRRO: TEdit
       Left = 135
       Top = 193
       Width = 250
       Height = 23
       TabOrder = 4
-      Text = 'Edit1'
     end
-    object ComboBox1: TComboBox
+    object listUF: TComboBox
       Left = 8
       Top = 244
       Width = 121
       Height = 23
       TabOrder = 5
-      Text = 'ComboBox1'
     end
-    object ComboBox2: TComboBox
+    object listMUNICIPIO: TComboBox
       Left = 135
       Top = 244
       Width = 250
       Height = 23
       TabOrder = 6
-      Text = 'ComboBox1'
     end
-    object Edit6: TEdit
+    object txtCEP: TEdit
       Left = 8
       Top = 146
       Width = 121
       Height = 23
       TabOrder = 7
-      Text = 'Edit1'
     end
-    object Edit7: TEdit
+    object txtFIXO: TEdit
       Left = 135
       Top = 101
       Width = 121
       Height = 23
       TabOrder = 8
-      Text = 'Edit1'
     end
-    object Edit8: TEdit
+    object txtMOVEL: TEdit
       Left = 262
       Top = 101
       Width = 121
       Height = 23
       TabOrder = 9
-      Text = 'Edit1'
     end
     object Button1: TButton
       Left = 360
@@ -238,6 +228,7 @@ object Form1: TForm1
       ParentShowHint = False
       ShowHint = True
       TabOrder = 12
+      OnClick = Button2Click
     end
     object Button3: TButton
       Left = 296
@@ -257,14 +248,13 @@ object Form1: TForm1
       TabOrder = 13
       OnClick = Button3Click
     end
-    object Edit9: TEdit
+    object txtID: TEdit
       Left = 8
       Top = 56
       Width = 50
       Height = 23
       ReadOnly = True
       TabOrder = 14
-      Text = 'Edit1'
     end
   end
   object StatusBar1: TStatusBar

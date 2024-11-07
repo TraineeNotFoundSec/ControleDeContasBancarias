@@ -26,32 +26,32 @@ type
     Analtico1: TMenuItem;
     StatusBar1: TStatusBar;
     Panel1: TPanel;
-    Edit1: TEdit;
+    txtNOME: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Edit2: TEdit;
+    txtCPF: TEdit;
     Label4: TLabel;
-    Edit3: TEdit;
-    Edit4: TEdit;
+    txtENDERECO: TEdit;
+    txtNUMERO: TEdit;
     Label5: TLabel;
-    Edit5: TEdit;
+    txtBAIRRO: TEdit;
     Label6: TLabel;
     Label7: TLabel;
-    ComboBox1: TComboBox;
-    ComboBox2: TComboBox;
+    listUF: TComboBox;
+    listMUNICIPIO: TComboBox;
     Label8: TLabel;
-    Edit6: TEdit;
+    txtCEP: TEdit;
     Label9: TLabel;
-    Edit7: TEdit;
-    Edit8: TEdit;
+    txtFIXO: TEdit;
+    txtMOVEL: TEdit;
     Label10: TLabel;
     Label11: TLabel;
     Button1: TButton;
     DBGrid1: TDBGrid;
     Button2: TButton;
     Button3: TButton;
-    Edit9: TEdit;
+    txtID: TEdit;
     Label12: TLabel;
     conn: TFDConnection;
     ds: TDataSource;
@@ -61,6 +61,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -84,18 +85,55 @@ begin
   Panel1.Visible := Not Panel1.Visible;
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
-var
-  id : integer;
+procedure TForm1.Button2Click(Sender: TObject);
 begin
-  if Edit1.Text = '' then
+  if (txtID.Text = '') then
+    begin
+      query2.SQL.Text := 'INSERT INTO clientes(id, nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio)'+
+	    'VALUES (:id, :nome, :cpf, :fixo, :celular, :cep, :endereco, :numero, :bairro, :id_uf, :id_municipio);';
+      query2.ParamByName('id').AsInteger := StrToInt(txtID.Text);
+      query2.ParamByName('nome').AsString := (txtNOME.Text);
+      query2.ParamByName('cpf').AsString := (txtCPF.Text);
+      query2.ParamByName('fixo').AsString := (txtFIXO.Text);
+      query2.ParamByName('celular').AsString := (txtMOVEL.Text);
+      query2.ParamByName('cep').AsString := (txtCEP.Text);
+      query2.ParamByName('endereco').AsString := (txtENDERECO.Text);
+      query2.ParamByName('numero').AsString := (txtNUMERO.Text);
+      query2.ParamByName('bairro').AsString := (txtBAIRRO.Text);
+      query2.ParamByName('id_uf').AsInteger := StrToInt(listUF.Text);
+      query2.ParamByName('id_municipio').AsInteger := StrToInt(listMUNICIPIO.Text);
+      query2.ExecSQL;
+    end
+  else
+    begin
+      query2.SQL.Text := 'UPDATE public.clientes'+
+	    'SET id=:id, nome=:nome, cpf=:cpf, fixo=;fixo, celular=:movel, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio'+
+	    'WHERE id = :id;';
+      query2.ParamByName('id').AsInteger := StrToInt(txtID.Text);
+      query2.ParamByName('nome').AsString := (txtNOME.Text);
+      query2.ParamByName('cpf').AsString := (txtCPF.Text);
+      query2.ParamByName('fixo').AsString := (txtFIXO.Text);
+      query2.ParamByName('celular').AsString := (txtMOVEL.Text);
+      query2.ParamByName('cep').AsString := (txtCEP.Text);
+      query2.ParamByName('endereco').AsString := (txtENDERECO.Text);
+      query2.ParamByName('numero').AsString := (txtNUMERO.Text);
+      query2.ParamByName('bairro').AsString := (txtBAIRRO.Text);
+      query2.ParamByName('id_uf').AsInteger := StrToInt(listUF.Text);
+      query2.ParamByName('id_municipio').AsInteger := StrToInt(listMUNICIPIO.Text);
+      query2.ExecSQL;
+    end;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  if (txtID.Text = '') then
     begin
       ShowMessage('Não foi possível excluir o registro corrente');
     end
   else
     begin
       query2.SQL.Text := 'DELETE FROM clientes WHERE id = :id';
-      query2.ParamByName('id').AsInteger := StrToInt(Edit1.Text);
+      query2.ParamByName('id').AsInteger := StrToInt(txtID.Text);
       query2.ExecSQL;
     end;
 end;
