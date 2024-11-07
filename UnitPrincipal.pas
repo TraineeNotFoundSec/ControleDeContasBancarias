@@ -42,6 +42,9 @@ type
     Edit8: TEdit;
     Label10: TLabel;
     Label11: TLabel;
+    Button1: TButton;
+    procedure Clientes1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,5 +57,15 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Panel1.Visible := Not Panel1.Visible;
+end;
+
+procedure TForm1.Clientes1Click(Sender: TObject);
+begin
+ Panel1.Visible := Not Panel1.Visible;
+end;
 
 end.

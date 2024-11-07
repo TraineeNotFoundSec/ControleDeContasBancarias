@@ -16,9 +16,10 @@ object Form1: TForm1
     Left = 8
     Top = 8
     Width = 393
-    Height = 329
+    Height = 321
     Caption = 'Panel1'
     TabOrder = 1
+    Visible = False
     object Label1: TLabel
       Left = 8
       Top = 8
@@ -183,6 +184,21 @@ object Form1: TForm1
       TabOrder = 9
       Text = 'Edit1'
     end
+    object Button1: TButton
+      Left = 360
+      Top = 9
+      Width = 25
+      Height = 25
+      Caption = 'X'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 10
+      OnClick = Button1Click
+    end
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -201,6 +217,7 @@ object Form1: TForm1
       Caption = 'Cadastros'
       object Clientes1: TMenuItem
         Caption = 'Clientes'
+        OnClick = Clientes1Click
       end
       object Bancos1: TMenuItem
         Caption = 'Bancos'
