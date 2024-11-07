@@ -165,8 +165,7 @@ procedure TForm1.Button2Click(Sender: TObject);
 begin
   if (txtID.Text = '') then
     begin
-      queryIUD.SQL.Text := 'INSERT INTO clientes(nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio)'+
-	    'VALUES (:nome, :cpf, :fixo, :celular, :cep, :endereco, :numero, :bairro, :id_uf, :id_municipio);';
+      queryIUD.SQL.Text := 'INSERT INTO clientes(nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio) VALUES (:nome, :cpf, :fixo, :celular, :cep, :endereco, :numero, :bairro, :id_uf, :id_municipio);';
       queryIUD.ParamByName('nome').AsString := (txtNOME.Text);
       queryIUD.ParamByName('cpf').AsString := (txtCPF.Text);
       queryIUD.ParamByName('fixo').AsString := (txtFIXO.Text);
@@ -181,9 +180,7 @@ begin
     end
   else
     begin
-      queryIUD.SQL.Text := 'UPDATE public.clientes'+
-	    'SET id=:id, nome=:nome, cpf=:cpf, fixo=:fixo, celular=:movel, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio'+
-	    'WHERE id = :id;';
+      queryIUD.SQL.Text := 'UPDATE public.clientes SET id=:id, nome=:nome, cpf=:cpf, fixo=:fixo, celular=:celular, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio WHERE id = :id;';
       queryIUD.ParamByName('id').AsInteger := StrToInt(txtID.Text);
       queryIUD.ParamByName('nome').AsString := (txtNOME.Text);
       queryIUD.ParamByName('cpf').AsString := (txtCPF.Text);
