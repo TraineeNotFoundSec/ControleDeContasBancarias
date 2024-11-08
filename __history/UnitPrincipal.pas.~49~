@@ -47,10 +47,10 @@ type
     txtMOVEL: TEdit;
     Label10: TLabel;
     Label11: TLabel;
-    Button1: TButton;
+    btnXClientes: TButton;
     DBGrid1: TDBGrid;
-    Button2: TButton;
-    Button3: TButton;
+    btnSIClientes: TButton;
+    btnEClientes: TButton;
     txtID: TEdit;
     Label12: TLabel;
     conn: TFDConnection;
@@ -60,13 +60,13 @@ type
     queryUF: TFDQuery;
     queryMUNICIPIOS: TFDQuery;
     queryClientesForm: TFDQuery;
-    Button4: TButton;
+    btnLClientes: TButton;
     Bancos: TPanel;
     Label13: TLabel;
-    Button5: TButton;
-    Button6: TButton;
-    Button7: TButton;
-    Button8: TButton;
+    btnXBancos: TButton;
+    btnSIBancos: TButton;
+    btnEBancos: TButton;
+    btnLBancos: TButton;
     txtIDBANCO: TEdit;
     Label14: TLabel;
     txtNOMEBANCO: TEdit;
@@ -107,34 +107,35 @@ type
     Label30: TLabel;
     querylistBancos: TFDQuery;
     querylistClientes: TFDQuery;
-    Button9: TButton;
-    Button10: TButton;
-    Button11: TButton;
-    Button12: TButton;
+    btnXContas: TButton;
+    btnSIContas: TButton;
+    btnEContas: TButton;
+    btnLContas: TButton;
     DBGrid3: TDBGrid;
     queryContas: TFDQuery;
     ds2: TDataSource;
     queryHistoricoContas: TFDQuery;
     queryContasForm: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure btnEClientesClick(Sender: TObject);
+    procedure btnSIClientesClick(Sender: TObject);
     procedure listUFChange(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure btnLClientesClick(Sender: TObject);
     procedure Bancos1Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
-    procedure Button7Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
+    procedure btnXBancosClick(Sender: TObject);
+    procedure btnLBancosClick(Sender: TObject);
+    procedure btnEBancosClick(Sender: TObject);
+    procedure btnSIBancosClick(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);
     procedure Contas1Click(Sender: TObject);
-    procedure Button12Click(Sender: TObject);
-    procedure Button11Click(Sender: TObject);
-    procedure Button10Click(Sender: TObject);
+    procedure btnLContasClick(Sender: TObject);
+    procedure btnEContasClick(Sender: TObject);
+    procedure btnSIContasClick(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
+    procedure btnXContasClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -274,9 +275,12 @@ begin
 
   queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
   queryBancos.Open;
+  queryBancos.Refresh;
 end;
 
-procedure TForm1.Button10Click(Sender: TObject);
+procedure TForm1.btnSIContasClick(Sender: TObject);
+var
+  acao: string;
 begin
   if (txtIDContas.Text = '') then
       begin
@@ -299,39 +303,20 @@ begin
 
     else
       begin
-        queryIUD.SQL.Text := 'UPDATE public.contas' +
-	      'SET id_banco=:id_banco, id_cliente=:id_cliente, agencia=:agencia, numero=:numero, saldo_anterior=:saldo_anterior, saldo_atual=:saldo_atual, total_debito=:total_debito, total_credito=:total_credito, data_ultimo_movimento=:data_ultimo_movimento, ativo=:ativo, descricao=:descricao'+
-        'WHERE id = :id;';
-
         queryHistoricoContas.SQL.Text := 'SELECT id, id_banco, id_cliente, agencia, numero, saldo_anterior, saldo_atual, total_debito, total_credito, data_ultimo_movimento, data_criacao, ativo, descricao '+
         'FROM public.contas WHERE id = :id;';
         queryHistoricoContas.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
         queryHistoricoContas.Open;
+
+        queryIUD.SQL.Text := 'UPDATE contas ' +
+	      'SET id_banco= :id_banco, id_cliente= :id_cliente, agencia= :agencia, numero= :numero, saldo_anterior= :saldo_anterior, saldo_atual= :saldo_atual, total_debito= :total_debito, total_credito= :total_credito, data_ultimo_movimento= :data_ultimo_movimento, ativo= :ativo, descricao= :descricao '+
+        'WHERE id = :id;';
 
         queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
         queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
         queryIUD.ParamByName('id_cliente').AsInteger := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
         queryIUD.ParamByName('agencia').AsString := (txtAgencia.Text);
         queryIUD.ParamByName('numero').AsString := (txtNumero.Text);
-        queryIUD.ParamByName('saldo_anterior').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
-        queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
-
-        if (StrToFloat(txtSaldoAtual.Text) > queryHistoricoContas.FieldByName('saldo_atual').AsFloat) then
-          begin
-            queryIUD.ParamByName('total_debito').AsFloat := queryHistoricoContas.FieldByName('total_debito').AsFloat;
-            queryIUD.ParamByName('total_credito').AsFloat := (StrToFloat(txtTotalCredito.Text)+(StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat));
-          end
-
-        else
-          begin
-            queryIUD.ParamByName('total_credito').AsFloat := queryHistoricoContas.FieldByName('total_credito').AsFloat;
-            queryIUD.ParamByName('total_debito').AsFloat := (StrToFloat(txtTotalDebito.Text)+queryHistoricoContas.FieldByName('saldo_atual').AsFloat)-(StrToFloat(txtSaldoAtual.Text));
-          end;
-
-        {queryIUD.ParamByName('total_debito').AsString := (txtTotalDebito.Text);
-                queryIUD.ParamByName('total_credito').AsString := (txtTotalCredito.Text);}
-
-        queryIUD.ParamByName('data_ultimo_movimento').AsDateTime := Now;
         queryIUD.ParamByName('descricao').AsString := (txtDescricaoConta.Text);
 
         if listAtivo.Text = 'Sim' then
@@ -343,7 +328,61 @@ begin
             queryIUD.ParamByName('ativo').AsString := 'N';
           end;
 
-        queryIUD.ExecSQL;
+        if (StrToFloat(txtSaldoAtual.Text) > queryHistoricoContas.FieldByName('saldo_atual').AsFloat) then
+          begin
+            queryIUD.ParamByName('total_debito').AsFloat := queryHistoricoContas.FieldByName('total_debito').AsFloat;
+            queryIUD.ParamByName('total_credito').AsFloat := (StrToFloat(txtTotalCredito.Text)+(StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat));
+            queryIUD.ParamByName('data_ultimo_movimento').AsDateTime := Now;
+            queryIUD.ParamByName('saldo_anterior').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
+            queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+
+            queryIUD.ExecSQL;
+
+            acao := 'E'; // entrada
+
+            queryIUD.SQL.Text := 'INSERT INTO public.historico(id_conta, saldo, acao, valor)'+
+            'VALUES (:id_conta, :saldo, :acao, :valor);';
+
+            queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
+            queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+            queryIUD.ParamByName('acao').AsString := acao;
+            queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
+
+            queryIUD.ExecSQL;
+          end
+
+        else if (StrToFloat(txtSaldoAtual.Text) < queryHistoricoContas.FieldByName('saldo_atual').AsFloat) then
+          begin
+            queryIUD.ParamByName('total_credito').AsFloat := queryHistoricoContas.FieldByName('total_credito').AsFloat;
+            queryIUD.ParamByName('total_debito').AsFloat := (StrToFloat(txtTotalDebito.Text)+queryHistoricoContas.FieldByName('saldo_atual').AsFloat)-(StrToFloat(txtSaldoAtual.Text));
+            queryIUD.ParamByName('data_ultimo_movimento').AsDateTime := Now;
+            queryIUD.ParamByName('saldo_anterior').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
+            queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+
+            queryIUD.ExecSQL;
+
+            acao := 'S'; // saida
+
+            queryIUD.SQL.Text := 'INSERT INTO public.historico(id_conta, saldo, acao, valor)'+
+            'VALUES (:id_conta, :saldo, :acao, :valor);';
+
+            queryIUD.ParamByName('id_conta').AsInteger := StrToInt(txtIDContas.Text);
+            queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+            queryIUD.ParamByName('acao').AsString := acao;
+            queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
+
+            queryIUD.ExecSQL;
+          end
+
+        else
+          begin
+            queryIUD.ParamByName('total_credito').AsFloat := queryHistoricoContas.FieldByName('total_credito').AsFloat;
+            queryIUD.ParamByName('total_debito').AsFloat := queryHistoricoContas.FieldByName('total_debito').AsFloat;
+            queryIUD.ParamByName('data_ultimo_movimento').AsDateTime := queryHistoricoContas.FieldByName('data_ultimo_movimento').AsDateTime;
+            queryIUD.ParamByName('saldo_anterior').AsFloat := queryHistoricoContas.FieldByName('saldo_anterior').AsFloat;
+            queryIUD.ParamByName('saldo_atual').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
+          end;
+
       end;
 
   queryContas.Open;
@@ -352,7 +391,7 @@ begin
   ClearPanelData(Contas);
 end;
 
-procedure TForm1.Button11Click(Sender: TObject);
+procedure TForm1.btnEContasClick(Sender: TObject);
 begin
   if (txtIDContas.Text = '') then
     begin
@@ -384,7 +423,7 @@ begin
   ClearPanelData(Contas);
 end;
 
-procedure TForm1.Button12Click(Sender: TObject);
+procedure TForm1.btnLContasClick(Sender: TObject);
 begin
   ClearPanelData(Contas);
 
@@ -392,14 +431,14 @@ begin
   queryContas.Refresh;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnXClientesClick(Sender: TObject);
 begin
   Clientes.Visible := not Clientes.Visible;
 
   ClearPanelData(Clientes);
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.btnSIClientesClick(Sender: TObject);
 begin
   if (txtID.Text = '') then
     begin
@@ -438,7 +477,7 @@ begin
   ClearPanelData(Clientes);
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TForm1.btnLClientesClick(Sender: TObject);
 begin
   ClearPanelData(Clientes);
 
@@ -446,14 +485,14 @@ begin
   queryClientes.Refresh;
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TForm1.btnXBancosClick(Sender: TObject);
 begin
   Bancos.Visible := Not Bancos.Visible;
 
   ClearPanelData(Bancos);
 end;
 
-procedure TForm1.Button6Click(Sender: TObject);
+procedure TForm1.btnSIBancosClick(Sender: TObject);
 begin
   if (txtIDBANCO.Text = '') then
     begin
@@ -496,7 +535,7 @@ begin
   ClearPanelData(Bancos);
 end;
 
-procedure TForm1.Button7Click(Sender: TObject);
+procedure TForm1.btnEBancosClick(Sender: TObject);
 begin
   if (txtIDBANCO.Text = '') then
     begin
@@ -528,7 +567,7 @@ begin
   ClearPanelData(Bancos);
 end;
 
-procedure TForm1.Button8Click(Sender: TObject);
+procedure TForm1.btnLBancosClick(Sender: TObject);
 begin
   ClearPanelData(Bancos);
 
@@ -538,7 +577,14 @@ end;
 
 
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.btnXContasClick(Sender: TObject);
+begin
+  Contas.Visible := Not Contas.Visible;
+
+  ClearPanelData(Contas);
+end;
+
+procedure TForm1.btnEClientesClick(Sender: TObject);
 begin
   if (txtID.Text = '') then
     begin
@@ -596,7 +642,14 @@ begin
   'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
   'From contas '+
   'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
+
   queryContas.Open;
+
+  // --------------------------------------------------------------
+
+  Form1.FormCreate(nil);
+
+
 end;
 
 procedure TForm1.DBGrid1DblClick(Sender: TObject);
@@ -684,10 +737,46 @@ end;
 
 
 
-procedure TForm1.DBGrid3DblClick(Sender: TObject);
+procedure TForm1.DBGrid3DblClick(Sender: TObject); // ADAPTAR PARA O CONTAINER DE CONTAS
 var
   BancoIndex, ClienteIndex, repetidor, qntRegistros: Integer;
 begin
+  ClearPanelData(Contas);
+
+  queryContasForm.SQL.Text := 'SELECT id, id_banco, id_cliente, agencia, numero, saldo_anterior, saldo_atual, total_debito, total_credito, data_ultimo_movimento, data_criacao, ativo, descricao '+
+	'FROM contas WHERE id = :id;';
+  queryContasForm.ParamByName('id').AsInteger := queryContas.FieldByName('ID').AsInteger;
+  queryContasForm.Open;
+
+  txtIDContas.Text := queryContasForm.FieldByName('id').AsString;
+
+  BancoIndex := listBancos.Items.IndexOfObject(TObject(queryContasForm.FieldByName('id_banco').AsInteger));
+  if BancoIndex <> -1 then
+    listBancos.ItemIndex := BancoIndex;
+
+  ClienteIndex := listClientes.Items.IndexOfObject(TObject(queryContasForm.FieldByName('id_cliente').AsInteger));
+  if ClienteIndex <> -1 then
+    listClientes.ItemIndex := ClienteIndex;
+
+  txtAgencia.Text := queryContasForm.FieldByName('agencia').AsString;
+  txtNumConta.Text := queryContasForm.FieldByName('numero').AsString;
+  txtSaldoAnterior.Text := queryContasForm.FieldByName('saldo_anterior').AsString;
+  txtSaldoAtual.Text := queryContasForm.FieldByName('saldo_atual').AsString;
+  txtTotalDebito.Text := queryContasForm.FieldByName('total_debito').AsString;
+  txtTotalCredito.Text := queryContasForm.FieldByName('total_credito').AsString;
+  txtUltimaAlteracao.Text := queryContasForm.FieldByName('data_ultimo_movimento').AsString;
+  txtDataCadastro.Text := queryContasForm.FieldByName('data_criacao').AsString;
+  txtDescricaoConta.Text := queryContasForm.FieldByName('descricao').AsString;
+
+  if queryContasForm.FieldByName('ativo').AsString = 'S' then
+    begin
+      listAtivo.Text := 'Sim';
+    end
+
+  else
+    begin
+      listAtivo.Text := 'Não';
+    end;
 
 end;
 

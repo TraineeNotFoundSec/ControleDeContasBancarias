@@ -343,8 +343,8 @@ begin
             queryIUD.SQL.Text := 'INSERT INTO public.historico(id_conta, saldo, acao, valor)'+
             'VALUES (:id_conta, :saldo, :acao, :valor);';
 
-            queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
-            queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+            queryIUD.ParamByName('id_conta').AsInteger := StrToInt(txtIDContas.Text);
+            queryIUD.ParamByName('saldo').AsFloat := StrToFloat(txtSaldoAtual.Text);
             queryIUD.ParamByName('acao').AsString := acao;
             queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
 
@@ -367,7 +367,7 @@ begin
             'VALUES (:id_conta, :saldo, :acao, :valor);';
 
             queryIUD.ParamByName('id_conta').AsInteger := StrToInt(txtIDContas.Text);
-            queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+            queryIUD.ParamByName('saldo').AsFloat := StrToFloat(txtSaldoAtual.Text);
             queryIUD.ParamByName('acao').AsString := acao;
             queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
 
