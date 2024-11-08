@@ -61,6 +61,21 @@ type
     queryMUNICIPIOS: TFDQuery;
     queryClientesForm: TFDQuery;
     Button4: TButton;
+    Bancos: TPanel;
+    Label13: TLabel;
+    Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    Button8: TButton;
+    Edit1: TEdit;
+    Label14: TLabel;
+    Edit2: TEdit;
+    ComboBox1: TComboBox;
+    Label15: TLabel;
+    Label16: TLabel;
+    DBGrid2: TDBGrid;
+    queryBancos: TFDQuery;
+    ds1: TDataSource;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -69,6 +84,8 @@ type
     procedure listUFChange(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure Bancos1Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -154,9 +171,16 @@ begin
 
 end;
 
+procedure TForm1.Bancos1Click(Sender: TObject);
+begin
+  Bancos.Visible := not Bancos.Visible;
+
+  ClearPanelData(Bancos);
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  Clientes.Visible := Not Clientes.Visible;
+  Clientes.Visible := not Clientes.Visible;
 
   ClearPanelData(Clientes);
 end;
@@ -238,6 +262,13 @@ begin
 
   queryClientes.Open;
   queryClientes.Refresh;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  Bancos.Visible := Not Bancos.Visible;
+
+  ClearPanelData(Bancos);
 end;
 
 procedure TForm1.Clientes1Click(Sender: TObject);
