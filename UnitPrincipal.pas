@@ -684,64 +684,46 @@ end;
 
 
 
-procedure TForm1.DBGrid3DblClick(Sender: TObject);
+procedure TForm1.DBGrid3DblClick(Sender: TObject); // ADAPTAR PARA O CONTAINER DE CONTAS
 var
   BancoIndex, ClienteIndex, repetidor, qntRegistros: Integer;
 begin
   ClearPanelData(Contas);
 
-  queryClientesForm.SQL.Text := 'SELECT id, nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio FROM clientes WHERE id = :id;';
-  queryClientesForm.ParamByName('id').AsInteger := queryClientes.FieldByName('ID').AsInteger;
-  queryClientesForm.Open;
+  queryContasForm.SQL.Text := 'SELECT id, id_banco, id_cliente, agencia, numero, saldo_anterior, saldo_atual, total_debito, total_credito, data_ultimo_movimento, data_criacao, ativo, descricao '+
+	'FROM contas WHERE id = :id;';
+  queryContasForm.ParamByName('id').AsInteger := queryContas.FieldByName('ID').AsInteger;
+  queryContasForm.Open;
 
-  txtID.Text := queryClientesForm.FieldByName('id').AsString;
-  txtNOME.Text := queryClientesForm.FieldByName('nome').AsString;
-  txtCPF.Text := queryClientesForm.FieldByName('cpf').AsString;
-  txtFIXO.Text := queryClientesForm.FieldByName('fixo').AsString;
-  txtMOVEL.Text := queryClientesForm.FieldByName('celular').AsString;
-  txtCEP.Text := queryClientesForm.FieldByName('cep').AsString;
-  txtENDERECO.Text := queryClientesForm.FieldByName('endereco').AsString;
-  txtNUMERO.Text := queryClientesForm.FieldByName('numero').AsString;
-  txtBAIRRO.Text := queryClientesForm.FieldByName('bairro').AsString;
+  txtIDContas.Text := queryContasForm.FieldByName('id').AsString;
 
-  UFIndex := listUF.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_uf').AsInteger));
-  if UFIndex <> -1 then
-    listUF.ItemIndex := UFIndex; // Define o ItemIndex com o índice correto da UF
+  BancoIndex := listBancos.Items.IndexOfObject(TObject(queryContasForm.FieldByName('id_banco').AsInteger));
+  if BancoIndex <> -1 then
+    listBancos.ItemIndex := BancoIndex;
 
-  repetidor := 0;
+  ClienteIndex := listClientes.Items.IndexOfObject(TObject(queryContasForm.FieldByName('id_cliente').AsInteger));
+  if ClienteIndex <> -1 then
+    listClientes.ItemIndex := ClienteIndex;
 
-  listMUNICIPIO.Items.Clear;
+  txtAgencia.Text := queryContasForm.FieldByName('agencia').AsString;
+  txtNumConta.Text := queryContasForm.FieldByName('numero').AsString;
+  txtSaldoAnterior.Text := queryContasForm.FieldByName('saldo_anterior').AsString;
+  txtSaldoAtual.Text := queryContasForm.FieldByName('saldo_atual').AsString;
+  txtTotalDebito.Text := queryContasForm.FieldByName('total_debito').AsString;
+  txtTotalCredito.Text := queryContasForm.FieldByName('total_credito').AsString;
+  txtUltimaAlteracao.Text := queryContasForm.FieldByName('data_ultimo_movimento').AsString;
+  txtDataCadastro.Text := queryContasForm.FieldByName('data_criacao').AsString;
+  txtDescricaoConta.Text := queryContasForm.FieldByName('descricao').AsString;
 
-  queryMUNICIPIOS.SQL.Text := 'SELECT COUNT(id_cidade) AS qntRegistros FROM cidade WHERE id_uf = :id_uf';
-  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
-  queryMUNICIPIOS.Open;
-  qntRegistros := queryMUNICIPIOS.FieldByName('qntRegistros').AsInteger;
-
-  queryMUNICIPIOS.SQL.Text := 'SELECT id_cidade, nome_cidade FROM cidade WHERE id_uf = :id_uf';
-  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
-  queryMUNICIPIOS.Open;
-
-  while repetidor < qntRegistros do
+  if queryContasForm.FieldByName('ativo').AsString = 'S' then
     begin
-      listMUNICIPIO.Items.Add(queryMUNICIPIOS.FieldByName('nome_cidade').AsString);
-      listMUNICIPIO.Items.Objects[listMUNICIPIO.Items.Count - 1] := TObject(queryMUNICIPIOS.FieldByName('id_cidade').AsInteger);
+      listAtivo.Text := 'Sim';
+    end
 
-      queryMUNICIPIOS.Next;
-      repetidor := repetidor + 1;
+  else
+    begin
+      listAtivo.Text := 'Não';
     end;
-
-  // Atribui o id_municipio ao objeto do item selecionado na listMUNICIPIO
-  MunicipioIndex := listMUNICIPIO.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_municipio').AsInteger));
-  if MunicipioIndex <> -1 then
-    listMUNICIPIO.ItemIndex := MunicipioIndex; // Define o ItemIndex com o índice correto do Município
-
-
-
-  {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
-  listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
-
-  {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
-  listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
 
 end;
 
