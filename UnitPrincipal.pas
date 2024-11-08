@@ -47,7 +47,7 @@ type
     txtMOVEL: TEdit;
     Label10: TLabel;
     Label11: TLabel;
-    Button1: TButton;
+    btnXClientes: TButton;
     DBGrid1: TDBGrid;
     btnSIClientes: TButton;
     btnEClientes: TButton;
@@ -63,7 +63,7 @@ type
     btnLClientes: TButton;
     Bancos: TPanel;
     Label13: TLabel;
-    Button5: TButton;
+    btnXBancos: TButton;
     btnSIBancos: TButton;
     btnEBancos: TButton;
     btnLBancos: TButton;
@@ -107,7 +107,7 @@ type
     Label30: TLabel;
     querylistBancos: TFDQuery;
     querylistClientes: TFDQuery;
-    Button9: TButton;
+    btnXContas: TButton;
     btnSIContas: TButton;
     btnEContas: TButton;
     btnLContas: TButton;
@@ -117,7 +117,7 @@ type
     queryHistoricoContas: TFDQuery;
     queryContasForm: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnEClientesClick(Sender: TObject);
     procedure btnSIClientesClick(Sender: TObject);
@@ -125,7 +125,7 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure btnLClientesClick(Sender: TObject);
     procedure Bancos1Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
+    procedure btnXBancosClick(Sender: TObject);
     procedure btnLBancosClick(Sender: TObject);
     procedure btnEBancosClick(Sender: TObject);
     procedure btnSIBancosClick(Sender: TObject);
@@ -135,7 +135,7 @@ type
     procedure btnEContasClick(Sender: TObject);
     procedure btnSIContasClick(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
-    procedure Button9Click(Sender: TObject);
+    procedure btnXContasClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -394,7 +394,7 @@ begin
   queryContas.Refresh;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnXClientesClick(Sender: TObject);
 begin
   Clientes.Visible := not Clientes.Visible;
 
@@ -448,7 +448,7 @@ begin
   queryClientes.Refresh;
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TForm1.btnXBancosClick(Sender: TObject);
 begin
   Bancos.Visible := Not Bancos.Visible;
 
@@ -540,7 +540,7 @@ end;
 
 
 
-procedure TForm1.Button9Click(Sender: TObject);
+procedure TForm1.btnXContasClick(Sender: TObject);
 begin
   Contas.Visible := Not Contas.Visible;
 
