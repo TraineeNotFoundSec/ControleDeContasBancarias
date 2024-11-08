@@ -135,6 +135,7 @@ type
     procedure Button11Click(Sender: TObject);
     procedure Button10Click(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -299,14 +300,16 @@ begin
 
     else
       begin
-        queryIUD.SQL.Text := 'UPDATE public.contas' +
-	      'SET id_banco=:id_banco, id_cliente=:id_cliente, agencia=:agencia, numero=:numero, saldo_anterior=:saldo_anterior, saldo_atual=:saldo_atual, total_debito=:total_debito, total_credito=:total_credito, data_ultimo_movimento=:data_ultimo_movimento, ativo=:ativo, descricao=:descricao'+
-        'WHERE id = :id;';
+
 
         queryHistoricoContas.SQL.Text := 'SELECT id, id_banco, id_cliente, agencia, numero, saldo_anterior, saldo_atual, total_debito, total_credito, data_ultimo_movimento, data_criacao, ativo, descricao '+
         'FROM public.contas WHERE id = :id;';
         queryHistoricoContas.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
         queryHistoricoContas.Open;
+
+        queryIUD.SQL.Text := 'UPDATE contas ' +
+	      'SET id_banco= :id_banco, id_cliente= :id_cliente, agencia= :agencia, numero= :numero, saldo_anterior= :saldo_anterior, saldo_atual= :saldo_atual, total_debito= :total_debito, total_credito= :total_credito, data_ultimo_movimento= :data_ultimo_movimento, ativo= :ativo, descricao= :descricao '+
+        'WHERE id = :id;';
 
         queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
         queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
@@ -537,6 +540,13 @@ begin
 end;
 
 
+
+procedure TForm1.Button9Click(Sender: TObject);
+begin
+  Contas.Visible := Not Contas.Visible;
+
+  ClearPanelData(Contas);
+end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin

@@ -662,6 +662,7 @@ object Form1: TForm1
       ParentShowHint = False
       ShowHint = True
       TabOrder = 13
+      OnClick = Button9Click
     end
     object Button10: TButton
       Left = 576
@@ -839,17 +840,17 @@ object Form1: TForm1
   end
   object ds2: TDataSource
     DataSet = queryContas
-    Left = 424
+    Left = 488
     Top = 416
   end
   object queryHistoricoContas: TFDQuery
     Connection = conn
-    Left = 336
-    Top = 192
+    Left = 456
+    Top = 416
   end
   object queryContasForm: TFDQuery
     Connection = conn
-    Left = 456
-    Top = 192
+    Left = 424
+    Top = 416
   end
 end
