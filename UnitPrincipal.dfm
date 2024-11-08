@@ -13,13 +13,6 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   TextHeight = 15
-  object StatusBar1: TStatusBar
-    Left = 0
-    Top = 422
-    Width = 624
-    Height = 19
-    Panels = <>
-  end
   object Bancos: TPanel
     Left = 223
     Top = 8
@@ -170,6 +163,136 @@ object Form1: TForm1
       TitleFont.Style = []
       OnDblClick = DBGrid2DblClick
     end
+  end
+  object Contas: TPanel
+    Left = 8
+    Top = 8
+    Width = 608
+    Height = 408
+    TabOrder = 3
+    Visible = False
+    object Label17: TLabel
+      Left = 8
+      Top = 8
+      Width = 146
+      Height = 21
+      Caption = 'Cadastro de Contas'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label18: TLabel
+      Left = 8
+      Top = 40
+      Width = 11
+      Height = 15
+      Caption = 'ID'
+    end
+    object Edit1: TEdit
+      Left = 8
+      Top = 56
+      Width = 49
+      Height = 23
+      TabOrder = 0
+    end
+    object ComboBox1: TComboBox
+      Left = 63
+      Top = 56
+      Width = 145
+      Height = 23
+      TabOrder = 1
+      Text = 'ComboBox1'
+    end
+    object ComboBox2: TComboBox
+      Left = 214
+      Top = 56
+      Width = 386
+      Height = 23
+      TabOrder = 2
+      Text = 'ComboBox2'
+    end
+    object Edit2: TEdit
+      Left = 160
+      Top = 144
+      Width = 121
+      Height = 23
+      TabOrder = 3
+      Text = 'Edit2'
+    end
+    object Edit3: TEdit
+      Left = 312
+      Top = 144
+      Width = 121
+      Height = 23
+      TabOrder = 4
+      Text = 'Edit3'
+    end
+    object Edit4: TEdit
+      Left = 464
+      Top = 136
+      Width = 121
+      Height = 23
+      TabOrder = 5
+      Text = 'Edit4'
+    end
+    object Edit5: TEdit
+      Left = 168
+      Top = 216
+      Width = 121
+      Height = 23
+      TabOrder = 6
+      Text = 'Edit5'
+    end
+    object Edit6: TEdit
+      Left = 312
+      Top = 216
+      Width = 121
+      Height = 23
+      TabOrder = 7
+      Text = 'Edit6'
+    end
+    object Edit7: TEdit
+      Left = 448
+      Top = 216
+      Width = 121
+      Height = 23
+      TabOrder = 8
+      Text = 'Edit7'
+    end
+    object Edit8: TEdit
+      Left = 176
+      Top = 264
+      Width = 121
+      Height = 23
+      TabOrder = 9
+      Text = 'Edit8'
+    end
+    object Edit9: TEdit
+      Left = 312
+      Top = 264
+      Width = 121
+      Height = 23
+      TabOrder = 10
+      Text = 'Edit9'
+    end
+    object ComboBox3: TComboBox
+      Left = 448
+      Top = 264
+      Width = 145
+      Height = 23
+      TabOrder = 11
+      Text = 'ComboBox3'
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 422
+    Width = 624
+    Height = 19
+    Panels = <>
   end
   object Clientes: TPanel
     Left = 8
@@ -450,6 +573,7 @@ object Form1: TForm1
       end
       object Contas1: TMenuItem
         Caption = 'Contas'
+        OnClick = Contas1Click
       end
     end
     object lanamentos1: TMenuItem

@@ -77,6 +77,21 @@ type
     queryBancos: TFDQuery;
     ds1: TDataSource;
     queryBancosForm: TFDQuery;
+    Contas: TPanel;
+    Label17: TLabel;
+    Edit1: TEdit;
+    Label18: TLabel;
+    ComboBox1: TComboBox;
+    ComboBox2: TComboBox;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
+    Edit9: TEdit;
+    ComboBox3: TComboBox;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -91,6 +106,7 @@ type
     procedure Button7Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);
+    procedure Contas1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -374,6 +390,13 @@ begin
  queryClientes.Open;
 end;
 
+procedure TForm1.Contas1Click(Sender: TObject);
+begin
+  Contas.Visible := Not Contas.Visible;
+
+  ClearPanelData(Contas);
+end;
+
 procedure TForm1.DBGrid1DblClick(Sender: TObject);
 var
   UFIndex, MunicipioIndex, repetidor, qntRegistros: Integer;
@@ -444,7 +467,17 @@ begin
 
   txtIDBANCO.Text := queryBancosForm.FieldByName('id').AsString;
   txtNOMEBANCO.Text := queryBancosForm.FieldByName('descricao').AsString;
-  listATIVOBANCO.Text := queryBancosForm.FieldByName('ativo').AsString;
+
+  if queryBancosForm.FieldByName('ativo').AsString = 'S' then
+    begin
+      listATIVOBANCO.Text := 'Sim';
+    end
+
+  else
+    begin
+      listATIVOBANCO.Text := 'Não';
+    end;
+
 end;
 
 end.
