@@ -67,10 +67,10 @@ type
     Button6: TButton;
     Button7: TButton;
     Button8: TButton;
-    Edit1: TEdit;
+    txtIDBANCO: TEdit;
     Label14: TLabel;
-    Edit2: TEdit;
-    ComboBox1: TComboBox;
+    txtNOMEBANCO: TEdit;
+    listATIVOBANCO: TComboBox;
     Label15: TLabel;
     Label16: TLabel;
     DBGrid2: TDBGrid;
@@ -86,6 +86,9 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Bancos1Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -176,6 +179,9 @@ begin
   Bancos.Visible := not Bancos.Visible;
 
   ClearPanelData(Bancos);
+
+  queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
+  queryBancos.Open;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -204,7 +210,7 @@ begin
     end
   else
     begin
-      queryIUD.SQL.Text := 'UPDATE public.clientes SET id=:id, nome=:nome, cpf=:cpf, fixo=:fixo, celular=:celular, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio WHERE id = :id;';
+      queryIUD.SQL.Text := 'UPDATE public.clientes SET nome=:nome, cpf=:cpf, fixo=:fixo, celular=:celular, cep=:cep, endereco=:endereco, numero=:numero, bairro=:bairro, id_uf=:id_uf, id_municipio=:id_municipio WHERE id = :id;';
       queryIUD.ParamByName('id').AsInteger := StrToInt(txtID.Text);
       queryIUD.ParamByName('nome').AsString := (txtNOME.Text);
       queryIUD.ParamByName('cpf').AsString := (txtCPF.Text);
@@ -223,6 +229,86 @@ begin
 
   ClearPanelData(Clientes);
 end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+  ClearPanelData(Clientes);
+
+  queryClientes.Open;
+  queryClientes.Refresh;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  Bancos.Visible := Not Bancos.Visible;
+
+  ClearPanelData(Bancos);
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+  if (txtID.Text = '') then
+    begin
+      queryIUD.SQL.Text := 'INSERT INTO bancos(descricao, ativo) VALUES (:descricao, :ativo);';
+      queryIUD.ParamByName('descricao').AsString := (txtNOMEBANCO.Text);
+      queryIUD.ParamByName('ativo').AsString := (listATIVOBANCO.Text);
+      queryIUD.ExecSQL;
+    end
+  else
+    begin
+      queryIUD.SQL.Text := 'UPDATE bancos SET descricao=:descricao, ativo=:ativo WHERE id = :id;';
+      queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDBANCO.Text);
+      queryIUD.ParamByName('descricao').AsString := (txtNOMEBANCO.Text);
+      queryIUD.ParamByName('ativo').AsString := (listATIVOBANCO.Text);
+      queryIUD.ExecSQL;
+    end;
+  queryBancos.Open;
+  queryBancos.Refresh;
+
+  ClearPanelData(Bancos);
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+begin
+  if (txtIDBANCO.Text = '') then
+    begin
+      ShowMessage('Não foi possível excluir o registro corrente');
+    end
+  else
+    begin
+      queryIUD.SQL.Text := 'DELETE FROM bancos WHERE id = :id';
+      queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDBANCO.Text);
+
+      try
+        queryIUD.ExecSQL;
+        ShowMessage('Registro excluído com sucesso!')
+      except
+
+      on E: Exception do
+        begin
+          // ShowMessage('Ocorreu um erro ao executar o comando: ' + E.Message);
+          ShowMessage('Erro! O registro atual pode estar sendo utilizado');
+        end;
+
+      end;
+
+    end;
+
+  queryBancos.Open;
+  queryBancos.Refresh;
+
+  ClearPanelData(Bancos);
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+  ClearPanelData(Bancos);
+
+  queryBancos.Open;
+  queryBancos.Refresh;
+end;
+
+
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
@@ -254,21 +340,6 @@ begin
   queryClientes.Refresh;
 
   ClearPanelData(Clientes);
-end;
-
-procedure TForm1.Button4Click(Sender: TObject);
-begin
-  ClearPanelData(Clientes);
-
-  queryClientes.Open;
-  queryClientes.Refresh;
-end;
-
-procedure TForm1.Button5Click(Sender: TObject);
-begin
-  Bancos.Visible := Not Bancos.Visible;
-
-  ClearPanelData(Bancos);
 end;
 
 procedure TForm1.Clientes1Click(Sender: TObject);

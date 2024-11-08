@@ -13,6 +13,163 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   TextHeight = 15
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 422
+    Width = 624
+    Height = 19
+    Panels = <>
+  end
+  object Bancos: TPanel
+    Left = 223
+    Top = 8
+    Width = 393
+    Height = 408
+    TabOrder = 2
+    Visible = False
+    object Label13: TLabel
+      Left = 8
+      Top = 8
+      Width = 148
+      Height = 21
+      Caption = 'Cadastro de Bancos'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label14: TLabel
+      Left = 8
+      Top = 40
+      Width = 11
+      Height = 15
+      Caption = 'ID'
+    end
+    object Label15: TLabel
+      Left = 64
+      Top = 40
+      Width = 51
+      Height = 15
+      Caption = 'Descri'#231#227'o'
+    end
+    object Label16: TLabel
+      Left = 10
+      Top = 85
+      Width = 28
+      Height = 15
+      Caption = 'Ativo'
+    end
+    object Button5: TButton
+      Left = 358
+      Top = 9
+      Width = 27
+      Height = 25
+      Hint = 'Fechar'
+      Caption = 'X'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+      OnClick = Button5Click
+    end
+    object Button6: TButton
+      Left = 359
+      Top = 375
+      Width = 27
+      Height = 25
+      Hint = 'Salvar/Incluir'
+      Caption = 'S/I'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+      OnClick = Button6Click
+    end
+    object Button7: TButton
+      Left = 327
+      Top = 375
+      Width = 26
+      Height = 25
+      Hint = 'Excluir'
+      Caption = 'E'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+      OnClick = Button7Click
+    end
+    object Button8: TButton
+      Left = 295
+      Top = 375
+      Width = 26
+      Height = 25
+      Hint = 'Limpar'
+      Caption = 'L'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 3
+      OnClick = Button8Click
+    end
+    object txtIDBANCO: TEdit
+      Left = 8
+      Top = 56
+      Width = 50
+      Height = 23
+      ReadOnly = True
+      TabOrder = 4
+    end
+    object txtNOMEBANCO: TEdit
+      Left = 64
+      Top = 56
+      Width = 321
+      Height = 23
+      TabOrder = 5
+    end
+    object listATIVOBANCO: TComboBox
+      Left = 8
+      Top = 101
+      Width = 99
+      Height = 23
+      TabOrder = 6
+      Items.Strings = (
+        'Sim'
+        'N'#227'o')
+    end
+    object DBGrid2: TDBGrid
+      Left = 8
+      Top = 130
+      Width = 377
+      Height = 239
+      DataSource = ds1
+      TabOrder = 7
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+  end
   object Clientes: TPanel
     Left = 8
     Top = 8
@@ -277,162 +434,6 @@ object Form1: TForm1
       OnClick = Button4Click
     end
   end
-  object StatusBar1: TStatusBar
-    Left = 0
-    Top = 422
-    Width = 624
-    Height = 19
-    Panels = <>
-  end
-  object Bancos: TPanel
-    Left = 223
-    Top = 8
-    Width = 393
-    Height = 408
-    TabOrder = 2
-    Visible = False
-    object Label13: TLabel
-      Left = 8
-      Top = 8
-      Width = 148
-      Height = 21
-      Caption = 'Cadastro de Bancos'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label14: TLabel
-      Left = 8
-      Top = 40
-      Width = 11
-      Height = 15
-      Caption = 'ID'
-    end
-    object Label15: TLabel
-      Left = 64
-      Top = 40
-      Width = 51
-      Height = 15
-      Caption = 'Descri'#231#227'o'
-    end
-    object Label16: TLabel
-      Left = 10
-      Top = 85
-      Width = 28
-      Height = 15
-      Caption = 'Ativo'
-    end
-    object Button5: TButton
-      Left = 358
-      Top = 9
-      Width = 27
-      Height = 25
-      Hint = 'Fechar'
-      Caption = 'X'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 0
-      OnClick = Button5Click
-    end
-    object Button6: TButton
-      Left = 359
-      Top = 375
-      Width = 27
-      Height = 25
-      Hint = 'Salvar/Incluir'
-      Caption = 'S/I'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 1
-    end
-    object Button7: TButton
-      Left = 327
-      Top = 375
-      Width = 26
-      Height = 25
-      Hint = 'Excluir'
-      Caption = 'E'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-    end
-    object Button8: TButton
-      Left = 295
-      Top = 375
-      Width = 26
-      Height = 25
-      Hint = 'Limpar'
-      Caption = 'L'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
-    end
-    object Edit1: TEdit
-      Left = 8
-      Top = 56
-      Width = 50
-      Height = 23
-      TabOrder = 4
-      Text = 'Edit1'
-    end
-    object Edit2: TEdit
-      Left = 64
-      Top = 56
-      Width = 321
-      Height = 23
-      TabOrder = 5
-      Text = 'Edit1'
-    end
-    object ComboBox1: TComboBox
-      Left = 10
-      Top = 101
-      Width = 99
-      Height = 23
-      TabOrder = 6
-      Text = 'ComboBox1'
-      Items.Strings = (
-        'S'
-        'N')
-    end
-    object DBGrid2: TDBGrid
-      Left = 10
-      Top = 130
-      Width = 375
-      Height = 239
-      DataSource = ds1
-      TabOrder = 7
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-    end
-  end
   object MainMenu1: TMainMenu
     Left = 232
     Top = 416
@@ -509,10 +510,11 @@ object Form1: TForm1
   end
   object queryBancos: TFDQuery
     Connection = conn
-    Left = 120
-    Top = 376
+    Left = 376
+    Top = 104
   end
   object ds1: TDataSource
+    DataSet = queryBancos
     Left = 272
     Top = 104
   end
