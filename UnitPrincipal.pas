@@ -129,6 +129,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);
     procedure Contas1Click(Sender: TObject);
+    procedure Button12Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -268,6 +269,14 @@ begin
 
   queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
   queryBancos.Open;
+end;
+
+procedure TForm1.Button12Click(Sender: TObject);
+begin
+  ClearPanelData(Contas);
+
+  queryContas.Open;
+  queryContas.Refresh;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
