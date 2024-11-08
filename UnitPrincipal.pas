@@ -49,8 +49,8 @@ type
     Label11: TLabel;
     Button1: TButton;
     DBGrid1: TDBGrid;
-    Button2: TButton;
-    Button3: TButton;
+    btnSIClientes: TButton;
+    btnEClientes: TButton;
     txtID: TEdit;
     Label12: TLabel;
     conn: TFDConnection;
@@ -60,13 +60,13 @@ type
     queryUF: TFDQuery;
     queryMUNICIPIOS: TFDQuery;
     queryClientesForm: TFDQuery;
-    Button4: TButton;
+    btnLClientes: TButton;
     Bancos: TPanel;
     Label13: TLabel;
     Button5: TButton;
-    Button6: TButton;
-    Button7: TButton;
-    Button8: TButton;
+    btnSIBancos: TButton;
+    btnEBancos: TButton;
+    btnLBancos: TButton;
     txtIDBANCO: TEdit;
     Label14: TLabel;
     txtNOMEBANCO: TEdit;
@@ -108,9 +108,9 @@ type
     querylistBancos: TFDQuery;
     querylistClientes: TFDQuery;
     Button9: TButton;
-    Button10: TButton;
-    Button11: TButton;
-    Button12: TButton;
+    btnSIContas: TButton;
+    btnEContas: TButton;
+    btnLContas: TButton;
     DBGrid3: TDBGrid;
     queryContas: TFDQuery;
     ds2: TDataSource;
@@ -119,21 +119,21 @@ type
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure btnEClientesClick(Sender: TObject);
+    procedure btnSIClientesClick(Sender: TObject);
     procedure listUFChange(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure btnLClientesClick(Sender: TObject);
     procedure Bancos1Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
-    procedure Button7Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
+    procedure btnLBancosClick(Sender: TObject);
+    procedure btnEBancosClick(Sender: TObject);
+    procedure btnSIBancosClick(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);
     procedure Contas1Click(Sender: TObject);
-    procedure Button12Click(Sender: TObject);
-    procedure Button11Click(Sender: TObject);
-    procedure Button10Click(Sender: TObject);
+    procedure btnLContasClick(Sender: TObject);
+    procedure btnEContasClick(Sender: TObject);
+    procedure btnSIContasClick(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
     procedure Button9Click(Sender: TObject);
   private
@@ -275,9 +275,10 @@ begin
 
   queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
   queryBancos.Open;
+  queryBancos.Refresh;
 end;
 
-procedure TForm1.Button10Click(Sender: TObject);
+procedure TForm1.btnSIContasClick(Sender: TObject);
 begin
   if (txtIDContas.Text = '') then
       begin
@@ -300,8 +301,6 @@ begin
 
     else
       begin
-
-
         queryHistoricoContas.SQL.Text := 'SELECT id, id_banco, id_cliente, agencia, numero, saldo_anterior, saldo_atual, total_debito, total_credito, data_ultimo_movimento, data_criacao, ativo, descricao '+
         'FROM public.contas WHERE id = :id;';
         queryHistoricoContas.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
@@ -355,7 +354,7 @@ begin
   ClearPanelData(Contas);
 end;
 
-procedure TForm1.Button11Click(Sender: TObject);
+procedure TForm1.btnEContasClick(Sender: TObject);
 begin
   if (txtIDContas.Text = '') then
     begin
@@ -387,7 +386,7 @@ begin
   ClearPanelData(Contas);
 end;
 
-procedure TForm1.Button12Click(Sender: TObject);
+procedure TForm1.btnLContasClick(Sender: TObject);
 begin
   ClearPanelData(Contas);
 
@@ -402,7 +401,7 @@ begin
   ClearPanelData(Clientes);
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.btnSIClientesClick(Sender: TObject);
 begin
   if (txtID.Text = '') then
     begin
@@ -441,7 +440,7 @@ begin
   ClearPanelData(Clientes);
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TForm1.btnLClientesClick(Sender: TObject);
 begin
   ClearPanelData(Clientes);
 
@@ -456,7 +455,7 @@ begin
   ClearPanelData(Bancos);
 end;
 
-procedure TForm1.Button6Click(Sender: TObject);
+procedure TForm1.btnSIBancosClick(Sender: TObject);
 begin
   if (txtIDBANCO.Text = '') then
     begin
@@ -499,7 +498,7 @@ begin
   ClearPanelData(Bancos);
 end;
 
-procedure TForm1.Button7Click(Sender: TObject);
+procedure TForm1.btnEBancosClick(Sender: TObject);
 begin
   if (txtIDBANCO.Text = '') then
     begin
@@ -531,7 +530,7 @@ begin
   ClearPanelData(Bancos);
 end;
 
-procedure TForm1.Button8Click(Sender: TObject);
+procedure TForm1.btnLBancosClick(Sender: TObject);
 begin
   ClearPanelData(Bancos);
 
@@ -548,7 +547,7 @@ begin
   ClearPanelData(Contas);
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.btnEClientesClick(Sender: TObject);
 begin
   if (txtID.Text = '') then
     begin
@@ -606,7 +605,10 @@ begin
   'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
   'From contas '+
   'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
+
   queryContas.Open;
+  queryBancos.Open;
+  queryClientes.Open;
 end;
 
 procedure TForm1.DBGrid1DblClick(Sender: TObject);

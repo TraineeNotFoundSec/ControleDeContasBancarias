@@ -79,7 +79,7 @@ type
     queryBancosForm: TFDQuery;
     Contas: TPanel;
     Label17: TLabel;
-    Edit1: TEdit;
+    txtIDContas: TEdit;
     Label18: TLabel;
     listBancos: TComboBox;
     listClientes: TComboBox;
@@ -114,6 +114,8 @@ type
     DBGrid3: TDBGrid;
     queryContas: TFDQuery;
     ds2: TDataSource;
+    queryHistoricoContas: TFDQuery;
+    queryContasForm: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -129,6 +131,11 @@ type
     procedure Button6Click(Sender: TObject);
     procedure DBGrid2DblClick(Sender: TObject);
     procedure Contas1Click(Sender: TObject);
+    procedure Button12Click(Sender: TObject);
+    procedure Button11Click(Sender: TObject);
+    procedure Button10Click(Sender: TObject);
+    procedure DBGrid3DblClick(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -268,6 +275,122 @@ begin
 
   queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
   queryBancos.Open;
+end;
+
+procedure TForm1.Button10Click(Sender: TObject);
+begin
+  if (txtIDContas.Text = '') then
+      begin
+        queryIUD.SQL.Text := 'INSERT INTO public.contas(id_banco, id_cliente, agencia, numero, saldo_atual, descricao)'+
+        'VALUES (:id_banco, :id_cliente, :agencia, :numero, :saldo_atual, :descricao);';
+
+        queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
+        queryIUD.ParamByName('id_cliente').AsInteger := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
+        queryIUD.ParamByName('agencia').AsString := (txtAgencia.Text);
+        queryIUD.ParamByName('numero').AsString := (txtNumero.Text);
+        // queryIUD.ParamByName('saldo_anterior').AsString := (txtSaldoAnterior.Text);
+        queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+        // queryIUD.ParamByName('total_debito').AsString := (txtTotalDebito.Text);
+        // queryIUD.ParamByName('total_credito').AsString := (txtTotalCredito.Text);
+        // queryIUD.ParamByName('data_ultimo_movimento').AsString := (txtUltimaAlteracao.Text);
+        queryIUD.ParamByName('descricao').AsString := (txtDescricaoConta.Text);
+
+        queryIUD.ExecSQL;
+      end
+
+    else
+      begin
+        queryHistoricoContas.SQL.Text := 'SELECT id, id_banco, id_cliente, agencia, numero, saldo_anterior, saldo_atual, total_debito, total_credito, data_ultimo_movimento, data_criacao, ativo, descricao '+
+        'FROM public.contas WHERE id = :id;';
+        queryHistoricoContas.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
+        queryHistoricoContas.Open;
+
+        queryIUD.SQL.Text := 'UPDATE contas ' +
+	      'SET id_banco= :id_banco, id_cliente= :id_cliente, agencia= :agencia, numero= :numero, saldo_anterior= :saldo_anterior, saldo_atual= :saldo_atual, total_debito= :total_debito, total_credito= :total_credito, data_ultimo_movimento= :data_ultimo_movimento, ativo= :ativo, descricao= :descricao '+
+        'WHERE id = :id;';
+
+        queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
+        queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
+        queryIUD.ParamByName('id_cliente').AsInteger := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
+        queryIUD.ParamByName('agencia').AsString := (txtAgencia.Text);
+        queryIUD.ParamByName('numero').AsString := (txtNumero.Text);
+        queryIUD.ParamByName('saldo_anterior').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
+        queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+
+        if (StrToFloat(txtSaldoAtual.Text) > queryHistoricoContas.FieldByName('saldo_atual').AsFloat) then
+          begin
+            queryIUD.ParamByName('total_debito').AsFloat := queryHistoricoContas.FieldByName('total_debito').AsFloat;
+            queryIUD.ParamByName('total_credito').AsFloat := (StrToFloat(txtTotalCredito.Text)+(StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat));
+          end
+
+        else
+          begin
+            queryIUD.ParamByName('total_credito').AsFloat := queryHistoricoContas.FieldByName('total_credito').AsFloat;
+            queryIUD.ParamByName('total_debito').AsFloat := (StrToFloat(txtTotalDebito.Text)+queryHistoricoContas.FieldByName('saldo_atual').AsFloat)-(StrToFloat(txtSaldoAtual.Text));
+          end;
+
+        {queryIUD.ParamByName('total_debito').AsString := (txtTotalDebito.Text);
+                queryIUD.ParamByName('total_credito').AsString := (txtTotalCredito.Text);}
+
+        queryIUD.ParamByName('data_ultimo_movimento').AsDateTime := Now;
+        queryIUD.ParamByName('descricao').AsString := (txtDescricaoConta.Text);
+
+        if listAtivo.Text = 'Sim' then
+          begin
+            queryIUD.ParamByName('ativo').AsString := 'S';
+          end
+        else
+          begin
+            queryIUD.ParamByName('ativo').AsString := 'N';
+          end;
+
+        queryIUD.ExecSQL;
+      end;
+
+  queryContas.Open;
+  queryContas.Refresh;
+
+  ClearPanelData(Contas);
+end;
+
+procedure TForm1.Button11Click(Sender: TObject);
+begin
+  if (txtIDContas.Text = '') then
+    begin
+      ShowMessage('Não foi possível excluir o registro corrente');
+    end
+  else
+    begin
+      queryIUD.SQL.Text := 'DELETE FROM contas WHERE id = :id';
+      queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
+
+      try
+        queryIUD.ExecSQL;
+        ShowMessage('Registro excluído com sucesso!')
+      except
+
+      on E: Exception do
+        begin
+          // ShowMessage('Ocorreu um erro ao executar o comando: ' + E.Message);
+          ShowMessage('Erro! O registro atual pode estar sendo utilizado');
+        end;
+
+      end;
+
+    end;
+
+  queryContas.Open;
+  queryContas.Refresh;
+
+  ClearPanelData(Contas);
+end;
+
+procedure TForm1.Button12Click(Sender: TObject);
+begin
+  ClearPanelData(Contas);
+
+  queryContas.Open;
+  queryContas.Refresh;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -416,6 +539,13 @@ end;
 
 
 
+procedure TForm1.Button9Click(Sender: TObject);
+begin
+  Contas.Visible := Not Contas.Visible;
+
+  ClearPanelData(Contas);
+end;
+
 procedure TForm1.Button3Click(Sender: TObject);
 begin
   if (txtID.Text = '') then
@@ -474,7 +604,10 @@ begin
   'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
   'From contas '+
   'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
+
   queryContas.Open;
+  queryBancos.Open;
+  queryClientes.Open;
 end;
 
 procedure TForm1.DBGrid1DblClick(Sender: TObject);
@@ -556,6 +689,51 @@ begin
   else
     begin
       listATIVOBANCO.Text := 'Não';
+    end;
+
+end;
+
+
+
+procedure TForm1.DBGrid3DblClick(Sender: TObject); // ADAPTAR PARA O CONTAINER DE CONTAS
+var
+  BancoIndex, ClienteIndex, repetidor, qntRegistros: Integer;
+begin
+  ClearPanelData(Contas);
+
+  queryContasForm.SQL.Text := 'SELECT id, id_banco, id_cliente, agencia, numero, saldo_anterior, saldo_atual, total_debito, total_credito, data_ultimo_movimento, data_criacao, ativo, descricao '+
+	'FROM contas WHERE id = :id;';
+  queryContasForm.ParamByName('id').AsInteger := queryContas.FieldByName('ID').AsInteger;
+  queryContasForm.Open;
+
+  txtIDContas.Text := queryContasForm.FieldByName('id').AsString;
+
+  BancoIndex := listBancos.Items.IndexOfObject(TObject(queryContasForm.FieldByName('id_banco').AsInteger));
+  if BancoIndex <> -1 then
+    listBancos.ItemIndex := BancoIndex;
+
+  ClienteIndex := listClientes.Items.IndexOfObject(TObject(queryContasForm.FieldByName('id_cliente').AsInteger));
+  if ClienteIndex <> -1 then
+    listClientes.ItemIndex := ClienteIndex;
+
+  txtAgencia.Text := queryContasForm.FieldByName('agencia').AsString;
+  txtNumConta.Text := queryContasForm.FieldByName('numero').AsString;
+  txtSaldoAnterior.Text := queryContasForm.FieldByName('saldo_anterior').AsString;
+  txtSaldoAtual.Text := queryContasForm.FieldByName('saldo_atual').AsString;
+  txtTotalDebito.Text := queryContasForm.FieldByName('total_debito').AsString;
+  txtTotalCredito.Text := queryContasForm.FieldByName('total_credito').AsString;
+  txtUltimaAlteracao.Text := queryContasForm.FieldByName('data_ultimo_movimento').AsString;
+  txtDataCadastro.Text := queryContasForm.FieldByName('data_criacao').AsString;
+  txtDescricaoConta.Text := queryContasForm.FieldByName('descricao').AsString;
+
+  if queryContasForm.FieldByName('ativo').AsString = 'S' then
+    begin
+      listAtivo.Text := 'Sim';
+    end
+
+  else
+    begin
+      listAtivo.Text := 'Não';
     end;
 
 end;
