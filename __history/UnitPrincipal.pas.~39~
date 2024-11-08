@@ -688,60 +688,6 @@ procedure TForm1.DBGrid3DblClick(Sender: TObject);
 var
   BancoIndex, ClienteIndex, repetidor, qntRegistros: Integer;
 begin
-  ClearPanelData(Contas);
-
-  queryClientesForm.SQL.Text := 'SELECT id, nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio FROM clientes WHERE id = :id;';
-  queryClientesForm.ParamByName('id').AsInteger := queryClientes.FieldByName('ID').AsInteger;
-  queryClientesForm.Open;
-
-  txtID.Text := queryClientesForm.FieldByName('id').AsString;
-  txtNOME.Text := queryClientesForm.FieldByName('nome').AsString;
-  txtCPF.Text := queryClientesForm.FieldByName('cpf').AsString;
-  txtFIXO.Text := queryClientesForm.FieldByName('fixo').AsString;
-  txtMOVEL.Text := queryClientesForm.FieldByName('celular').AsString;
-  txtCEP.Text := queryClientesForm.FieldByName('cep').AsString;
-  txtENDERECO.Text := queryClientesForm.FieldByName('endereco').AsString;
-  txtNUMERO.Text := queryClientesForm.FieldByName('numero').AsString;
-  txtBAIRRO.Text := queryClientesForm.FieldByName('bairro').AsString;
-
-  UFIndex := listUF.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_uf').AsInteger));
-  if UFIndex <> -1 then
-    listUF.ItemIndex := UFIndex; // Define o ItemIndex com o índice correto da UF
-
-  repetidor := 0;
-
-  listMUNICIPIO.Items.Clear;
-
-  queryMUNICIPIOS.SQL.Text := 'SELECT COUNT(id_cidade) AS qntRegistros FROM cidade WHERE id_uf = :id_uf';
-  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
-  queryMUNICIPIOS.Open;
-  qntRegistros := queryMUNICIPIOS.FieldByName('qntRegistros').AsInteger;
-
-  queryMUNICIPIOS.SQL.Text := 'SELECT id_cidade, nome_cidade FROM cidade WHERE id_uf = :id_uf';
-  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
-  queryMUNICIPIOS.Open;
-
-  while repetidor < qntRegistros do
-    begin
-      listMUNICIPIO.Items.Add(queryMUNICIPIOS.FieldByName('nome_cidade').AsString);
-      listMUNICIPIO.Items.Objects[listMUNICIPIO.Items.Count - 1] := TObject(queryMUNICIPIOS.FieldByName('id_cidade').AsInteger);
-
-      queryMUNICIPIOS.Next;
-      repetidor := repetidor + 1;
-    end;
-
-  // Atribui o id_municipio ao objeto do item selecionado na listMUNICIPIO
-  MunicipioIndex := listMUNICIPIO.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_municipio').AsInteger));
-  if MunicipioIndex <> -1 then
-    listMUNICIPIO.ItemIndex := MunicipioIndex; // Define o ItemIndex com o índice correto do Município
-
-
-
-  {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
-  listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
-
-  {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
-  listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
 
 end;
 
