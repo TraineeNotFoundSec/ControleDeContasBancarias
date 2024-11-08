@@ -81,17 +81,17 @@ type
     Label17: TLabel;
     Edit1: TEdit;
     Label18: TLabel;
-    ComboBox1: TComboBox;
-    ComboBox2: TComboBox;
-    Edit2: TEdit;
-    Edit3: TEdit;
-    Edit4: TEdit;
-    Edit5: TEdit;
-    Edit6: TEdit;
-    Edit7: TEdit;
-    Edit8: TEdit;
-    Edit9: TEdit;
-    ComboBox3: TComboBox;
+    listBancos: TComboBox;
+    listClientes: TComboBox;
+    txtAgencia: TEdit;
+    txtNumConta: TEdit;
+    txtSaldoAtual: TEdit;
+    txtSaldoAnterior: TEdit;
+    txtTotalDebito: TEdit;
+    txtTotalCredito: TEdit;
+    txtDataCadastro: TEdit;
+    txtUltimaAlteracao: TEdit;
+    listAtivo: TComboBox;
     Label19: TLabel;
     Label20: TLabel;
     Label21: TLabel;
@@ -100,11 +100,20 @@ type
     Label24: TLabel;
     Label25: TLabel;
     Label26: TLabel;
-    Edit10: TEdit;
+    txtDescricaoConta: TEdit;
     Label27: TLabel;
     Label28: TLabel;
     Label29: TLabel;
     Label30: TLabel;
+    querylistBancos: TFDQuery;
+    querylistClientes: TFDQuery;
+    Button9: TButton;
+    Button10: TButton;
+    Button11: TButton;
+    Button12: TButton;
+    DBGrid3: TDBGrid;
+    queryContas: TFDQuery;
+    ds2: TDataSource;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -157,9 +166,12 @@ begin
 
   listUF.Items.Clear;
   listMUNICIPIO.Items.Clear;
+  listBancos.Items.Clear;
+  listClientes.Items.Clear;
 
-  queryUF.SQL.Text := 'SELECT COUNT(id_uf) AS "qntRegistros" from uf;';
+  queryUF.SQL.Text := 'SELECT COUNT(id_uf) AS "qntRegistros" FROM uf;';
   queryUF.Open;
+
   qntRegistros := queryUF.FieldByName('qntRegistros').AsInteger;
 
   queryUF.SQL.Text := 'SELECT id_uf,  nome_uf FROM uf ORDER BY nome_uf ASC;';
@@ -173,6 +185,49 @@ begin
       queryUF.Next;
       repetidor := repetidor + 1;
     end;
+
+  // -------------------------------------------
+
+  repetidor := 0;
+
+  querylistBancos.SQL.Text := 'SELECT COUNT(id) AS "qntRegistros" FROM bancos;';
+  querylistBancos.Open;
+
+  qntRegistros := querylistBancos.FieldByName('qntRegistros').ASInteger;
+
+  querylistBancos.SQL.Text := 'SELECT id, descricao FROM bancos;';
+  querylistBancos.Open;
+
+  while repetidor < qntRegistros do
+    begin
+      listBancos.Items.Add(querylistBancos.FieldByName('descricao').AsString);
+      listBancos.Items.Objects[listBancos.Items.Count - 1] := TObject(querylistBancos.FieldByName('id').AsInteger);
+
+      querylistBancos.Next;
+      repetidor := repetidor + 1;
+    end;
+
+  // -------------------------------------------
+
+  repetidor := 0;
+
+  querylistClientes.SQL.Text := 'SELECT COUNT(id) AS "qntRegistros" FROM clientes;';
+  querylistClientes.Open;
+
+  qntRegistros := querylistClientes.FieldByName('qntRegistros').ASInteger;
+
+  querylistClientes.SQL.Text := 'SELECT id, nome FROM clientes;';
+  querylistClientes.Open;
+
+  while repetidor < qntRegistros do
+    begin
+      listClientes.Items.Add(querylistClientes.FieldByName('nome').AsString);
+      listClientes.Items.Objects[listClientes.Items.Count - 1] := TObject(querylistClientes.FieldByName('id').AsInteger);
+
+      querylistClientes.Next;
+      repetidor := repetidor + 1;
+    end;
+
 end;
 
 procedure TForm1.listUFChange(Sender: TObject);
@@ -406,8 +461,20 @@ end;
 procedure TForm1.Contas1Click(Sender: TObject);
 begin
   Contas.Visible := Not Contas.Visible;
+  Clientes.Visible := False;
+  Bancos.Visible := False;
 
   ClearPanelData(Contas);
+  ClearPanelData(Clientes);
+  ClearPanelData(Bancos);
+
+  queryContas.SQL.Text := 'SELECT contas.id As "ID", bancos.descricao As "BANCO", clientes.nome As "CLIENTE",'+
+  'contas.descricao As "DESCRICAO", contas.agencia As AGENCIA, contas.numero As "NUMERO DA CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
+  'contas.saldo_atual As "SALDO ATUAL", contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
+  'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
+  'From contas '+
+  'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
+  queryContas.Open;
 end;
 
 procedure TForm1.DBGrid1DblClick(Sender: TObject);
