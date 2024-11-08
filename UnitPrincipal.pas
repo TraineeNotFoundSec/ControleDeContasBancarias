@@ -79,7 +79,7 @@ type
     queryBancosForm: TFDQuery;
     Contas: TPanel;
     Label17: TLabel;
-    Edit1: TEdit;
+    txtIDContas: TEdit;
     Label18: TLabel;
     listBancos: TComboBox;
     listClientes: TComboBox;
@@ -130,6 +130,7 @@ type
     procedure DBGrid2DblClick(Sender: TObject);
     procedure Contas1Click(Sender: TObject);
     procedure Button12Click(Sender: TObject);
+    procedure Button11Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -269,6 +270,38 @@ begin
 
   queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
   queryBancos.Open;
+end;
+
+procedure TForm1.Button11Click(Sender: TObject);
+begin
+  if (txtIDContas.Text = '') then
+    begin
+      ShowMessage('Não foi possível excluir o registro corrente');
+    end
+  else
+    begin
+      queryIUD.SQL.Text := 'DELETE FROM contas WHERE id = :id';
+      queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDContas.Text);
+
+      try
+        queryIUD.ExecSQL;
+        ShowMessage('Registro excluído com sucesso!')
+      except
+
+      on E: Exception do
+        begin
+          // ShowMessage('Ocorreu um erro ao executar o comando: ' + E.Message);
+          ShowMessage('Erro! O registro atual pode estar sendo utilizado');
+        end;
+
+      end;
+
+    end;
+
+  queryContas.Open;
+  queryContas.Refresh;
+
+  ClearPanelData(Contas);
 end;
 
 procedure TForm1.Button12Click(Sender: TObject);
