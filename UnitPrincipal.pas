@@ -76,6 +76,7 @@ type
     DBGrid2: TDBGrid;
     queryBancos: TFDQuery;
     ds1: TDataSource;
+    queryBancosForm: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -89,6 +90,7 @@ type
     procedure Button8Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure DBGrid2DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -247,21 +249,41 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-  if (txtID.Text = '') then
+  if (txtIDBANCO.Text = '') then
     begin
       queryIUD.SQL.Text := 'INSERT INTO bancos(descricao, ativo) VALUES (:descricao, :ativo);';
       queryIUD.ParamByName('descricao').AsString := (txtNOMEBANCO.Text);
-      queryIUD.ParamByName('ativo').AsString := (listATIVOBANCO.Text);
+
+      if listATIVOBANCO.Text = 'Sim' then
+        begin
+          queryIUD.ParamByName('ativo').AsString := 'S';
+        end
+      else
+        begin
+          queryIUD.ParamByName('ativo').AsString := 'N';
+        end;
+
       queryIUD.ExecSQL;
     end
+
   else
     begin
       queryIUD.SQL.Text := 'UPDATE bancos SET descricao=:descricao, ativo=:ativo WHERE id = :id;';
       queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDBANCO.Text);
       queryIUD.ParamByName('descricao').AsString := (txtNOMEBANCO.Text);
-      queryIUD.ParamByName('ativo').AsString := (listATIVOBANCO.Text);
+
+      if listATIVOBANCO.Text = 'Sim' then
+        begin
+          queryIUD.ParamByName('ativo').AsString := 'S';
+        end
+      else
+        begin
+          queryIUD.ParamByName('ativo').AsString := 'N';
+        end;
+
       queryIUD.ExecSQL;
     end;
+
   queryBancos.Open;
   queryBancos.Refresh;
 
@@ -410,6 +432,19 @@ begin
 
   {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
   listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
+end;
+
+procedure TForm1.DBGrid2DblClick(Sender: TObject);
+begin
+  ClearPanelData(Bancos);
+
+  queryBancosForm.SQL.Text := 'SELECT id, descricao, ativo FROM bancos WHERE id = :id;';
+  queryBancosForm.ParamByName('id').AsInteger := queryBancos.FieldByName('ID').AsInteger;
+  queryBancosForm.Open;
+
+  txtIDBANCO.Text := queryBancosForm.FieldByName('id').AsString;
+  txtNOMEBANCO.Text := queryBancosForm.FieldByName('descricao').AsString;
+  listATIVOBANCO.Text := queryBancosForm.FieldByName('ativo').AsString;
 end;
 
 end.

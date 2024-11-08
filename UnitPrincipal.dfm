@@ -168,6 +168,7 @@ object Form1: TForm1
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnDblClick = DBGrid2DblClick
     end
   end
   object Clientes: TPanel
@@ -510,12 +511,17 @@ object Form1: TForm1
   end
   object queryBancos: TFDQuery
     Connection = conn
-    Left = 376
+    Left = 440
     Top = 104
   end
   object ds1: TDataSource
     DataSet = queryBancos
     Left = 272
+    Top = 104
+  end
+  object queryBancosForm: TFDQuery
+    Connection = conn
+    Left = 495
     Top = 104
   end
 end

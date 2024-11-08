@@ -76,7 +76,6 @@ type
     DBGrid2: TDBGrid;
     queryBancos: TFDQuery;
     ds1: TDataSource;
-    queryBancosForm: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -90,7 +89,6 @@ type
     procedure Button8Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
-    procedure DBGrid2DblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -113,7 +111,7 @@ var
         if Panel.Controls[I] is TEdit then
           TEdit(Panel.Controls[I]).Text := '' // Limpa o texto dos Edit
         else if Panel.Controls[I] is TComboBox then
-          TComboBox(Panel.Controls[I]).ItemIndex := -1; // Reseta a seleÃ§Ã£o do ComboBox
+          TComboBox(Panel.Controls[I]).ItemIndex := -1; // Reseta a seleção do ComboBox
       end;
   end;
 
@@ -249,41 +247,21 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-  if (txtIDBANCO.Text = '') then
+  if (txtID.Text = '') then
     begin
       queryIUD.SQL.Text := 'INSERT INTO bancos(descricao, ativo) VALUES (:descricao, :ativo);';
       queryIUD.ParamByName('descricao').AsString := (txtNOMEBANCO.Text);
-
-      if listATIVOBANCO.Text = 'Sim' then
-        begin
-          queryIUD.ParamByName('ativo').AsString := 'S';
-        end
-      else
-        begin
-          queryIUD.ParamByName('ativo').AsString := 'N';
-        end;
-
+      queryIUD.ParamByName('ativo').AsString := (listATIVOBANCO.Text);
       queryIUD.ExecSQL;
     end
-
   else
     begin
       queryIUD.SQL.Text := 'UPDATE bancos SET descricao=:descricao, ativo=:ativo WHERE id = :id;';
       queryIUD.ParamByName('id').AsInteger := StrToInt(txtIDBANCO.Text);
       queryIUD.ParamByName('descricao').AsString := (txtNOMEBANCO.Text);
-
-      if listATIVOBANCO.Text = 'Sim' then
-        begin
-          queryIUD.ParamByName('ativo').AsString := 'S';
-        end
-      else
-        begin
-          queryIUD.ParamByName('ativo').AsString := 'N';
-        end;
-
+      queryIUD.ParamByName('ativo').AsString := (listATIVOBANCO.Text);
       queryIUD.ExecSQL;
     end;
-
   queryBancos.Open;
   queryBancos.Refresh;
 
@@ -294,7 +272,7 @@ procedure TForm1.Button7Click(Sender: TObject);
 begin
   if (txtIDBANCO.Text = '') then
     begin
-      ShowMessage('NÃ£o foi possÃ­vel excluir o registro corrente');
+      ShowMessage('Não foi possível excluir o registro corrente');
     end
   else
     begin
@@ -303,7 +281,7 @@ begin
 
       try
         queryIUD.ExecSQL;
-        ShowMessage('Registro excluÃ­do com sucesso!')
+        ShowMessage('Registro excluído com sucesso!')
       except
 
       on E: Exception do
@@ -336,7 +314,7 @@ procedure TForm1.Button3Click(Sender: TObject);
 begin
   if (txtID.Text = '') then
     begin
-      ShowMessage('NÃ£o foi possÃ­vel excluir o registro corrente');
+      ShowMessage('Não foi possível excluir o registro corrente');
     end
   else
     begin
@@ -345,7 +323,7 @@ begin
 
       try
         queryIUD.ExecSQL;
-        ShowMessage('Registro excluÃ­do com sucesso!')
+        ShowMessage('Registro excluído com sucesso!')
       except
 
       on E: Exception do
@@ -396,7 +374,7 @@ begin
 
   UFIndex := listUF.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_uf').AsInteger));
   if UFIndex <> -1 then
-    listUF.ItemIndex := UFIndex; // Define o ItemIndex com o Ã­ndice correto da UF
+    listUF.ItemIndex := UFIndex; // Define o ItemIndex com o índice correto da UF
 
   repetidor := 0;
 
@@ -423,7 +401,7 @@ begin
   // Atribui o id_municipio ao objeto do item selecionado na listMUNICIPIO
   MunicipioIndex := listMUNICIPIO.Items.IndexOfObject(TObject(queryClientesForm.FieldByName('id_municipio').AsInteger));
   if MunicipioIndex <> -1 then
-    listMUNICIPIO.ItemIndex := MunicipioIndex; // Define o ItemIndex com o Ã­ndice correto do MunicÃ­pio
+    listMUNICIPIO.ItemIndex := MunicipioIndex; // Define o ItemIndex com o índice correto do Município
 
 
 
@@ -432,19 +410,6 @@ begin
 
   {listUF.Items.Objects[listUF.ItemIndex] := TObject(queryClientesForm.FieldByName('id_uf').AsInteger);
   listMUNICIPIO.Items.Objects[listMUNICIPIO.ItemIndex] := TObject(queryClientesForm.FieldByName('id_municipio').AsInteger);}
-end;
-
-procedure TForm1.DBGrid2DblClick(Sender: TObject);
-begin
-  ClearPanelData(Bancos);
-
-  queryBancosForm.SQL.Text := 'SELECT id, nome, cpf, fixo, celular, cep, endereco, numero, bairro, id_uf, id_municipio FROM clientes WHERE id = :id;';
-  queryBancosForm.ParamByName('id').AsInteger := queryClientes.FieldByName('ID').AsInteger;
-  queryClientesForm.Open;
-
-  txtID.Text := queryClientesForm.FieldByName('id').AsString;
-  txtNOME.Text := queryClientesForm.FieldByName('nome').AsString;
-  txtCPF.Text := queryClientesForm.FieldByName('cpf').AsString;
 end;
 
 end.
