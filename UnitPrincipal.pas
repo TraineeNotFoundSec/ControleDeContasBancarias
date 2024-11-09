@@ -290,7 +290,7 @@ begin
         queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
         queryIUD.ParamByName('id_cliente').AsInteger := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
         queryIUD.ParamByName('agencia').AsString := (txtAgencia.Text);
-        queryIUD.ParamByName('numero').AsString := (txtNumero.Text);
+        queryIUD.ParamByName('numero').AsString := (txtNumConta.Text);
         // queryIUD.ParamByName('saldo_anterior').AsString := (txtSaldoAnterior.Text);
         queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
         // queryIUD.ParamByName('total_debito').AsString := (txtTotalDebito.Text);
@@ -316,7 +316,7 @@ begin
         queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
         queryIUD.ParamByName('id_cliente').AsInteger := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
         queryIUD.ParamByName('agencia').AsString := (txtAgencia.Text);
-        queryIUD.ParamByName('numero').AsString := (txtNumero.Text);
+        queryIUD.ParamByName('numero').AsString := (txtNumConta.Text);
         queryIUD.ParamByName('descricao').AsString := (txtDescricaoConta.Text);
 
         if listAtivo.Text = 'Sim' then
