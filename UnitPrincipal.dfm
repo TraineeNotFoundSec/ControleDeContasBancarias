@@ -18,7 +18,7 @@ object Form1: TForm1
     Top = 8
     Width = 534
     Height = 369
-    TabOrder = 3
+    TabOrder = 2
     Visible = False
     object Label31: TLabel
       Left = 8
@@ -677,6 +677,34 @@ object Form1: TForm1
       Height = 15
       Caption = 'Ativo'
     end
+    object Label37: TLabel
+      Left = 8
+      Top = 359
+      Width = 75
+      Height = 15
+      Caption = 'Saldo Anterior'
+    end
+    object Label38: TLabel
+      Left = 115
+      Top = 359
+      Width = 63
+      Height = 15
+      Caption = 'Total D'#233'bito'
+    end
+    object Label39: TLabel
+      Left = 223
+      Top = 359
+      Width = 67
+      Height = 15
+      Caption = 'Total Cr'#233'dito'
+    end
+    object Label40: TLabel
+      Left = 331
+      Top = 359
+      Width = 57
+      Height = 15
+      Caption = 'Saldo Final'
+    end
     object txtIDContas: TEdit
       Left = 8
       Top = 56
@@ -861,7 +889,7 @@ object Form1: TForm1
       Left = 8
       Top = 222
       Width = 593
-      Height = 147
+      Height = 131
       DataSource = ds2
       TabOrder = 17
       TitleFont.Charset = DEFAULT_CHARSET
@@ -870,6 +898,42 @@ object Form1: TForm1
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
       OnDblClick = DBGrid3DblClick
+    end
+    object totalSA: TEdit
+      Left = 8
+      Top = 375
+      Width = 101
+      Height = 23
+      Enabled = False
+      ReadOnly = True
+      TabOrder = 18
+    end
+    object totalD: TEdit
+      Left = 115
+      Top = 375
+      Width = 102
+      Height = 23
+      Enabled = False
+      ReadOnly = True
+      TabOrder = 19
+    end
+    object totalC: TEdit
+      Left = 223
+      Top = 375
+      Width = 102
+      Height = 23
+      Enabled = False
+      ReadOnly = True
+      TabOrder = 20
+    end
+    object totalSF: TEdit
+      Left = 331
+      Top = 375
+      Width = 102
+      Height = 23
+      Color = clLightcyan
+      Enabled = False
+      TabOrder = 21
     end
   end
   object StatusBar1: TStatusBar
@@ -996,5 +1060,10 @@ object Form1: TForm1
     Connection = conn
     Left = 424
     Top = 416
+  end
+  object queryTotalizadores: TFDQuery
+    Connection = conn
+    Left = 448
+    Top = 368
   end
 end

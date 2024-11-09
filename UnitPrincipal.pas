@@ -130,6 +130,15 @@ type
     btnXLcmt: TButton;
     DBGrid4: TDBGrid;
     Consolidado1: TMenuItem;
+    totalSA: TEdit;
+    totalD: TEdit;
+    totalC: TEdit;
+    totalSF: TEdit;
+    Label37: TLabel;
+    Label38: TLabel;
+    Label39: TLabel;
+    Label40: TLabel;
+    queryTotalizadores: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -277,6 +286,23 @@ begin
       'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente WHERE 1=1 AND id_cliente = :indexCliente ORDER BY contas.id;';
 
       queryContas.ParamByName('indexCliente').AsInteger := indexCliente;
+
+      queryTotalizadores.SQL.Text := 'SELECT Sum(contas.saldo_anterior) As total_SA,'+
+      ' SUM(contas.total_debito) As total_D,'+
+      ' SUM(contas.total_credito) As total_C,'+
+      ' SUM(contas.saldo_atual) As total_SF'+
+      ' FROM contas'+
+      ' WHERE contas.id_cliente = :indexCliente'+
+      ' GROUP BY contas.id_cliente;';
+
+      queryTotalizadores.ParamByName('indexCliente').AsInteger := indexCliente;
+
+      queryTotalizadores.Open;
+
+      totalSA.Text := queryTotalizadores.FieldByName('total_SA').AsString;
+      totalD.Text := queryTotalizadores.FieldByName('total_D').AsString;
+      totalC.Text := queryTotalizadores.FieldByName('total_C').AsString;
+      totalSF.Text := queryTotalizadores.FieldByName('total_SF').AsString;
     end
 
   else
@@ -361,7 +387,7 @@ var
 begin
   if (txtIDContas.Text = '') then
       begin
-        queryIUD.SQL.Text := 'INSERT INTO public.contas(id_banco, id_cliente, agencia, numero, saldo_atual, descricao)'+
+        queryIUD.SQL.Text := 'INSERT INTO contas(id_banco, id_cliente, agencia, numero, saldo_atual, descricao)'+
         'VALUES (:id_banco, :id_cliente, :agencia, :numero, :saldo_atual, :descricao);';
 
         queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
@@ -376,6 +402,18 @@ begin
         queryIUD.ParamByName('descricao').AsString := (txtDescricaoConta.Text);
 
         queryIUD.ExecSQL;
+
+        queryHistoricoContas.SQL.Text := 'SELECT id AS "id_corrente" FROM contas ORDER BY id DESC LIMIT 1';
+
+        queryIUD.SQL.Text := 'INSERT INTO historico(id_conta, saldo, acao, valor, forma, observacoes)'+
+	      'VALUES (:id_conta, :saldo, :acao, :valor, :forma, :observacoes);';
+
+        queryIUD.ParamByName('id_conta').AsInteger := queryHistoricoContas.FieldByName('id_corrente').AsInteger;
+        queryIUD.ParamByName('saldo').AsFloat := 0.00;
+        queryIUD.ParamByName('acao').AsString := 'E';
+        queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text);
+        queryIUD.ParamByName('forma').AsString := 'AUTO';
+        queryIUD.ParamByName('observacoes').AsString := 'Ajuste inicial de conta';
       end
 
     else
