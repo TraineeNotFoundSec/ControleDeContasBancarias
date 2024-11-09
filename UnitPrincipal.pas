@@ -129,7 +129,6 @@ type
     btnRegistrarLcmt: TButton;
     btnXLcmt: TButton;
     DBGrid4: TDBGrid;
-    Consolidado1: TMenuItem;
     totalSA: TEdit;
     totalD: TEdit;
     totalC: TEdit;
@@ -139,6 +138,9 @@ type
     Label39: TLabel;
     Label40: TLabel;
     queryTotalizadores: TFDQuery;
+    Consolidado1: TMenuItem;
+    Consolidado: TPanel;
+    btnXConsolidado: TButton;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -161,6 +163,8 @@ type
     procedure btnXContasClick(Sender: TObject);
     procedure Analtico1Click(Sender: TObject);
     procedure listClientesChange(Sender: TObject);
+    procedure btnXConsolidadoClick(Sender: TObject);
+    procedure Consolidado1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -265,63 +269,62 @@ end;
 procedure TForm1.listClientesChange(Sender: TObject);
 var
   indexCliente : Integer;
+  query1, query2 : string;
+
 begin
+  {query1 := 'SELECT contas.id AS "ID", clientes.nome As "CLIENTE", bancos.descricao As "BANCO",'+
+            ' contas.numero As "NR CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
+            ' contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
+            ' contas.saldo_atual As "SALDO FINAL" '+
+            ' From contas '+
+            ' Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente'+
+            ' WHERE 1=1 ';
+
+  query2 := 'SELECT Sum(contas.saldo_anterior) As "total_SA",'+
+            ' SUM(contas.total_debito) As "total_D",'+
+            ' SUM(contas.total_credito) As "total_C",'+
+            ' SUM(contas.saldo_atual) As "total_SF"'+
+            ' FROM contas'+
+            ' WHERE 1=1';
+
+
   if listClientes.Text = '' then
     begin
       indexCliente := 0;
-    end
 
-  else
-    begin
-      indexCliente := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
-    end;
+      query1 := query1 + ' ORDER BY id;';
+      query2 := query2 + ' GROUP BY contas.id_cliente;';
 
-  if indexCliente > 0 then
-    begin
-      queryContas.SQL.Text := 'SELECT contas.id As "ID", bancos.descricao As "BANCO", clientes.nome As "CLIENTE",'+
-      'contas.descricao As "DESCRICAO", contas.agencia As AGENCIA, contas.numero As "NUMERO DA CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
-      'contas.saldo_atual As "SALDO ATUAL", contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
-      'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
-      'From contas '+
-      'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente WHERE 1=1 AND id_cliente = :indexCliente ORDER BY contas.id;';
-
-      queryContas.ParamByName('indexCliente').AsInteger := indexCliente;
-
-      queryTotalizadores.SQL.Text := 'SELECT Sum(contas.saldo_anterior) As total_SA,'+
-      ' SUM(contas.total_debito) As total_D,'+
-      ' SUM(contas.total_credito) As total_C,'+
-      ' SUM(contas.saldo_atual) As total_SF'+
-      ' FROM contas'+
-      ' WHERE contas.id_cliente = :indexCliente'+
-      ' GROUP BY contas.id_cliente;';
-
-      queryTotalizadores.ParamByName('indexCliente').AsInteger := indexCliente;
-
-      queryTotalizadores.Open;
-
-      totalSA.Text := queryTotalizadores.FieldByName('total_SA').AsString;
-      totalD.Text := queryTotalizadores.FieldByName('total_D').AsString;
-      totalC.Text := queryTotalizadores.FieldByName('total_C').AsString;
-      totalSF.Text := queryTotalizadores.FieldByName('total_SF').AsString;
-    end
-
-  else
-    begin
-      queryContas.SQL.Text := 'SELECT contas.id As "ID", bancos.descricao As "BANCO", clientes.nome As "CLIENTE",'+
-      'contas.descricao As "DESCRICAO", contas.agencia As AGENCIA, contas.numero As "NUMERO DA CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
-      'contas.saldo_atual As "SALDO ATUAL", contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
-      'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
-      'From contas '+
-      'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente WHERE 1=1 ORDER BY contas.id;';
+      queryContas.SQL.Text := query1;
+      queryTotalizadores.SQL.Text := query2;
 
       totalSA.Text := '';
       totalD.Text := '';
       totalC.Text := '';
       totalSF.Text := '';
+    end
+
+  else
+    begin
+      indexCliente := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
+
+      query1 := query1 + ' AND id_cliente = :indexCliente ORDER BY contas.id';
+      query2 := query2 + ' AND id_cliente = :indexCliente GROUP BY contas.id_cliente;';
+
+      queryContas.SQL.Text := query1;
+      queryTotalizadores.SQL.Text := query2;
+
+      queryContas.ParamByName('indexCliente').AsInteger := indexCliente;
+      queryTotalizadores.ParamByName('indexCliente').AsInteger := indexCliente;
     end;
 
-  queryContas.Open;
+  totalSA.Text := queryTotalizadores.FieldByName('total_SA').AsString;
+  totalD.Text := queryTotalizadores.FieldByName('total_D').AsString;
+  totalC.Text := queryTotalizadores.FieldByName('total_C').AsString;
+  totalSF.Text := queryTotalizadores.FieldByName('total_SF').AsString;
 
+  queryTotalizadores.Open;
+  queryContas.Open;}
 end;
 
 procedure TForm1.listUFChange(Sender: TObject);
@@ -371,6 +374,9 @@ begin
   Bancos.Visible := False;
   Contas.Visible := False;
 
+  ClearPanelData(Contas);
+  ClearPanelData(Bancos);
+  ClearPanelData(Clientes);
 end;
 
 procedure TForm1.Bancos1Click(Sender: TObject);
@@ -392,8 +398,8 @@ var
 begin
   if (txtIDContas.Text = '') then
       begin
-        queryIUD.SQL.Text := 'INSERT INTO contas(id_banco, id_cliente, agencia, numero, saldo_atual, descricao)'+
-        'VALUES (:id_banco, :id_cliente, :agencia, :numero, :saldo_atual, :descricao);';
+        queryIUD.SQL.Text := 'INSERT INTO contas(id_banco, id_cliente, agencia, numero, saldo_atual, descricao, total_credito, total_debito)'+
+        'VALUES (:id_banco, :id_cliente, :agencia, :numero, :saldo_atual, :descricao, :total_credito, :total_debito);';
 
         queryIUD.ParamByName('id_banco').AsInteger := Integer(listBancos.Items.Objects[listBancos.ItemIndex]);
         queryIUD.ParamByName('id_cliente').AsInteger := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
@@ -401,8 +407,21 @@ begin
         queryIUD.ParamByName('numero').AsString := (txtNumConta.Text);
         // queryIUD.ParamByName('saldo_anterior').AsString := (txtSaldoAnterior.Text);
         queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
-        // queryIUD.ParamByName('total_debito').AsString := (txtTotalDebito.Text);
-        // queryIUD.ParamByName('total_credito').AsString := (txtTotalCredito.Text);
+
+        if StrToFloat(txtSaldoAtual.Text) > 0 then
+          begin
+          // queryIUD.ParamByName('total_credito').AsFloat := StrToFloat(txtSaldoAtual.Text);
+          queryIUD.ParamByName('total_credito').AsFloat := 0.00;
+          queryIUD.ParamByName('total_debito').AsFloat := 0.00;
+          end
+
+        else
+          begin
+            // queryIUD.ParamByName('total_debito').AsFloat := StrToFloat(txtSaldoAtual.Text);
+            queryIUD.ParamByName('total_debito').AsFloat := 0.00;
+            queryIUD.ParamByName('total_credito').AsFloat := 0.00;
+          end;
+
         // queryIUD.ParamByName('data_ultimo_movimento').AsString := (txtUltimaAlteracao.Text);
         queryIUD.ParamByName('descricao').AsString := (txtDescricaoConta.Text);
 
@@ -417,12 +436,22 @@ begin
 
         queryIUD.ParamByName('id_conta').AsInteger := queryHistoricoContas.FieldByName('id_corrente').AsInteger;
         queryIUD.ParamByName('saldo').AsFloat := 0.00;
-        queryIUD.ParamByName('acao').AsString := 'E';
+
+        if StrToFloat(txtSaldoAtual.Text) > 0 then
+          begin
+            queryIUD.ParamByName('acao').AsString := 'E';
+          end
+
+        else
+          begin
+            queryIUD.ParamByName('acao').AsString := 'S';
+          end;
+
         queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text);
         queryIUD.ParamByName('forma').AsString := 'AUTO';
         queryIUD.ParamByName('observacoes').AsString := 'Ajuste inicial de conta';
 
-        queryIUD.ExecSQL;
+        // queryIUD.ExecSQL;
       end
 
     else
@@ -457,11 +486,12 @@ begin
             queryIUD.ParamByName('ativo').AsString := 'S';
             if (StrToFloat(txtSaldoAtual.Text) > queryHistoricoContas.FieldByName('saldo_atual').AsFloat) then
               begin
-                queryIUD.ParamByName('total_debito').AsFloat := queryHistoricoContas.FieldByName('total_debito').AsFloat;
-                queryIUD.ParamByName('total_credito').AsFloat := (StrToFloat(txtTotalCredito.Text)+(StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat));
                 queryIUD.ParamByName('data_ultimo_movimento').AsDateTime := Now;
                 queryIUD.ParamByName('saldo_anterior').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
                 queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+
+                queryIUD.ParamByName('total_debito').AsFloat := queryHistoricoContas.FieldByName('total_debito').AsFloat;
+                queryIUD.ParamByName('total_credito').AsFloat := (StrToFloat(txtTotalCredito.Text)+(StrToFloat(txtSaldoAtual.Text)-queryHistoricoContas.FieldByName('saldo_atual').AsFloat));
 
                 queryIUD.ExecSQL;
 
@@ -480,11 +510,12 @@ begin
 
             else if (StrToFloat(txtSaldoAtual.Text) < queryHistoricoContas.FieldByName('saldo_atual').AsFloat) then
               begin
-                queryIUD.ParamByName('total_credito').AsFloat := queryHistoricoContas.FieldByName('total_credito').AsFloat;
-                queryIUD.ParamByName('total_debito').AsFloat := (StrToFloat(txtTotalDebito.Text)+queryHistoricoContas.FieldByName('saldo_atual').AsFloat)-(StrToFloat(txtSaldoAtual.Text));
                 queryIUD.ParamByName('data_ultimo_movimento').AsDateTime := Now;
                 queryIUD.ParamByName('saldo_anterior').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
                 queryIUD.ParamByName('saldo_atual').AsFloat := StrToFloat(txtSaldoAtual.Text);
+
+                queryIUD.ParamByName('total_credito').AsFloat := queryHistoricoContas.FieldByName('total_credito').AsFloat;
+                queryIUD.ParamByName('total_debito').AsFloat := (StrToFloat(txtTotalDebito.Text)+queryHistoricoContas.FieldByName('saldo_atual').AsFloat)-(StrToFloat(txtSaldoAtual.Text));
 
                 queryIUD.ExecSQL;
 
@@ -729,6 +760,13 @@ begin
   ClearPanelData(Contas);
 end;
 
+procedure TForm1.btnXConsolidadoClick(Sender: TObject);
+begin
+  ClearPanelData(Consolidado);
+
+  Consolidado.Visible := not Consolidado.Visible;
+end;
+
 procedure TForm1.btnEClientesClick(Sender: TObject);
 begin
   if (txtID.Text = '') then
@@ -773,6 +811,21 @@ begin
  queryClientes.Open;
 end;
 
+procedure TForm1.Consolidado1Click(Sender: TObject);
+begin
+  ClearPanelData(Consolidado);
+  ClearPanelData(Contas);
+  ClearPanelData(Bancos);
+  ClearPanelData(Clientes);
+
+  Consolidado.Visible := not Consolidado.Visible;
+  Contas.Visible := False;
+  Bancos.Visible := False;
+  Clientes.Visible := False;
+
+end;
+
+
 procedure TForm1.Contas1Click(Sender: TObject);
 begin
   Contas.Visible := Not Contas.Visible;
@@ -781,10 +834,10 @@ begin
 
   ClearPanelData(Contas);
 
-  queryContas.SQL.Text := 'SELECT contas.id As "ID", bancos.descricao As "BANCO", clientes.nome As "CLIENTE",'+
-  'contas.descricao As "DESCRICAO", contas.agencia As AGENCIA, contas.numero As "NUMERO DA CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
-  'contas.saldo_atual As "SALDO ATUAL", contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
-  'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
+  queryContas.SQL.Text := 'SELECT contas.id AS "ID", clientes.nome As "CLIENTE", bancos.descricao As "BANCO",'+
+  'contas.numero As "NR CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
+  'contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
+  'contas.saldo_atual As "SALDO FINAL" '+
   'From contas '+
   'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
 

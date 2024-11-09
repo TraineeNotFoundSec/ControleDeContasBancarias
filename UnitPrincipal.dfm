@@ -683,6 +683,7 @@ object Form1: TForm1
       Width = 75
       Height = 15
       Caption = 'Saldo Anterior'
+      Visible = False
     end
     object Label38: TLabel
       Left = 115
@@ -690,6 +691,7 @@ object Form1: TForm1
       Width = 63
       Height = 15
       Caption = 'Total D'#233'bito'
+      Visible = False
     end
     object Label39: TLabel
       Left = 223
@@ -697,6 +699,7 @@ object Form1: TForm1
       Width = 67
       Height = 15
       Caption = 'Total Cr'#233'dito'
+      Visible = False
     end
     object Label40: TLabel
       Left = 331
@@ -704,6 +707,7 @@ object Form1: TForm1
       Width = 57
       Height = 15
       Caption = 'Saldo Final'
+      Visible = False
     end
     object txtIDContas: TEdit
       Left = 8
@@ -886,10 +890,10 @@ object Form1: TForm1
       OnClick = btnLContasClick
     end
     object DBGrid3: TDBGrid
-      Left = 8
+      Left = 9
       Top = 222
       Width = 593
-      Height = 131
+      Height = 147
       DataSource = ds2
       TabOrder = 17
       TitleFont.Charset = DEFAULT_CHARSET
@@ -907,6 +911,7 @@ object Form1: TForm1
       Enabled = False
       ReadOnly = True
       TabOrder = 18
+      Visible = False
     end
     object totalD: TEdit
       Left = 115
@@ -916,6 +921,7 @@ object Form1: TForm1
       Enabled = False
       ReadOnly = True
       TabOrder = 19
+      Visible = False
     end
     object totalC: TEdit
       Left = 223
@@ -925,6 +931,7 @@ object Form1: TForm1
       Enabled = False
       ReadOnly = True
       TabOrder = 20
+      Visible = False
     end
     object totalSF: TEdit
       Left = 331
@@ -934,6 +941,7 @@ object Form1: TForm1
       Color = clLightcyan
       Enabled = False
       TabOrder = 21
+      Visible = False
     end
   end
   object StatusBar1: TStatusBar
@@ -942,6 +950,32 @@ object Form1: TForm1
     Width = 624
     Height = 19
     Panels = <>
+  end
+  object Consolidado: TPanel
+    Left = 8
+    Top = 8
+    Width = 433
+    Height = 408
+    TabOrder = 5
+    Visible = False
+    object btnXConsolidado: TButton
+      Left = 400
+      Top = 9
+      Width = 25
+      Height = 25
+      Hint = 'Fechar'
+      Caption = 'X'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = btnXConsolidadoClick
+    end
   end
   object MainMenu1: TMainMenu
     Left = 584
@@ -971,6 +1005,7 @@ object Form1: TForm1
         end
         object Consolidado1: TMenuItem
           Caption = 'Consolidado'
+          OnClick = Consolidado1Click
         end
       end
     end
