@@ -18,7 +18,7 @@ object Form1: TForm1
     Top = 8
     Width = 534
     Height = 369
-    TabOrder = 4
+    TabOrder = 3
     Visible = False
     object Label31: TLabel
       Left = 8
@@ -149,9 +149,9 @@ object Form1: TForm1
   object Clientes: TPanel
     Left = 8
     Top = 8
-    Width = 393
+    Width = 608
     Height = 408
-    TabOrder = 1
+    TabOrder = 0
     Visible = False
     object Label1: TLabel
       Left = 8
@@ -182,43 +182,43 @@ object Form1: TForm1
       Caption = 'CPF'
     end
     object Label4: TLabel
-      Left = 135
+      Left = 262
       Top = 130
       Width = 49
       Height = 15
       Caption = 'Endere'#231'o'
     end
     object Label5: TLabel
-      Left = 8
-      Top = 177
+      Left = 518
+      Top = 85
       Width = 44
       Height = 15
       Caption = 'N'#250'mero'
     end
     object Label6: TLabel
-      Left = 135
-      Top = 177
+      Left = 8
+      Top = 132
       Width = 31
       Height = 15
       Caption = 'Bairro'
     end
     object Label7: TLabel
-      Left = 8
-      Top = 228
+      Left = 9
+      Top = 177
       Width = 101
       Height = 15
       Caption = 'Unidade Federativa'
     end
     object Label8: TLabel
       Left = 135
-      Top = 228
+      Top = 177
       Width = 54
       Height = 15
       Caption = 'Munic'#237'pio'
     end
     object Label9: TLabel
-      Left = 8
-      Top = 130
+      Left = 391
+      Top = 85
       Width = 21
       Height = 15
       Caption = 'CEP'
@@ -247,76 +247,76 @@ object Form1: TForm1
     object txtNOME: TEdit
       Left = 64
       Top = 56
-      Width = 321
+      Width = 536
       Height = 23
-      TabOrder = 0
+      TabOrder = 1
     end
     object txtCPF: TEdit
       Left = 8
       Top = 101
       Width = 121
       Height = 23
-      TabOrder = 1
-    end
-    object txtENDERECO: TEdit
-      Left = 135
-      Top = 146
-      Width = 250
-      Height = 23
       TabOrder = 2
     end
-    object txtNUMERO: TEdit
-      Left = 8
-      Top = 193
-      Width = 121
+    object txtENDERECO: TEdit
+      Left = 262
+      Top = 148
+      Width = 338
       Height = 23
-      TabOrder = 3
+      TabOrder = 8
+    end
+    object txtNUMERO: TEdit
+      Left = 518
+      Top = 101
+      Width = 82
+      Height = 23
+      TabOrder = 6
     end
     object txtBAIRRO: TEdit
-      Left = 135
-      Top = 193
+      Left = 8
+      Top = 148
       Width = 250
       Height = 23
-      TabOrder = 4
+      TabOrder = 7
     end
     object listUF: TComboBox
       Left = 8
-      Top = 244
+      Top = 193
       Width = 121
       Height = 23
-      TabOrder = 5
+      TabOrder = 9
       OnChange = listUFChange
     end
     object listMUNICIPIO: TComboBox
       Left = 135
-      Top = 244
-      Width = 250
+      Top = 193
+      Width = 465
       Height = 23
-      TabOrder = 6
+      TabOrder = 10
     end
     object txtCEP: TEdit
-      Left = 8
-      Top = 146
+      Left = 391
+      Top = 101
       Width = 121
       Height = 23
-      TabOrder = 7
+      TabOrder = 5
     end
     object txtFIXO: TEdit
       Left = 135
       Top = 101
       Width = 121
       Height = 23
-      TabOrder = 8
+      TabOrder = 3
     end
     object txtMOVEL: TEdit
       Left = 262
       Top = 101
       Width = 123
       Height = 23
-      TabOrder = 9
+      TabOrder = 4
     end
     object btnXClientes: TButton
-      Left = 360
+      Left = 575
       Top = 9
       Width = 25
       Height = 25
@@ -330,16 +330,16 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 10
+      TabOrder = 14
       OnClick = btnXClientesClick
     end
     object DBGrid1: TDBGrid
       Left = 8
-      Top = 273
-      Width = 377
-      Height = 96
+      Top = 222
+      Width = 592
+      Height = 147
       DataSource = ds
-      TabOrder = 11
+      TabOrder = 15
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -12
@@ -348,7 +348,7 @@ object Form1: TForm1
       OnDblClick = DBGrid1DblClick
     end
     object btnSIClientes: TButton
-      Left = 359
+      Left = 573
       Top = 375
       Width = 26
       Height = 25
@@ -362,11 +362,11 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 12
+      TabOrder = 11
       OnClick = btnSIClientesClick
     end
     object btnEClientes: TButton
-      Left = 327
+      Left = 541
       Top = 375
       Width = 26
       Height = 25
@@ -380,7 +380,7 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 13
+      TabOrder = 12
       OnClick = btnEClientesClick
     end
     object txtID: TEdit
@@ -388,13 +388,14 @@ object Form1: TForm1
       Top = 56
       Width = 50
       Height = 23
+      Enabled = False
       ParentShowHint = False
       ReadOnly = True
       ShowHint = False
-      TabOrder = 14
+      TabOrder = 0
     end
     object btnLClientes: TButton
-      Left = 295
+      Left = 509
       Top = 375
       Width = 26
       Height = 25
@@ -408,23 +409,16 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 15
+      TabOrder = 13
       OnClick = btnLClientesClick
     end
   end
-  object StatusBar1: TStatusBar
-    Left = 0
-    Top = 422
-    Width = 624
-    Height = 19
-    Panels = <>
-  end
   object Bancos: TPanel
-    Left = 71
+    Left = 8
     Top = 8
-    Width = 393
+    Width = 608
     Height = 408
-    TabOrder = 2
+    TabOrder = 1
     Visible = False
     object Label13: TLabel
       Left = 8
@@ -461,7 +455,7 @@ object Form1: TForm1
       Caption = 'Ativo'
     end
     object btnXBancos: TButton
-      Left = 358
+      Left = 573
       Top = 9
       Width = 27
       Height = 25
@@ -473,11 +467,11 @@ object Form1: TForm1
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 0
+      TabOrder = 5
       OnClick = btnXBancosClick
     end
     object btnSIBancos: TButton
-      Left = 359
+      Left = 573
       Top = 375
       Width = 27
       Height = 25
@@ -491,11 +485,11 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 1
+      TabOrder = 2
       OnClick = btnSIBancosClick
     end
     object btnEBancos: TButton
-      Left = 327
+      Left = 541
       Top = 375
       Width = 26
       Height = 25
@@ -509,11 +503,11 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 3
       OnClick = btnEBancosClick
     end
     object btnLBancos: TButton
-      Left = 295
+      Left = 509
       Top = 375
       Width = 26
       Height = 25
@@ -527,7 +521,7 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 3
+      TabOrder = 4
       OnClick = btnLBancosClick
     end
     object txtIDBANCO: TEdit
@@ -535,15 +529,16 @@ object Form1: TForm1
       Top = 56
       Width = 50
       Height = 23
+      Enabled = False
       ReadOnly = True
-      TabOrder = 4
+      TabOrder = 0
     end
     object txtNOMEBANCO: TEdit
       Left = 64
       Top = 56
-      Width = 321
+      Width = 536
       Height = 23
-      TabOrder = 5
+      TabOrder = 1
     end
     object listATIVOBANCO: TComboBox
       Left = 8
@@ -551,15 +546,16 @@ object Form1: TForm1
       Width = 99
       Height = 23
       TabOrder = 6
+      Visible = False
       Items.Strings = (
         'Sim'
         'N'#227'o')
     end
     object DBGrid2: TDBGrid
       Left = 8
-      Top = 130
-      Width = 377
-      Height = 239
+      Top = 85
+      Width = 592
+      Height = 284
       DataSource = ds1
       TabOrder = 7
       TitleFont.Charset = DEFAULT_CHARSET
@@ -575,7 +571,7 @@ object Form1: TForm1
     Top = 8
     Width = 608
     Height = 408
-    TabOrder = 3
+    TabOrder = 4
     Visible = False
     object Label17: TLabel
       Left = 8
@@ -686,6 +682,7 @@ object Form1: TForm1
       Top = 56
       Width = 49
       Height = 23
+      Enabled = False
       ReadOnly = True
       TabOrder = 0
     end
@@ -722,13 +719,15 @@ object Form1: TForm1
       Top = 148
       Width = 102
       Height = 23
-      TabOrder = 5
+      Color = clLightcyan
+      TabOrder = 9
     end
     object txtSaldoAnterior: TEdit
       Left = 8
       Top = 148
       Width = 101
       Height = 23
+      Enabled = False
       ReadOnly = True
       TabOrder = 6
     end
@@ -737,6 +736,7 @@ object Form1: TForm1
       Top = 148
       Width = 102
       Height = 23
+      Enabled = False
       ReadOnly = True
       TabOrder = 7
     end
@@ -745,6 +745,7 @@ object Form1: TForm1
       Top = 148
       Width = 102
       Height = 23
+      Enabled = False
       ReadOnly = True
       TabOrder = 8
     end
@@ -753,23 +754,25 @@ object Form1: TForm1
       Top = 193
       Width = 209
       Height = 23
+      Enabled = False
       ReadOnly = True
-      TabOrder = 9
+      TabOrder = 11
     end
     object txtUltimaAlteracao: TEdit
       Left = 223
       Top = 193
       Width = 210
       Height = 23
+      Enabled = False
       ReadOnly = True
-      TabOrder = 10
+      TabOrder = 12
     end
     object listAtivo: TComboBox
       Left = 498
       Top = 148
       Width = 102
       Height = 23
-      TabOrder = 11
+      TabOrder = 10
       Items.Strings = (
         'Sim'
         'N'#227'o')
@@ -779,7 +782,7 @@ object Form1: TForm1
       Top = 101
       Width = 377
       Height = 23
-      TabOrder = 12
+      TabOrder = 5
     end
     object btnXContas: TButton
       Left = 576
@@ -796,7 +799,7 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 13
+      TabOrder = 16
       OnClick = btnXContasClick
     end
     object btnSIContas: TButton
@@ -814,7 +817,7 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 14
+      TabOrder = 13
       OnClick = btnSIContasClick
     end
     object btnEContas: TButton
@@ -832,7 +835,7 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 15
+      TabOrder = 14
       OnClick = btnEContasClick
     end
     object btnLContas: TButton
@@ -850,7 +853,7 @@ object Form1: TForm1
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 16
+      TabOrder = 15
       OnClick = btnLContasClick
     end
     object DBGrid3: TDBGrid
@@ -867,6 +870,13 @@ object Form1: TForm1
       TitleFont.Style = []
       OnDblClick = DBGrid3DblClick
     end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 422
+    Width = 624
+    Height = 19
+    Panels = <>
   end
   object MainMenu1: TMainMenu
     Left = 584
@@ -892,6 +902,10 @@ object Form1: TForm1
         Caption = 'Contas'
         object Analtico1: TMenuItem
           Caption = 'Anal'#237'tico'
+          OnClick = Analtico1Click
+        end
+        object Consolidado1: TMenuItem
+          Caption = 'Consolidado'
         end
       end
     end

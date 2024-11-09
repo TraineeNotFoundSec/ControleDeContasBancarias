@@ -129,6 +129,7 @@ type
     btnRegistrarLcmt: TButton;
     btnXLcmt: TButton;
     DBGrid4: TDBGrid;
+    Consolidado1: TMenuItem;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -149,6 +150,7 @@ type
     procedure btnSIContasClick(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
     procedure btnXContasClick(Sender: TObject);
+    procedure Analtico1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -280,9 +282,19 @@ begin
 
 end;
 
+procedure TForm1.Analtico1Click(Sender: TObject);
+begin
+  Clientes.Visible := False;
+  Bancos.Visible := False;
+  Contas.Visible := False;
+
+end;
+
 procedure TForm1.Bancos1Click(Sender: TObject);
 begin
   Bancos.Visible := not Bancos.Visible;
+  Clientes.Visible := False;
+  Contas.Visible := False;
 
   ClearPanelData(Bancos);
 
@@ -411,6 +423,8 @@ begin
             queryIUD.ParamByName('saldo_atual').AsFloat := queryHistoricoContas.FieldByName('saldo_atual').AsFloat;
 
             queryIUD.ExecSQL;
+
+            ShowMessage('Não é possível alterar o saldo com a conta desativada');
           end;
       end;
 
@@ -648,6 +662,8 @@ end;
 procedure TForm1.Clientes1Click(Sender: TObject);
 begin
  Clientes.Visible := Not Clientes.Visible;
+ Contas.Visible := False;
+ Bancos.Visible := False;
 
  ClearPanelData(Clientes);
 
@@ -662,8 +678,6 @@ begin
   Bancos.Visible := False;
 
   ClearPanelData(Contas);
-  ClearPanelData(Clientes);
-  ClearPanelData(Bancos);
 
   queryContas.SQL.Text := 'SELECT contas.id As "ID", bancos.descricao As "BANCO", clientes.nome As "CLIENTE",'+
   'contas.descricao As "DESCRICAO", contas.agencia As AGENCIA, contas.numero As "NUMERO DA CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
