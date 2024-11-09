@@ -571,7 +571,7 @@ object Form1: TForm1
     Top = 8
     Width = 608
     Height = 408
-    TabOrder = 4
+    TabOrder = 3
     Visible = False
     object Label17: TLabel
       Left = 8
@@ -1034,7 +1034,7 @@ object Form1: TForm1
       Top = 182
       Width = 590
       Height = 44
-      DataSource = ds
+      DataSource = ds2
       TabOrder = 3
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -1044,15 +1044,31 @@ object Form1: TForm1
     end
     object DBGrid8: TDBGrid
       Left = 8
-      Top = 232
+      Top = 263
       Width = 590
-      Height = 166
+      Height = 135
+      DataSource = dsConsolidacao
       TabOrder = 4
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+    end
+    object btnFiltroConsolidacao: TButton
+      Left = 523
+      Top = 232
+      Width = 75
+      Height = 25
+      Caption = 'FITRAR'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 5
+      OnClick = btnFiltroConsolidacaoClick
     end
   end
   object StatusBar1: TStatusBar
@@ -1187,6 +1203,7 @@ object Form1: TForm1
     Top = 368
   end
   object dsConsolidacao: TDataSource
+    DataSet = queryConsolidacao
     Left = 448
     Top = 24
   end

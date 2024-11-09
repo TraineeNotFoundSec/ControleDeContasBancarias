@@ -151,6 +151,7 @@ type
     DBGrid8: TDBGrid;
     dsConsolidacao: TDataSource;
     queryConsolidacao: TFDQuery;
+    btnFiltroConsolidacao: TButton;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -175,6 +176,7 @@ type
     procedure listClientesChange(Sender: TObject);
     procedure btnXConsolidadoClick(Sender: TObject);
     procedure Consolidado1Click(Sender: TObject);
+    procedure btnFiltroConsolidacaoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -608,6 +610,13 @@ begin
   listClientesChange(nil);
 end;
 
+procedure TForm1.btnFiltroConsolidacaoClick(Sender: TObject);
+var
+  query : string;
+begin
+
+end;
+
 procedure TForm1.btnLContasClick(Sender: TObject);
 begin
   ClearPanelData(Contas);
@@ -832,6 +841,21 @@ begin
   Contas.Visible := False;
   Bancos.Visible := False;
   Clientes.Visible := False;
+
+  queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
+  queryBancos.Open;
+
+  queryClientes.SQL.Text := 'SELECT id AS "ID", nome as "Nome" FROM clientes ORDER BY nome;';
+  queryClientes.Open;
+
+  queryContas.SQL.Text := 'SELECT contas.id AS "ID", clientes.nome As "CLIENTE", bancos.descricao As "BANCO",'+
+  'contas.numero As "NR CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
+  'contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
+  'contas.saldo_atual As "SALDO FINAL" '+
+  'From contas '+
+  'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
+
+  queryContas.Open;
 
 end;
 
