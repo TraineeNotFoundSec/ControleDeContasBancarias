@@ -116,6 +116,7 @@ type
     ds2: TDataSource;
     queryHistoricoContas: TFDQuery;
     queryContasForm: TFDQuery;
+    Lancamentos: TPanel;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -136,6 +137,7 @@ type
     procedure btnSIContasClick(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
     procedure btnXContasClick(Sender: TObject);
+    procedure MovBancria1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -264,6 +266,15 @@ begin
       queryMUNICIPIOS.Next;
       repetidor := repetidor + 1;
     end;
+
+end;
+
+procedure TForm1.MovBancria1Click(Sender: TObject);
+begin
+  Contas.Visible := False;
+  Clientes.Visible := False;
+  Bancos.Visible := False;
+  Lancamentos.Visible := True;
 
 end;
 

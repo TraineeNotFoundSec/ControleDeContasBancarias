@@ -13,8 +13,306 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   TextHeight = 15
+  object Contas: TPanel
+    Left = 8
+    Top = 8
+    Width = 608
+    Height = 408
+    TabOrder = 3
+    Visible = False
+    object Label17: TLabel
+      Left = 8
+      Top = 8
+      Width = 146
+      Height = 21
+      Caption = 'Cadastro de Contas'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label18: TLabel
+      Left = 8
+      Top = 40
+      Width = 11
+      Height = 15
+      Caption = 'ID'
+    end
+    object Label19: TLabel
+      Left = 64
+      Top = 40
+      Width = 33
+      Height = 15
+      Caption = 'Banco'
+    end
+    object Label20: TLabel
+      Left = 223
+      Top = 40
+      Width = 37
+      Height = 15
+      Caption = 'Cliente'
+    end
+    object Label21: TLabel
+      Left = 8
+      Top = 85
+      Width = 43
+      Height = 15
+      Caption = 'Ag'#234'ncia'
+    end
+    object Label22: TLabel
+      Left = 115
+      Top = 85
+      Width = 65
+      Height = 15
+      Caption = 'Num. Conta'
+    end
+    object Label23: TLabel
+      Left = 9
+      Top = 132
+      Width = 75
+      Height = 15
+      Caption = 'Saldo Anterior'
+    end
+    object Label24: TLabel
+      Left = 115
+      Top = 130
+      Width = 60
+      Height = 15
+      Caption = 'Saldo Atual'
+    end
+    object Label25: TLabel
+      Left = 8
+      Top = 178
+      Width = 90
+      Height = 15
+      Caption = 'Data de Cadastro'
+    end
+    object Label26: TLabel
+      Left = 115
+      Top = 177
+      Width = 88
+      Height = 15
+      Caption = #218'ltima Altera'#231#227'o'
+    end
+    object Label27: TLabel
+      Left = 223
+      Top = 85
+      Width = 51
+      Height = 15
+      Caption = 'Descri'#231#227'o'
+    end
+    object Label28: TLabel
+      Left = 223
+      Top = 130
+      Width = 63
+      Height = 15
+      Caption = 'Total D'#233'bito'
+    end
+    object Label29: TLabel
+      Left = 331
+      Top = 130
+      Width = 67
+      Height = 15
+      Caption = 'Total Cr'#233'dito'
+    end
+    object Label30: TLabel
+      Left = 498
+      Top = 130
+      Width = 28
+      Height = 15
+      Caption = 'Ativo'
+    end
+    object txtIDContas: TEdit
+      Left = 8
+      Top = 56
+      Width = 49
+      Height = 23
+      ReadOnly = True
+      TabOrder = 0
+    end
+    object listBancos: TComboBox
+      Left = 63
+      Top = 56
+      Width = 154
+      Height = 23
+      TabOrder = 1
+    end
+    object listClientes: TComboBox
+      Left = 223
+      Top = 56
+      Width = 377
+      Height = 23
+      TabOrder = 2
+    end
+    object txtAgencia: TEdit
+      Left = 8
+      Top = 101
+      Width = 101
+      Height = 23
+      TabOrder = 3
+    end
+    object txtNumConta: TEdit
+      Left = 115
+      Top = 101
+      Width = 102
+      Height = 23
+      TabOrder = 4
+    end
+    object txtSaldoAtual: TEdit
+      Left = 115
+      Top = 148
+      Width = 102
+      Height = 23
+      TabOrder = 5
+    end
+    object txtSaldoAnterior: TEdit
+      Left = 8
+      Top = 148
+      Width = 101
+      Height = 23
+      ReadOnly = True
+      TabOrder = 6
+    end
+    object txtTotalDebito: TEdit
+      Left = 223
+      Top = 148
+      Width = 102
+      Height = 23
+      ReadOnly = True
+      TabOrder = 7
+    end
+    object txtTotalCredito: TEdit
+      Left = 331
+      Top = 148
+      Width = 102
+      Height = 23
+      ReadOnly = True
+      TabOrder = 8
+    end
+    object txtDataCadastro: TEdit
+      Left = 8
+      Top = 193
+      Width = 101
+      Height = 23
+      ReadOnly = True
+      TabOrder = 9
+    end
+    object txtUltimaAlteracao: TEdit
+      Left = 115
+      Top = 193
+      Width = 102
+      Height = 23
+      ReadOnly = True
+      TabOrder = 10
+    end
+    object listAtivo: TComboBox
+      Left = 498
+      Top = 148
+      Width = 102
+      Height = 23
+      TabOrder = 11
+      Items.Strings = (
+        'Sim'
+        'N'#227'o')
+    end
+    object txtDescricaoConta: TEdit
+      Left = 223
+      Top = 101
+      Width = 377
+      Height = 23
+      TabOrder = 12
+    end
+    object btnXContas: TButton
+      Left = 576
+      Top = 9
+      Width = 25
+      Height = 25
+      Hint = 'Fechar'
+      Caption = 'X'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 13
+      OnClick = btnXContasClick
+    end
+    object btnSIContas: TButton
+      Left = 576
+      Top = 375
+      Width = 25
+      Height = 25
+      Hint = 'Salvar/Inserir'
+      Caption = 'S/I'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 14
+      OnClick = btnSIContasClick
+    end
+    object btnEContas: TButton
+      Left = 545
+      Top = 375
+      Width = 25
+      Height = 25
+      Hint = 'Entrar'
+      Caption = 'E'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 15
+      OnClick = btnEContasClick
+    end
+    object btnLContas: TButton
+      Left = 514
+      Top = 375
+      Width = 25
+      Height = 25
+      Hint = 'Limpar'
+      Caption = 'L'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 16
+      OnClick = btnLContasClick
+    end
+    object DBGrid3: TDBGrid
+      Left = 8
+      Top = 222
+      Width = 593
+      Height = 147
+      DataSource = ds2
+      TabOrder = 17
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+      OnDblClick = DBGrid3DblClick
+    end
+  end
   object Bancos: TPanel
-    Left = 223
+    Left = 71
     Top = 8
     Width = 393
     Height = 408
@@ -435,303 +733,12 @@ object Form1: TForm1
       OnClick = btnLClientesClick
     end
   end
-  object Contas: TPanel
-    Left = 8
+  object Lancamentos: TPanel
+    Left = 238
     Top = 8
-    Width = 608
-    Height = 408
-    TabOrder = 3
-    Visible = False
-    object Label17: TLabel
-      Left = 8
-      Top = 8
-      Width = 146
-      Height = 21
-      Caption = 'Cadastro de Contas'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label18: TLabel
-      Left = 8
-      Top = 40
-      Width = 11
-      Height = 15
-      Caption = 'ID'
-    end
-    object Label19: TLabel
-      Left = 64
-      Top = 40
-      Width = 33
-      Height = 15
-      Caption = 'Banco'
-    end
-    object Label20: TLabel
-      Left = 223
-      Top = 40
-      Width = 37
-      Height = 15
-      Caption = 'Cliente'
-    end
-    object Label21: TLabel
-      Left = 8
-      Top = 85
-      Width = 43
-      Height = 15
-      Caption = 'Ag'#234'ncia'
-    end
-    object Label22: TLabel
-      Left = 115
-      Top = 85
-      Width = 65
-      Height = 15
-      Caption = 'Num. Conta'
-    end
-    object Label23: TLabel
-      Left = 9
-      Top = 132
-      Width = 75
-      Height = 15
-      Caption = 'Saldo Anterior'
-    end
-    object Label24: TLabel
-      Left = 115
-      Top = 130
-      Width = 60
-      Height = 15
-      Caption = 'Saldo Atual'
-    end
-    object Label25: TLabel
-      Left = 8
-      Top = 178
-      Width = 90
-      Height = 15
-      Caption = 'Data de Cadastro'
-    end
-    object Label26: TLabel
-      Left = 115
-      Top = 177
-      Width = 88
-      Height = 15
-      Caption = #218'ltima Altera'#231#227'o'
-    end
-    object Label27: TLabel
-      Left = 223
-      Top = 85
-      Width = 51
-      Height = 15
-      Caption = 'Descri'#231#227'o'
-    end
-    object Label28: TLabel
-      Left = 223
-      Top = 130
-      Width = 63
-      Height = 15
-      Caption = 'Total D'#233'bito'
-    end
-    object Label29: TLabel
-      Left = 331
-      Top = 130
-      Width = 67
-      Height = 15
-      Caption = 'Total Cr'#233'dito'
-    end
-    object Label30: TLabel
-      Left = 498
-      Top = 130
-      Width = 28
-      Height = 15
-      Caption = 'Ativo'
-    end
-    object txtIDContas: TEdit
-      Left = 8
-      Top = 56
-      Width = 49
-      Height = 23
-      ReadOnly = True
-      TabOrder = 0
-    end
-    object listBancos: TComboBox
-      Left = 63
-      Top = 56
-      Width = 154
-      Height = 23
-      TabOrder = 1
-    end
-    object listClientes: TComboBox
-      Left = 223
-      Top = 56
-      Width = 377
-      Height = 23
-      TabOrder = 2
-    end
-    object txtAgencia: TEdit
-      Left = 8
-      Top = 101
-      Width = 101
-      Height = 23
-      TabOrder = 3
-    end
-    object txtNumConta: TEdit
-      Left = 115
-      Top = 101
-      Width = 102
-      Height = 23
-      TabOrder = 4
-    end
-    object txtSaldoAtual: TEdit
-      Left = 115
-      Top = 148
-      Width = 102
-      Height = 23
-      TabOrder = 5
-    end
-    object txtSaldoAnterior: TEdit
-      Left = 8
-      Top = 148
-      Width = 101
-      Height = 23
-      ReadOnly = True
-      TabOrder = 6
-    end
-    object txtTotalDebito: TEdit
-      Left = 223
-      Top = 148
-      Width = 102
-      Height = 23
-      ReadOnly = True
-      TabOrder = 7
-    end
-    object txtTotalCredito: TEdit
-      Left = 331
-      Top = 148
-      Width = 102
-      Height = 23
-      ReadOnly = True
-      TabOrder = 8
-    end
-    object txtDataCadastro: TEdit
-      Left = 8
-      Top = 193
-      Width = 101
-      Height = 23
-      ReadOnly = True
-      TabOrder = 9
-    end
-    object txtUltimaAlteracao: TEdit
-      Left = 115
-      Top = 193
-      Width = 102
-      Height = 23
-      ReadOnly = True
-      TabOrder = 10
-    end
-    object listAtivo: TComboBox
-      Left = 498
-      Top = 148
-      Width = 102
-      Height = 23
-      TabOrder = 11
-      Items.Strings = (
-        'Sim'
-        'N'#227'o')
-    end
-    object txtDescricaoConta: TEdit
-      Left = 223
-      Top = 101
-      Width = 377
-      Height = 23
-      TabOrder = 12
-    end
-    object btnXContas: TButton
-      Left = 576
-      Top = 9
-      Width = 25
-      Height = 25
-      Hint = 'Fechar'
-      Caption = 'X'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 13
-      OnClick = btnXContasClick
-    end
-    object btnSIContas: TButton
-      Left = 576
-      Top = 375
-      Width = 25
-      Height = 25
-      Hint = 'Salvar/Inserir'
-      Caption = 'S/I'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 14
-      OnClick = btnSIContasClick
-    end
-    object btnEContas: TButton
-      Left = 545
-      Top = 375
-      Width = 25
-      Height = 25
-      Hint = 'Entrar'
-      Caption = 'E'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 15
-      OnClick = btnEContasClick
-    end
-    object btnLContas: TButton
-      Left = 514
-      Top = 375
-      Width = 25
-      Height = 25
-      Hint = 'Limpar'
-      Caption = 'L'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 16
-      OnClick = btnLContasClick
-    end
-    object DBGrid3: TDBGrid
-      Left = 8
-      Top = 222
-      Width = 593
-      Height = 147
-      DataSource = ds2
-      TabOrder = 17
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-      OnDblClick = DBGrid3DblClick
-    end
+    Width = 185
+    Height = 369
+    TabOrder = 4
   end
   object MainMenu1: TMainMenu
     Left = 584
@@ -755,6 +762,7 @@ object Form1: TForm1
       Caption = 'Lan'#231'amentos'
       object MovBancria1: TMenuItem
         Caption = 'Mov. Banc'#225'ria'
+        OnClick = MovBancria1Click
       end
     end
     object Relatrios1: TMenuItem
