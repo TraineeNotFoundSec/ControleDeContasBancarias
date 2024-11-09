@@ -313,6 +313,11 @@ begin
       'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
       'From contas '+
       'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente WHERE 1=1 ORDER BY contas.id;';
+
+      totalSA.Text := '';
+      totalD.Text := '';
+      totalC.Text := '';
+      totalSF.Text := '';
     end;
 
   queryContas.Open;
@@ -403,7 +408,9 @@ begin
 
         queryIUD.ExecSQL;
 
-        queryHistoricoContas.SQL.Text := 'SELECT id AS "id_corrente" FROM contas ORDER BY id DESC LIMIT 1';
+        queryHistoricoContas.SQL.Text := 'SELECT currval(''conta_id_seq'') AS "id_corrente";';
+        // queryHistoricoContas.SQL.Text := 'SELECT id AS "id_corrente" FROM contas ORDER BY id DESC LIMIT 1';
+        queryHistoricoContas.Open;
 
         queryIUD.SQL.Text := 'INSERT INTO historico(id_conta, saldo, acao, valor, forma, observacoes)'+
 	      'VALUES (:id_conta, :saldo, :acao, :valor, :forma, :observacoes);';
@@ -414,6 +421,8 @@ begin
         queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text);
         queryIUD.ParamByName('forma').AsString := 'AUTO';
         queryIUD.ParamByName('observacoes').AsString := 'Ajuste inicial de conta';
+
+        queryIUD.ExecSQL;
       end
 
     else
@@ -914,6 +923,7 @@ begin
       listAtivo.Text := 'Não';
     end;
 
+  listClientesChange(nil);
 end;
 
 end.
