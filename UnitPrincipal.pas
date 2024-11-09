@@ -141,6 +141,16 @@ type
     Consolidado1: TMenuItem;
     Consolidado: TPanel;
     btnXConsolidado: TButton;
+    DBGrid5: TDBGrid;
+    Label41: TLabel;
+    Label42: TLabel;
+    DBGrid6: TDBGrid;
+    Label43: TLabel;
+    DBGrid7: TDBGrid;
+    Label44: TLabel;
+    DBGrid8: TDBGrid;
+    dsConsolidacao: TDataSource;
+    queryConsolidacao: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

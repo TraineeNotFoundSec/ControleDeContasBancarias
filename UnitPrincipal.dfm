@@ -334,7 +334,7 @@ object Form1: TForm1
       OnClick = btnXClientesClick
     end
     object DBGrid1: TDBGrid
-      Left = 8
+      Left = 9
       Top = 222
       Width = 592
       Height = 147
@@ -944,22 +944,49 @@ object Form1: TForm1
       Visible = False
     end
   end
-  object StatusBar1: TStatusBar
-    Left = 0
-    Top = 422
-    Width = 624
-    Height = 19
-    Panels = <>
-  end
   object Consolidado: TPanel
     Left = 8
     Top = 8
-    Width = 433
+    Width = 608
     Height = 408
     TabOrder = 5
     Visible = False
+    object Label41: TLabel
+      Left = 8
+      Top = 8
+      Width = 184
+      Height = 21
+      Caption = 'Consolida'#231#227'o dos dados'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label42: TLabel
+      Left = 8
+      Top = 35
+      Width = 38
+      Height = 15
+      Caption = 'Bancos'
+    end
+    object Label43: TLabel
+      Left = 8
+      Top = 101
+      Width = 42
+      Height = 15
+      Caption = 'Clientes'
+    end
+    object Label44: TLabel
+      Left = 8
+      Top = 166
+      Width = 37
+      Height = 15
+      Caption = 'Contas'
+    end
     object btnXConsolidado: TButton
-      Left = 400
+      Left = 576
       Top = 9
       Width = 25
       Height = 25
@@ -976,6 +1003,64 @@ object Form1: TForm1
       TabOrder = 0
       OnClick = btnXConsolidadoClick
     end
+    object DBGrid5: TDBGrid
+      Left = 9
+      Top = 52
+      Width = 589
+      Height = 43
+      DataSource = ds1
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+    object DBGrid6: TDBGrid
+      Left = 8
+      Top = 117
+      Width = 590
+      Height = 43
+      DataSource = ds
+      TabOrder = 2
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+    object DBGrid7: TDBGrid
+      Left = 8
+      Top = 182
+      Width = 590
+      Height = 44
+      DataSource = ds
+      TabOrder = 3
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+    object DBGrid8: TDBGrid
+      Left = 8
+      Top = 232
+      Width = 590
+      Height = 166
+      TabOrder = 4
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 422
+    Width = 624
+    Height = 19
+    Panels = <>
   end
   object MainMenu1: TMainMenu
     Left = 584
@@ -1100,5 +1185,14 @@ object Form1: TForm1
     Connection = conn
     Left = 448
     Top = 368
+  end
+  object dsConsolidacao: TDataSource
+    Left = 448
+    Top = 24
+  end
+  object queryConsolidacao: TFDQuery
+    Connection = conn
+    Left = 384
+    Top = 24
   end
 end
