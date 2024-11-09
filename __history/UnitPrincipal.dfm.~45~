@@ -711,9 +711,7 @@ object Form1: TForm1
       Top = 56
       Width = 50
       Height = 23
-      ParentShowHint = False
       ReadOnly = True
-      ShowHint = False
       TabOrder = 14
     end
     object btnLClientes: TButton
@@ -736,136 +734,11 @@ object Form1: TForm1
     end
   end
   object Lancamentos: TPanel
-    Left = 8
+    Left = 238
     Top = 8
-    Width = 534
+    Width = 185
     Height = 369
     TabOrder = 4
-    object Label31: TLabel
-      Left = 8
-      Top = 8
-      Width = 101
-      Height = 21
-      Caption = 'Lan'#231'amentos'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -16
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Label32: TLabel
-      Left = 8
-      Top = 40
-      Width = 37
-      Height = 15
-      Caption = 'Cliente'
-    end
-    object Label33: TLabel
-      Left = 183
-      Top = 40
-      Width = 32
-      Height = 15
-      Caption = 'Conta'
-    end
-    object Label34: TLabel
-      Left = 8
-      Top = 85
-      Width = 26
-      Height = 15
-      Caption = 'Valor'
-    end
-    object Label35: TLabel
-      Left = 183
-      Top = 85
-      Width = 34
-      Height = 15
-      Caption = 'Forma'
-    end
-    object Label36: TLabel
-      Left = 358
-      Top = 40
-      Width = 67
-      Height = 15
-      Caption = 'Observa'#231#245'es'
-    end
-    object listClientesLcmt: TComboBox
-      Left = 8
-      Top = 56
-      Width = 169
-      Height = 23
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 0
-    end
-    object listContaLcmt: TComboBox
-      Left = 183
-      Top = 56
-      Width = 169
-      Height = 23
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 1
-    end
-    object txtValorLcmt: TEdit
-      Left = 8
-      Top = 101
-      Width = 169
-      Height = 23
-      TabOrder = 2
-    end
-    object listFormaLcmt: TComboBox
-      Left = 183
-      Top = 101
-      Width = 169
-      Height = 23
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 3
-    end
-    object txtObsLcmt: TMemo
-      Left = 358
-      Top = 56
-      Width = 169
-      Height = 68
-      Lines.Strings = (
-        'txtObsLcmt')
-      TabOrder = 4
-    end
-    object btnRegistrarLcmt: TButton
-      Left = 445
-      Top = 130
-      Width = 82
-      Height = 25
-      Caption = 'REGISTRAR'
-      TabOrder = 5
-    end
-    object btnXLcmt: TButton
-      Left = 502
-      Top = 9
-      Width = 25
-      Height = 25
-      Caption = 'X'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 6
-    end
-    object DBGrid4: TDBGrid
-      Left = 8
-      Top = 161
-      Width = 519
-      Height = 200
-      TabOrder = 7
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-    end
   end
   object MainMenu1: TMainMenu
     Left = 584

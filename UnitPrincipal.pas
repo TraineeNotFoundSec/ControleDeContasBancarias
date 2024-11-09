@@ -117,6 +117,20 @@ type
     queryHistoricoContas: TFDQuery;
     queryContasForm: TFDQuery;
     Lancamentos: TPanel;
+    listClientesLcmt: TComboBox;
+    Label31: TLabel;
+    Label32: TLabel;
+    listContaLcmt: TComboBox;
+    Label33: TLabel;
+    txtValorLcmt: TEdit;
+    Label34: TLabel;
+    listFormaLcmt: TComboBox;
+    Label35: TLabel;
+    txtObsLcmt: TMemo;
+    Label36: TLabel;
+    btnRegistrarLcmt: TButton;
+    btnXLcmt: TButton;
+    DBGrid4: TDBGrid;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -275,6 +289,8 @@ begin
   Clientes.Visible := False;
   Bancos.Visible := False;
   Lancamentos.Visible := True;
+
+
 
 end;
 
