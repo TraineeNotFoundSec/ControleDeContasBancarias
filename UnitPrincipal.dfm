@@ -699,6 +699,7 @@ object Form1: TForm1
       Width = 377
       Height = 23
       TabOrder = 2
+      OnChange = listClientesChange
     end
     object txtAgencia: TEdit
       Left = 8

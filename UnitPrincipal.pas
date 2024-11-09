@@ -151,6 +151,7 @@ type
     procedure DBGrid3DblClick(Sender: TObject);
     procedure btnXContasClick(Sender: TObject);
     procedure Analtico1Click(Sender: TObject);
+    procedure listClientesChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -252,18 +253,69 @@ begin
 
 end;
 
+procedure TForm1.listClientesChange(Sender: TObject);
+var
+  indexCliente : Integer;
+begin
+  if listClientes.Text = '' then
+    begin
+      indexCliente := 0;
+    end
+
+  else
+    begin
+      indexCliente := Integer(listClientes.Items.Objects[listClientes.ItemIndex]);
+    end;
+
+  if indexCliente > 0 then
+    begin
+      queryContas.SQL.Text := 'SELECT contas.id As "ID", bancos.descricao As "BANCO", clientes.nome As "CLIENTE",'+
+      'contas.descricao As "DESCRICAO", contas.agencia As AGENCIA, contas.numero As "NUMERO DA CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
+      'contas.saldo_atual As "SALDO ATUAL", contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
+      'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
+      'From contas '+
+      'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente WHERE 1=1 AND id_cliente = :indexCliente ORDER BY contas.id;';
+
+      queryContas.ParamByName('indexCliente').AsInteger := indexCliente;
+    end
+
+  else
+    begin
+      queryContas.SQL.Text := 'SELECT contas.id As "ID", bancos.descricao As "BANCO", clientes.nome As "CLIENTE",'+
+      'contas.descricao As "DESCRICAO", contas.agencia As AGENCIA, contas.numero As "NUMERO DA CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+
+      'contas.saldo_atual As "SALDO ATUAL", contas.total_debito As "TOTAL DEBITO", contas.total_credito As "TOTAL CREDITO",'+
+      'contas.data_ultimo_movimento As "DATA DA ULTIMA ALTERAÇÃO", contas.data_criacao As "DATA CADASTRO" '+
+      'From contas '+
+      'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente WHERE 1=1 ORDER BY contas.id;';
+    end;
+
+  queryContas.Open;
+
+end;
+
 procedure TForm1.listUFChange(Sender: TObject);
 var
   repetidor : integer;
   qntRegistros : integer;
+  indexUF : integer;
 
 begin
   repetidor := 0;
 
   listMUNICIPIO.Items.Clear;
 
+  if listUF.Text = '' then
+    begin
+      indexUF := 0;
+    end
+
+  else
+    begin
+      indexUF := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+    end;
+
   queryMUNICIPIOS.SQL.Text := 'SELECT COUNT(id_cidade) AS qntRegistros FROM cidade WHERE id_uf = :id_uf';
-  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := Integer(listUF.Items.Objects[listUF.ItemIndex]);
+  queryMUNICIPIOS.ParamByName('id_uf').AsInteger := indexUF;
   queryMUNICIPIOS.Open;
   qntRegistros := queryMUNICIPIOS.FieldByName('qntRegistros').AsInteger;
 
@@ -432,6 +484,7 @@ begin
   queryContas.Refresh;
 
   ClearPanelData(Contas);
+  listClientesChange(nil);
 end;
 
 procedure TForm1.btnEContasClick(Sender: TObject);
@@ -464,6 +517,7 @@ begin
   queryContas.Refresh;
 
   ClearPanelData(Contas);
+  listClientesChange(nil);
 end;
 
 procedure TForm1.btnLContasClick(Sender: TObject);
@@ -472,6 +526,7 @@ begin
 
   queryContas.Open;
   queryContas.Refresh;
+  listClientesChange(nil);
 end;
 
 procedure TForm1.btnXClientesClick(Sender: TObject);
