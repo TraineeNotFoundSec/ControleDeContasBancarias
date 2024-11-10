@@ -158,6 +158,16 @@ type
     Panel1: TPanel;
     Analitico: TPanel;
     btnXAnalitico: TButton;
+    listContaA: TComboBox;
+    txtDeA: TEdit;
+    txtAteA: TEdit;
+    Label45: TLabel;
+    Label46: TLabel;
+    Label47: TLabel;
+    Label48: TLabel;
+    btnFiltrarA: TButton;
+    cbFiltroData: TCheckBox;
+    DBGrid9: TDBGrid;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -767,7 +777,7 @@ procedure TForm1.btnXAnaliticoClick(Sender: TObject);
 begin
   ClearPanelData(Analitico);
 
-  Analitico.Visible := Not Bancos.Visible;
+  Analitico.Visible := Not Analitico.Visible;
 end;
 
 procedure TForm1.btnXBancosClick(Sender: TObject);

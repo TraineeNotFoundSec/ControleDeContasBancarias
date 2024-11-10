@@ -944,13 +944,6 @@ object Form1: TForm1
       TitleFont.Style = []
     end
   end
-  object StatusBar1: TStatusBar
-    Left = 0
-    Top = 422
-    Width = 624
-    Height = 19
-    Panels = <>
-  end
   object Consolidado: TPanel
     Left = 8
     Top = 8
@@ -1102,14 +1095,6 @@ object Form1: TForm1
       TabOrder = 8
     end
   end
-  object Panel1: TPanel
-    Left = 24
-    Top = 432
-    Width = 185
-    Height = 41
-    Caption = 'Panel1'
-    TabOrder = 6
-  end
   object Analitico: TPanel
     Left = 8
     Top = 8
@@ -1117,6 +1102,40 @@ object Form1: TForm1
     Height = 408
     TabOrder = 7
     Visible = False
+    object Label45: TLabel
+      Left = 13
+      Top = 40
+      Width = 32
+      Height = 15
+      Caption = 'Conta'
+    end
+    object Label46: TLabel
+      Left = 164
+      Top = 40
+      Width = 14
+      Height = 15
+      Caption = 'De'
+    end
+    object Label47: TLabel
+      Left = 8
+      Top = 8
+      Width = 69
+      Height = 21
+      Caption = 'Anal'#237'tico'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label48: TLabel
+      Left = 291
+      Top = 40
+      Width = 18
+      Height = 15
+      Caption = 'At'#233
+    end
     object btnXAnalitico: TButton
       Left = 574
       Top = 9
@@ -1135,6 +1154,76 @@ object Form1: TForm1
       TabOrder = 0
       OnClick = btnXAnaliticoClick
     end
+    object listContaA: TComboBox
+      Left = 13
+      Top = 56
+      Width = 145
+      Height = 23
+      TabOrder = 1
+    end
+    object txtDeA: TEdit
+      Left = 164
+      Top = 56
+      Width = 121
+      Height = 23
+      TabOrder = 2
+    end
+    object txtAteA: TEdit
+      Left = 291
+      Top = 56
+      Width = 121
+      Height = 23
+      TabOrder = 3
+    end
+    object btnFiltrarA: TButton
+      Left = 524
+      Top = 54
+      Width = 75
+      Height = 25
+      Caption = 'Filtrar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+    end
+    object cbFiltroData: TCheckBox
+      Left = 418
+      Top = 61
+      Width = 97
+      Height = 17
+      Caption = 'Filtrar por Data'
+      TabOrder = 5
+    end
+    object DBGrid9: TDBGrid
+      Left = 13
+      Top = 85
+      Width = 586
+      Height = 313
+      TabOrder = 6
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 422
+    Width = 624
+    Height = 19
+    Panels = <>
+  end
+  object Panel1: TPanel
+    Left = 24
+    Top = 432
+    Width = 185
+    Height = 41
+    Caption = 'Panel1'
+    TabOrder = 6
   end
   object MainMenu1: TMainMenu
     Left = 584
