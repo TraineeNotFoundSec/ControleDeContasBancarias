@@ -18,7 +18,7 @@ object Form1: TForm1
     Top = 8
     Width = 534
     Height = 369
-    TabOrder = 3
+    TabOrder = 2
     Visible = False
     object Label31: TLabel
       Left = 8
@@ -334,7 +334,7 @@ object Form1: TForm1
       OnClick = btnXClientesClick
     end
     object DBGrid1: TDBGrid
-      Left = 8
+      Left = 9
       Top = 222
       Width = 592
       Height = 147
@@ -571,7 +571,7 @@ object Form1: TForm1
     Top = 8
     Width = 608
     Height = 408
-    TabOrder = 4
+    TabOrder = 3
     Visible = False
     object Label17: TLabel
       Left = 8
@@ -677,6 +677,38 @@ object Form1: TForm1
       Height = 15
       Caption = 'Ativo'
     end
+    object Label37: TLabel
+      Left = 8
+      Top = 359
+      Width = 75
+      Height = 15
+      Caption = 'Saldo Anterior'
+      Visible = False
+    end
+    object Label38: TLabel
+      Left = 115
+      Top = 359
+      Width = 63
+      Height = 15
+      Caption = 'Total D'#233'bito'
+      Visible = False
+    end
+    object Label39: TLabel
+      Left = 223
+      Top = 359
+      Width = 67
+      Height = 15
+      Caption = 'Total Cr'#233'dito'
+      Visible = False
+    end
+    object Label40: TLabel
+      Left = 331
+      Top = 359
+      Width = 57
+      Height = 15
+      Caption = 'Saldo Final'
+      Visible = False
+    end
     object txtIDContas: TEdit
       Left = 8
       Top = 56
@@ -699,6 +731,7 @@ object Form1: TForm1
       Width = 377
       Height = 23
       TabOrder = 2
+      OnChange = listClientesChange
     end
     object txtAgencia: TEdit
       Left = 8
@@ -857,7 +890,7 @@ object Form1: TForm1
       OnClick = btnLContasClick
     end
     object DBGrid3: TDBGrid
-      Left = 8
+      Left = 9
       Top = 222
       Width = 593
       Height = 147
@@ -869,6 +902,173 @@ object Form1: TForm1
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
       OnDblClick = DBGrid3DblClick
+    end
+    object totalSA: TEdit
+      Left = 8
+      Top = 375
+      Width = 101
+      Height = 23
+      Enabled = False
+      ReadOnly = True
+      TabOrder = 18
+      Visible = False
+    end
+    object totalD: TEdit
+      Left = 115
+      Top = 375
+      Width = 102
+      Height = 23
+      Enabled = False
+      ReadOnly = True
+      TabOrder = 19
+      Visible = False
+    end
+    object totalC: TEdit
+      Left = 223
+      Top = 375
+      Width = 102
+      Height = 23
+      Enabled = False
+      ReadOnly = True
+      TabOrder = 20
+      Visible = False
+    end
+    object totalSF: TEdit
+      Left = 331
+      Top = 375
+      Width = 102
+      Height = 23
+      Color = clLightcyan
+      Enabled = False
+      TabOrder = 21
+      Visible = False
+    end
+  end
+  object Consolidado: TPanel
+    Left = 8
+    Top = 8
+    Width = 608
+    Height = 408
+    TabOrder = 5
+    Visible = False
+    object Label41: TLabel
+      Left = 8
+      Top = 8
+      Width = 184
+      Height = 21
+      Caption = 'Consolida'#231#227'o dos dados'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label42: TLabel
+      Left = 8
+      Top = 35
+      Width = 38
+      Height = 15
+      Caption = 'Bancos'
+    end
+    object Label43: TLabel
+      Left = 8
+      Top = 101
+      Width = 42
+      Height = 15
+      Caption = 'Clientes'
+    end
+    object Label44: TLabel
+      Left = 8
+      Top = 166
+      Width = 37
+      Height = 15
+      Caption = 'Contas'
+    end
+    object btnXConsolidado: TButton
+      Left = 576
+      Top = 9
+      Width = 25
+      Height = 25
+      Hint = 'Fechar'
+      Caption = 'X'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = btnXConsolidadoClick
+    end
+    object DBGrid5: TDBGrid
+      Left = 9
+      Top = 52
+      Width = 589
+      Height = 43
+      DataSource = ds1
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+    object DBGrid6: TDBGrid
+      Left = 8
+      Top = 117
+      Width = 590
+      Height = 43
+      DataSource = ds
+      TabOrder = 2
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+    object DBGrid7: TDBGrid
+      Left = 8
+      Top = 182
+      Width = 590
+      Height = 69
+      DataSource = ds2
+      TabOrder = 3
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+    object DBGrid8: TDBGrid
+      Left = 8
+      Top = 288
+      Width = 590
+      Height = 110
+      DataSource = dsConsolidacao
+      TabOrder = 4
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -12
+      TitleFont.Name = 'Segoe UI'
+      TitleFont.Style = []
+    end
+    object btnFiltroConsolidacao: TButton
+      Left = 523
+      Top = 257
+      Width = 75
+      Height = 25
+      Caption = 'FITRAR'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 5
+      OnClick = btnFiltroConsolidacaoClick
     end
   end
   object StatusBar1: TStatusBar
@@ -906,6 +1106,7 @@ object Form1: TForm1
         end
         object Consolidado1: TMenuItem
           Caption = 'Consolidado'
+          OnClick = Consolidado1Click
         end
       end
     end
@@ -995,5 +1196,20 @@ object Form1: TForm1
     Connection = conn
     Left = 424
     Top = 416
+  end
+  object queryTotalizadores: TFDQuery
+    Connection = conn
+    Left = 448
+    Top = 368
+  end
+  object dsConsolidacao: TDataSource
+    DataSet = queryConsolidacao
+    Left = 448
+    Top = 24
+  end
+  object queryConsolidacao: TFDQuery
+    Connection = conn
+    Left = 384
+    Top = 24
   end
 end
