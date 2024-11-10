@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.PG, FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param,
   FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, Vcl.Mask;
 
 type
   TForm1 = class(TForm)
@@ -28,7 +28,6 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    txtCPF: TEdit;
     Label4: TLabel;
     txtENDERECO: TEdit;
     txtNUMERO: TEdit;
@@ -39,10 +38,7 @@ type
     listUF: TComboBox;
     listMUNICIPIO: TComboBox;
     Label8: TLabel;
-    txtCEP: TEdit;
     Label9: TLabel;
-    txtFIXO: TEdit;
-    txtMOVEL: TEdit;
     Label10: TLabel;
     Label11: TLabel;
     btnXClientes: TButton;
@@ -159,8 +155,6 @@ type
     Analitico: TPanel;
     btnXAnalitico: TButton;
     listContaA: TComboBox;
-    txtDeA: TEdit;
-    txtAteA: TEdit;
     Label45: TLabel;
     Label46: TLabel;
     Label47: TLabel;
@@ -168,6 +162,12 @@ type
     btnFiltrarA: TButton;
     cbFiltroData: TCheckBox;
     DBGrid9: TDBGrid;
+    txtDeA: TMaskEdit;
+    txtAteA: TMaskEdit;
+    txtCPF: TMaskEdit;
+    txtFIXO: TMaskEdit;
+    txtMOVEL: TMaskEdit;
+    txtCEP: TMaskEdit;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

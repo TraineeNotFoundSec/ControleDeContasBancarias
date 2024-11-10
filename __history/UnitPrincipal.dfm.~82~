@@ -949,7 +949,7 @@ object Form1: TForm1
     Top = 8
     Width = 608
     Height = 408
-    TabOrder = 4
+    TabOrder = 5
     Visible = False
     object Label41: TLabel
       Left = 8
@@ -1223,7 +1223,7 @@ object Form1: TForm1
     Width = 185
     Height = 41
     Caption = 'Panel1'
-    TabOrder = 5
+    TabOrder = 6
   end
   object MainMenu1: TMainMenu
     Left = 584
