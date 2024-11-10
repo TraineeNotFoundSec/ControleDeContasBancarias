@@ -155,6 +155,9 @@ type
     listBancosC: TComboBox;
     listClientesC: TComboBox;
     listContasC: TComboBox;
+    Panel1: TPanel;
+    Analitico: TPanel;
+    btnXAnalitico: TButton;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -180,6 +183,8 @@ type
     procedure btnXConsolidadoClick(Sender: TObject);
     procedure Consolidado1Click(Sender: TObject);
     procedure btnFiltroConsolidacaoClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure btnXAnaliticoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -386,21 +391,31 @@ end;
 procedure TForm1.Analtico1Click(Sender: TObject);
 begin
   Clientes.Visible := False;
-  Bancos.Visible := False;
   Contas.Visible := False;
+  Bancos.Visible := False;
+  Consolidado.Visible := False;
+  Analitico.Visible := not Analitico.Visible;
 
   ClearPanelData(Contas);
   ClearPanelData(Bancos);
   ClearPanelData(Clientes);
+  ClearPanelData(Consolidado);
+  ClearPanelData(Analitico);
 end;
 
 procedure TForm1.Bancos1Click(Sender: TObject);
 begin
-  Bancos.Visible := not Bancos.Visible;
   Clientes.Visible := False;
   Contas.Visible := False;
+  Bancos.Visible := not Bancos.Visible;
+  Consolidado.Visible := False;
+  Analitico.Visible := False;
 
+  ClearPanelData(Contas);
   ClearPanelData(Bancos);
+  ClearPanelData(Clientes);
+  ClearPanelData(Consolidado);
+  ClearPanelData(Analitico);
 
   queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
   queryBancos.Open;
@@ -748,6 +763,13 @@ begin
   queryClientes.Refresh;
 end;
 
+procedure TForm1.btnXAnaliticoClick(Sender: TObject);
+begin
+  ClearPanelData(Analitico);
+
+  Analitico.Visible := Not Bancos.Visible;
+end;
+
 procedure TForm1.btnXBancosClick(Sender: TObject);
 begin
   Bancos.Visible := Not Bancos.Visible;
@@ -847,6 +869,11 @@ begin
   ClearPanelData(Contas);
 end;
 
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+    Analitico.Visible := not Analitico.Visible;
+end;
+
 procedure TForm1.btnXConsolidadoClick(Sender: TObject);
 begin
   ClearPanelData(Consolidado);
@@ -888,14 +915,20 @@ end;
 
 procedure TForm1.Clientes1Click(Sender: TObject);
 begin
- Clientes.Visible := Not Clientes.Visible;
- Contas.Visible := False;
- Bancos.Visible := False;
+  Clientes.Visible := Not Clientes.Visible;
+  Contas.Visible := False;
+  Bancos.Visible := False;
+  Consolidado.Visible := False;
+  Analitico.Visible := False;
 
- ClearPanelData(Clientes);
+  ClearPanelData(Contas);
+  ClearPanelData(Bancos);
+  ClearPanelData(Clientes);
+  ClearPanelData(Consolidado);
+  ClearPanelData(Analitico);
 
- queryClientes.SQL.Text := 'SELECT id AS "ID", nome as "Nome" FROM clientes ORDER BY nome;';
- queryClientes.Open;
+  queryClientes.SQL.Text := 'SELECT id AS "ID", nome as "Nome" FROM clientes ORDER BY nome;';
+  queryClientes.Open;
 end;
 
 procedure TForm1.Consolidado1Click(Sender: TObject);
@@ -904,6 +937,18 @@ var
   listagem : string;
 
 begin
+  Clientes.Visible := False;
+  Contas.Visible := False;
+  Bancos.Visible := False;
+  Consolidado.Visible := not Consolidado.Visible;
+  Analitico.Visible := False;
+
+  ClearPanelData(Contas);
+  ClearPanelData(Bancos);
+  ClearPanelData(Clientes);
+  ClearPanelData(Consolidado);
+  ClearPanelData(Analitico);
+
   listBancosC.Items.Clear;
   listClientesC.Items.Clear;
   listContasC.Items.Clear;
@@ -977,16 +1022,6 @@ begin
 
   //-----------------------------------------------------------------------
 
-  ClearPanelData(Consolidado);
-  ClearPanelData(Contas);
-  ClearPanelData(Bancos);
-  ClearPanelData(Clientes);
-
-  Consolidado.Visible := not Consolidado.Visible;
-  Contas.Visible := False;
-  Bancos.Visible := False;
-  Clientes.Visible := False;
-
   queryBancos.SQL.Text := 'SELECT id AS "ID", descricao as "Nome" FROM bancos ORDER BY descricao;';
   queryBancos.Open;
 
@@ -1005,11 +1040,17 @@ end;
 
 procedure TForm1.Contas1Click(Sender: TObject);
 begin
-  Contas.Visible := Not Contas.Visible;
   Clientes.Visible := False;
+  Contas.Visible := not Contas.Visible;
   Bancos.Visible := False;
+  Consolidado.Visible := False;
+  Analitico.Visible := False;
 
   ClearPanelData(Contas);
+  ClearPanelData(Bancos);
+  ClearPanelData(Clientes);
+  ClearPanelData(Consolidado);
+  ClearPanelData(Analitico);
 
   queryContas.SQL.Text := 'SELECT contas.id AS "ID", clientes.nome As "CLIENTE", bancos.descricao As "BANCO",'+
   'contas.numero As "NR CONTA", contas.saldo_anterior As "SALDO ANTERIOR",'+

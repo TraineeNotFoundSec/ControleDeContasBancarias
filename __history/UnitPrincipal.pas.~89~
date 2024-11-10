@@ -615,9 +615,9 @@ end;
 
 procedure TForm1.btnFiltroConsolidacaoClick(Sender: TObject);
 var
-  query : string;
+  query, queryAdicional : string;
 begin
-  query :=  'SELECT clientes.nome As "CLIENTE", bancos.descricao As "BANCO", contas.numero As "NRO CONTA",'+
+  query :=  'SELECT clientes.nome AS "CLIENTE", bancos.descricao AS "BANCO", contas.numero AS "NRO CONTA",'+
             ' contas.saldo_anterior AS "SALDO ANTERIOR", contas.total_debito AS "TOTAL DEBITO",'+
             ' contas.total_credito AS "TOTAL CREDITO", contas.saldo_atual AS "SALDO FINAL"'+
             ' From contas'+
@@ -625,33 +625,57 @@ begin
             ' Inner Join bancos On bancos.id = contas.id_banco'+
             ' Where 1 = 1';
 
+  queryAdicional := 'SELECT SUM(contas.saldo_anterior) As "SALDO ANTERIOR",'+
+                    'Sum(contas.total_debito) As "TOTAL DEBITO",'+
+                    'Sum(contas.total_credito) As "TOTAL CREDITO",'+
+                    'Sum(contas.saldo_atual) As "SALDO FINAL" '+
+                    'From contas '+
+                    'Where 1 = 1';
+
   // ------------------------------------------------------------------------
-  if queryBancos.FieldByName('ID').AsString <> '' then
+  if listBancosC.Text <> '' then
     begin
-     query := query + ' AND bancos.id = '+ queryBancos.FieldByName('ID').AsString;
-    end
-
-  else if queryClientes.FieldByName('ID').AsString <> '' then
-    begin
-      query := query + ' AND clientes.id = :idCliente'+ queryClientes.FieldByName('ID').AsString;
-    end
-
-  else if queryContas.FieldByName('ID').AsString <> '' then
-    begin
-      query := query + ' AND contas.id = :idConta'+ queryContas.FieldByName('ID').AsString;
+     query := query + ' AND bancos.id = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
+     queryAdicional := queryAdicional + ' AND id_banco = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
     end;
 
-  query := query + 'ORDER BY contas.id;';
+  if listClientesC.Text <> '' then
+    begin
+      query := query + ' AND clientes.id = '+ IntToStr(Integer(listClientesC.Items.Objects[listClientesC.ItemIndex]));
+      queryAdicional := queryAdicional + ' AND id_cliente = '+ IntToStr(Integer(listClientesC.Items.Objects[listClientesC.ItemIndex]));
+    end;
 
-  ShowMessage(query);
+  if listContasC.Text <> '' then
+    begin
+      query := query + ' AND contas.id = '+ IntToStr(Integer(listContasC.Items.Objects[listContasC.ItemIndex]));
+      queryAdicional := queryAdicional + ' AND id = '+ IntToStr(Integer(listContasC.Items.Objects[listContasC.ItemIndex]));
+    end;
 
-{  queryConsolidacao.SQL.Text := query;
-  queryConsolidacao.Open;}
+  query := query + ' ORDER BY contas.id;';
+  // queryAdicional := queryAdicional + ' ORDER BY contas.id;';
+
+  // ShowMessage(query);
+
+  queryConsolidacao.SQL.Text := query;
+  queryConsolidacao.Open;
+
+  // ShowMessage(queryAdicional);
+
+  queryTotalizadores.SQL.Text := queryAdicional;
+  queryTotalizadores.Open;
+
+  queryConsolidacao.Append;
+
+  queryConsolidacao.FieldByName('CLIENTE').AsString := 'Total do cliente';
+  queryConsolidacao.FieldByName('SALDO ANTERIOR').AsString := queryTotalizadores.FieldByName('SALDO ANTERIOR').AsString;
+  queryConsolidacao.FieldByName('TOTAL CREDITO').AsString := queryTotalizadores.FieldByName('TOTAL CREDITO').AsString;
+  queryConsolidacao.FieldByName('SALDO FINAL').AsString := queryTotalizadores.FieldByName('SALDO FINAL').AsString;
+  queryConsolidacao.FieldByName('TOTAL DEBITO').AsString := queryTotalizadores.FieldByName('TOTAL DEBITO').AsString;
 
   // ------------------------------------------------------------------------
 
 
-  DBGrid8.Columns[0].Width := 50;
+  DBGrid8.Columns[0].Width := 100;
   DBGrid8.Columns[1].Width := 90;
   DBGrid8.Columns[2].Width := 75;
   DBGrid8.Columns[3].Width := 100;
@@ -877,6 +901,7 @@ end;
 procedure TForm1.Consolidado1Click(Sender: TObject);
 var
   repetidor, qntRegistros : integer;
+  listagem : string;
 
 begin
   listBancosC.Items.Clear;
@@ -932,16 +957,19 @@ begin
 
   qntRegistros := queryContas.FieldByName('qntRegistros').AsInteger;
 
-  queryContas.SQL.Text := 'SELECT CONCAT(contas.id, "-", clientes.nome As "CLIENTE", "-", bancos.descricao As "BANCO",'+
-  ' "-", contas.numero As "NR CONTA") AS descritivo'+
+  queryContas.SQL.Text := 'SELECT contas.id, clientes.nome AS "CLIENTE", bancos.descricao AS "BANCO",'+
+  'contas.numero AS "NR CONTA"'+ // erro aqui
   'From contas '+
   'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
   queryContas.Open;
 
+
+
   while repetidor < qntRegistros do
     begin
-      listContasC.Items.Add(queryContas.FieldByName('descritivo').AsString);
-      listContasC.Items.Objects[listContasC.Items.Count - 1] := TObject(queryClientes.FieldByName('id').AsInteger);
+      listagem := 'Cliente: ' + queryContas.FieldByName('CLIENTE').AsString + ' - Banco: ' + queryContas.FieldByName('BANCO').AsString + ' - Conta: ' + queryContas.FieldByName('NR CONTA').AsString;
+      listContasC.Items.Add(listagem);
+      listContasC.Items.Objects[listContasC.Items.Count - 1] := TObject(queryContas.FieldByName('id').AsInteger);
 
       queryContas.Next;
       repetidor := repetidor + 1;

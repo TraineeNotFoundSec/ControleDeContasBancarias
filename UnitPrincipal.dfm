@@ -1102,6 +1102,40 @@ object Form1: TForm1
       TabOrder = 8
     end
   end
+  object Panel1: TPanel
+    Left = 24
+    Top = 432
+    Width = 185
+    Height = 41
+    Caption = 'Panel1'
+    TabOrder = 6
+  end
+  object Analitico: TPanel
+    Left = 8
+    Top = 8
+    Width = 608
+    Height = 408
+    TabOrder = 7
+    Visible = False
+    object btnXAnalitico: TButton
+      Left = 574
+      Top = 9
+      Width = 25
+      Height = 25
+      Hint = 'Fechar'
+      Caption = 'X'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = btnXAnaliticoClick
+    end
+  end
   object MainMenu1: TMainMenu
     Left = 584
     Top = 416
@@ -1153,32 +1187,32 @@ object Form1: TForm1
   end
   object queryClientes: TFDQuery
     Connection = conn
-    Left = 104
+    Left = 168
     Top = 416
   end
   object queryIUD: TFDQuery
     Connection = conn
-    Left = 168
+    Left = 232
     Top = 416
   end
   object queryUF: TFDQuery
     Connection = conn
-    Left = 200
+    Left = 264
     Top = 416
   end
   object queryMUNICIPIOS: TFDQuery
     Connection = conn
-    Left = 232
+    Left = 296
     Top = 416
   end
   object queryClientesForm: TFDQuery
     Connection = conn
-    Left = 136
+    Left = 200
     Top = 416
   end
   object queryBancos: TFDQuery
     Connection = conn
-    Left = 264
+    Left = 328
     Top = 416
   end
   object ds1: TDataSource
@@ -1188,37 +1222,37 @@ object Form1: TForm1
   end
   object queryBancosForm: TFDQuery
     Connection = conn
-    Left = 295
+    Left = 359
     Top = 416
   end
   object querylistBancos: TFDQuery
     Connection = conn
-    Left = 328
+    Left = 392
     Top = 416
   end
   object querylistClientes: TFDQuery
     Connection = conn
-    Left = 360
+    Left = 424
     Top = 416
   end
   object queryContas: TFDQuery
     Connection = conn
-    Left = 392
+    Left = 456
     Top = 416
   end
   object ds2: TDataSource
     DataSet = queryContas
-    Left = 488
+    Left = 136
     Top = 416
   end
   object queryHistoricoContas: TFDQuery
     Connection = conn
-    Left = 456
+    Left = 520
     Top = 416
   end
   object queryContasForm: TFDQuery
     Connection = conn
-    Left = 424
+    Left = 488
     Top = 416
   end
   object queryTotalizadores: TFDQuery
@@ -1228,12 +1262,12 @@ object Form1: TForm1
   end
   object dsConsolidacao: TDataSource
     DataSet = queryConsolidacao
-    Left = 480
-    Top = 368
+    Left = 104
+    Top = 416
   end
   object queryConsolidacao: TFDQuery
     Connection = conn
-    Left = 512
-    Top = 368
+    Left = 552
+    Top = 416
   end
 end
