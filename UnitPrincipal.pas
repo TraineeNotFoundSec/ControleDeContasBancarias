@@ -630,21 +630,19 @@ begin
                     'Sum(contas.total_credito) As "TOTAL CREDITO",'+
                     'Sum(contas.saldo_atual) As "SALDO FINAL" '+
                     'From contas '+
-                    'Inner Join clientes On clientes.id = contas.id_cliente '+
-                    'Inner Join bancos On bancos.id = contas.id_banco '+
-                    'Where (1 = 1)';
+                    'Where 1 = 1';
 
   // ------------------------------------------------------------------------
   if listBancosC.Text <> '' then
     begin
      query := query + ' AND bancos.id = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
-     queryAdicional := queryAdicional + ' AND bancos.id = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
+     queryAdicional := queryAdicional + ' AND id_banco.id = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
     end;
 
   if listClientesC.Text <> '' then
     begin
       query := query + ' AND clientes.id = '+ IntToStr(Integer(listClientesC.Items.Objects[listClientesC.ItemIndex]));
-      queryAdicional := queryAdicional + ' AND clientes.id = '+ IntToStr(Integer(listClientesC.Items.Objects[listClientesC.ItemIndex]));
+      queryAdicional := queryAdicional + ' AND id_cliente = '+ IntToStr(Integer(listClientesC.Items.Objects[listClientesC.ItemIndex]));
     end;
 
   if listContasC.Text <> '' then
@@ -654,12 +652,14 @@ begin
     end;
 
   query := query + ' ORDER BY contas.id;';
-  queryAdicional := queryAdicional + ' ORDER BY contas.id;';
+  // queryAdicional := queryAdicional + ' ORDER BY contas.id;';
 
   // ShowMessage(query);
 
   queryConsolidacao.SQL.Text := query;
   queryConsolidacao.Open;
+
+  // ShowMessage(queryAdicional);
 
   queryTotalizadores.SQL.Text := queryAdicional;
   queryTotalizadores.Open;
@@ -670,6 +670,7 @@ begin
   queryConsolidacao.FieldByName('SALDO ANTERIOR').AsString := queryTotalizadores.FieldByName('SALDO ANTERIOR').AsString;
   queryConsolidacao.FieldByName('TOTAL CREDITO').AsString := queryTotalizadores.FieldByName('TOTAL CREDITO').AsString;
   queryConsolidacao.FieldByName('SALDO FINAL').AsString := queryTotalizadores.FieldByName('SALDO FINAL').AsString;
+  queryConsolidacao.FieldByName('TOTAL DEBITO').AsString := queryTotalizadores.FieldByName('TOTAL DEBITO').AsString;
 
   // ------------------------------------------------------------------------
 
