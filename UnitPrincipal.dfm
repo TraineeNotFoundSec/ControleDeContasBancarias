@@ -1228,12 +1228,12 @@ object Form1: TForm1
   end
   object dsConsolidacao: TDataSource
     DataSet = queryConsolidacao
-    Left = 448
-    Top = 24
+    Left = 480
+    Top = 368
   end
   object queryConsolidacao: TFDQuery
     Connection = conn
-    Left = 384
-    Top = 24
+    Left = 512
+    Top = 368
   end
 end

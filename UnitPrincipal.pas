@@ -636,7 +636,7 @@ begin
   if listBancosC.Text <> '' then
     begin
      query := query + ' AND bancos.id = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
-     queryAdicional := queryAdicional + ' AND id_banco.id = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
+     queryAdicional := queryAdicional + ' AND id_banco = '+ IntToStr(Integer(listBancosC.Items.Objects[listBancosC.ItemIndex]));
     end;
 
   if listClientesC.Text <> '' then
@@ -648,7 +648,7 @@ begin
   if listContasC.Text <> '' then
     begin
       query := query + ' AND contas.id = '+ IntToStr(Integer(listContasC.Items.Objects[listContasC.ItemIndex]));
-      queryAdicional := queryAdicional + ' AND contas.id = '+ IntToStr(Integer(listContasC.Items.Objects[listContasC.ItemIndex]));
+      queryAdicional := queryAdicional + ' AND id = '+ IntToStr(Integer(listContasC.Items.Objects[listContasC.ItemIndex]));
     end;
 
   query := query + ' ORDER BY contas.id;';
