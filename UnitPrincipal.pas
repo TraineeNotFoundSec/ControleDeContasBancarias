@@ -160,8 +160,6 @@ type
     Label48: TLabel;
     btnFiltrarA: TButton;
     DBGrid9: TDBGrid;
-    txtDeA: TMaskEdit;
-    txtAteA: TMaskEdit;
     txtCPF: TMaskEdit;
     txtFIXO: TMaskEdit;
     txtMOVEL: TMaskEdit;
@@ -169,6 +167,8 @@ type
     txtSaldoAtual: TMaskEdit;
     dsAnalitico: TDataSource;
     queryAnalitico: TFDQuery;
+    txtDeA: TMaskEdit;
+    txtAteA: TMaskEdit;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -218,6 +218,8 @@ var
       begin
         if Panel.Controls[I] is TEdit then
           TEdit(Panel.Controls[I]).Text := '' // Limpa o texto dos Edit
+        else if Panel.Controls[I] is TMaskEdit then
+          TMaskEdit(Panel.Controls[I]).Text := ''
         else if Panel.Controls[I] is TComboBox then
           TComboBox(Panel.Controls[I]).ItemIndex := -1; // Reseta a seleção do ComboBox
       end;
@@ -506,7 +508,8 @@ begin
 	      'VALUES (:id_conta, :saldo, :acao, :valor, :forma, :observacoes);';
 
         queryIUD.ParamByName('id_conta').AsInteger := queryHistoricoContas.FieldByName('id_corrente').AsInteger;
-        queryIUD.ParamByName('saldo').AsFloat := 0.00;
+        // queryIUD.ParamByName('saldo').AsFloat := 0.00;
+        queryIUD.ParamByName('saldo').AsFloat := StrToFloat(txtSaldoAtual.Text);
 
         if StrToFloat(txtSaldoAtual.Text) > 0 then
           begin
@@ -684,9 +687,28 @@ begin
 
   else
     begin
-
+      query :=  'SELECT saldo - valor AS "SALDO ANTERIOR", '+
+                '(CASE WHEN acao = ''E'' THEN ''+'' WHEN acao = ''S'' THEN ''-'' ELSE ''='' END)::Char AS "AÇÃO", '+
+                'CASE WHEN valor < 0 THEN (valor * (-1)) ELSE valor END AS "VALOR", '+
+                'saldo AS "SALDO FINAL", '+
+                'forma AS "FORMA", '+
+                'observacoes AS "OBS", '+
+                'data_hora AS "DATA E HORA" '+
+                'FROM historico '+
+                'WHERE id_conta = ' + IntToStr(Integer(listContaA.Items.Objects[listContaA.ItemIndex]));
     end;
 
+  query := QUERY + 'ORDER BY id DESC';
+  queryAnalitico.SQL.Text := query;
+  queryAnalitico.Open;
+
+  DBGrid9.Columns[0].Width := 100;
+  DBGrid9.Columns[1].Width := 35;
+  DBGrid9.Columns[2].Width := 50;
+  DBGrid9.Columns[3].Width := 75;
+  DBGrid9.Columns[4].Width := 55;
+  DBGrid9.Columns[5].Width := 120;
+  DBGrid9.Columns[6].Width := 110;
 end;
 
 procedure TForm1.btnFiltroConsolidacaoClick(Sender: TObject);
