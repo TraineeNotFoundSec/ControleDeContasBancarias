@@ -79,7 +79,6 @@ type
     listClientes: TComboBox;
     txtAgencia: TEdit;
     txtNumConta: TEdit;
-    txtSaldoAtual: TEdit;
     txtSaldoAnterior: TEdit;
     txtTotalDebito: TEdit;
     txtTotalCredito: TEdit;
@@ -160,7 +159,6 @@ type
     Label47: TLabel;
     Label48: TLabel;
     btnFiltrarA: TButton;
-    cbFiltroData: TCheckBox;
     DBGrid9: TDBGrid;
     txtDeA: TMaskEdit;
     txtAteA: TMaskEdit;
@@ -168,6 +166,9 @@ type
     txtFIXO: TMaskEdit;
     txtMOVEL: TMaskEdit;
     txtCEP: TMaskEdit;
+    txtSaldoAtual: TMaskEdit;
+    dsAnalitico: TDataSource;
+    queryAnalitico: TFDQuery;
     procedure Clientes1Click(Sender: TObject);
     procedure btnXClientesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -195,6 +196,7 @@ type
     procedure btnFiltroConsolidacaoClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure btnXAnaliticoClick(Sender: TObject);
+    procedure btnFiltrarAClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -399,6 +401,10 @@ begin
 end;
 
 procedure TForm1.Analtico1Click(Sender: TObject);
+var
+  repetidor, qntRegistros : integer;
+  listagem : string;
+
 begin
   Clientes.Visible := False;
   Contas.Visible := False;
@@ -411,6 +417,31 @@ begin
   ClearPanelData(Clientes);
   ClearPanelData(Consolidado);
   ClearPanelData(Analitico);
+
+  repetidor := 0;
+
+  queryContas.SQL.Text := 'SELECT COUNT(id) AS "qntRegistros" FROM contas;';
+  queryContas.Open;
+
+  qntRegistros := queryContas.FieldByName('qntRegistros').AsInteger;
+
+  queryContas.SQL.Text := 'SELECT contas.id, clientes.nome AS "CLIENTE", bancos.descricao AS "BANCO",'+
+  'contas.numero AS "NR CONTA"'+
+  'From contas '+
+  'Inner Join bancos On bancos.id = contas.id_banco Inner Join clientes On clientes.id = contas.id_cliente;';
+  queryContas.Open;
+
+
+  while repetidor < qntRegistros do
+    begin
+      listagem := 'Cliente: ' + queryContas.FieldByName('CLIENTE').AsString + ' - Banco: ' + queryContas.FieldByName('BANCO').AsString + ' - Conta: ' + queryContas.FieldByName('NR CONTA').AsString;
+      listContaA.Items.Add(listagem);
+      listContaA.Items.Objects[listContaA.Items.Count - 1] := TObject(queryContas.FieldByName('id').AsInteger);
+
+      queryContas.Next;
+      repetidor := repetidor + 1;
+    end;
+
 end;
 
 procedure TForm1.Bancos1Click(Sender: TObject);
@@ -450,15 +481,15 @@ begin
 
         if StrToFloat(txtSaldoAtual.Text) > 0 then
           begin
-          queryIUD.ParamByName('total_credito').AsFloat := StrToFloat(txtSaldoAtual.Text);
-          // queryIUD.ParamByName('total_credito').AsFloat := 0.00;
+          // queryIUD.ParamByName('total_credito').AsFloat := StrToFloat(txtSaldoAtual.Text);
+           queryIUD.ParamByName('total_credito').AsFloat := 0.00;
           queryIUD.ParamByName('total_debito').AsFloat := 0.00;
           end
 
         else
           begin
-            queryIUD.ParamByName('total_debito').AsFloat := StrToFloat(txtSaldoAtual.Text);
-            // queryIUD.ParamByName('total_debito').AsFloat := 0.00;
+            // queryIUD.ParamByName('total_debito').AsFloat := StrToFloat(txtSaldoAtual.Text);
+            queryIUD.ParamByName('total_debito').AsFloat := 0.00;
             queryIUD.ParamByName('total_credito').AsFloat := 0.00;
           end;
 
@@ -479,19 +510,21 @@ begin
 
         if StrToFloat(txtSaldoAtual.Text) > 0 then
           begin
-            queryIUD.ParamByName('acao').AsString := 'E';
+            queryIUD.ParamByName('acao').AsString := 'A';     // A = ajuste inicial
+            // queryIUD.ParamByName('acao').AsString := 'E';  // E = Entrada
           end
 
         else
           begin
-            queryIUD.ParamByName('acao').AsString := 'S';
+            queryIUD.ParamByName('acao').AsString := 'A';
+            // queryIUD.ParamByName('acao').AsString := 'S';  //S = Saída
           end;
 
         queryIUD.ParamByName('valor').AsFloat := StrToFloat(txtSaldoAtual.Text);
         queryIUD.ParamByName('forma').AsString := 'AUTO';
         queryIUD.ParamByName('observacoes').AsString := 'Ajuste inicial de conta';
 
-        // queryIUD.ExecSQL;
+        queryIUD.ExecSQL;
       end
 
     else
@@ -636,6 +669,24 @@ begin
 
   ClearPanelData(Contas);
   listClientesChange(nil);
+end;
+
+procedure TForm1.btnFiltrarAClick(Sender: TObject);
+var
+  query : string;
+begin
+  if listContaA.Text = '' then
+    begin
+      ShowMessage('Selecione uma conta para emitir a consulta');
+      listContaA.SetFocus;
+      Exit;
+    end
+
+  else
+    begin
+
+    end;
+
 end;
 
 procedure TForm1.btnFiltroConsolidacaoClick(Sender: TObject);
