@@ -408,6 +408,8 @@ var
   listagem : string;
 
 begin
+  listContaA.Clear;
+
   Clientes.Visible := False;
   Contas.Visible := False;
   Bancos.Visible := False;
@@ -698,7 +700,17 @@ begin
                 'WHERE id_conta = ' + IntToStr(Integer(listContaA.Items.Objects[listContaA.ItemIndex]));
     end;
 
-  query := QUERY + 'ORDER BY id DESC';
+  if txtDeA.Text <> '  /  /    ' then
+    begin
+      query := query + ' AND data_hora >= '''+ Copy(txtDeA.Text, 7,4)+ '-'+ Copy(txtDeA.Text, 4,2)+ '-'+ Copy(txtDeA.Text, 1,2) + ' 00:00:00''';
+    end;
+
+    if txtAteA.Text <> '  /  /    ' then
+    begin
+      query := query + ' AND data_hora <= '''+ Copy(txtAteA.Text, 7,4)+ '-'+ Copy(txtAteA.Text, 4,2)+ '-'+ Copy(txtAteA.Text, 1,2) + ' 23:59:59''';
+    end;
+
+  query := query + ' ORDER BY id DESC;';
   queryAnalitico.SQL.Text := query;
   queryAnalitico.Open;
 
